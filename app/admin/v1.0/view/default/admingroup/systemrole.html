@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 管理员管理 / 用户组系统权限设置 / <{$info['groupname']}></h3><hr>
+</div>
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-body ">
+                <blockquote class="layui-elem-quote">需要配合菜单权限进行分配</blockquote>
+            </div>
+        </div>
+    </div>
+</div>	
+<div class="layui-form">
+<form class="layui-form" action="">
+<fieldset class="layui-elem-field">
+  <legend>系统管理</legend>
+  <div class="layui-field-box">
+   <div class="layui-form-item">
+    <label class="layui-form-label">后台管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="index_index" title="后台进入" <?php echo systemroleInarray("index_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="index_home" title="主页查看" <?php echo systemroleInarray("index_home",$systemrole);?>>
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">系统设置</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="system_index" title="查看" <?php echo systemroleInarray("system_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="system_edit" title="编辑" <?php echo systemroleInarray("system_edit",$systemrole);?>>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">缓存管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="cache_index" title="列表" <?php echo systemroleInarray("cache_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="cache_delRedisCache" title="清除Redis缓存" <?php echo systemroleInarray("cache_delRedisCache",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="cache_delFileCache" title="清除文件缓存" <?php echo systemroleInarray("cache_delFileCache",$systemrole);?>>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">上传权限</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="upload_imgUpload" title="表单图片上传" <?php echo systemroleInarray("upload_imgUpload",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="upload_attmentUpload" title="表单附件上传" <?php echo systemroleInarray("upload_attmentUpload",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="upload_tinymceUpload" title="编辑器图片上传" <?php echo systemroleInarray("upload_tinymceUpload",$systemrole);?>>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">系统菜单</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="systemmenu_index" title="列表" <?php echo systemroleInarray("systemmenu_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_jsonlist" title="列表json" <?php echo systemroleInarray("systemmenu_jsonlist",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_menutreejsonlist" title="权限设置json" <?php echo systemroleInarray("systemmenu_menutreejsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="systemmenu_addview" title="添加" <?php echo systemroleInarray("systemmenu_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_add" title="添加动作" <?php echo systemroleInarray("systemmenu_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_editview" title="编辑" <?php echo systemroleInarray("systemmenu_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_edit" title="编辑动作" <?php echo systemroleInarray("systemmenu_edit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="systemmenu_del" title="删除" <?php echo systemroleInarray("systemmenu_del",$systemrole);?>>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">系统公告</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="notice_index" title="列表" <?php echo systemroleInarray("notice_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_jsonlist" title="列表json" <?php echo systemroleInarray("notice_jsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="notice_addview" title="添加" <?php echo systemroleInarray("notice_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_add" title="添加动作" <?php echo systemroleInarray("notice_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_editview" title="编辑" <?php echo systemroleInarray("notice_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_edit" title="编辑动作" <?php echo systemroleInarray("notice_edit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_del" title="删除" <?php echo systemroleInarray("notice_del",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="notice_switchStatus" title="状态切换" <?php echo systemroleInarray("notice_switchStatus",$systemrole);?>>
+    </div>
+  </div>
+</div>
+</fieldset>
+<fieldset class="layui-elem-field">
+  <legend>内容管理</legend>
+  <div class="layui-field-box">
+   <div class="layui-form-item">
+    <label class="layui-form-label">栏目管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="contentcate_index" title="列表" <?php echo systemroleInarray("contentcate_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="contentcate_jsonlist" title="列表json" <?php echo systemroleInarray("contentcate_jsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="contentcate_addview" title="添加" <?php echo systemroleInarray("contentcate_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="contentcate_add" title="添加动作" <?php echo systemroleInarray("contentcate_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="contentcate_editview" title="编辑" <?php echo systemroleInarray("contentcate_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="contentcate_edit" title="编辑动作" <?php echo systemroleInarray("contentcateedit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="contentcate_del" title="删除" <?php echo systemroleInarray("contentcate_del",$systemrole);?>>
+      <!-- <input type="checkbox" name="systemrole[]" value="articlecate_contentCateTreeJsonlist" title="内容编辑列表json" <?php //echo systemroleInarray("articlecate_contentCateTreeJsonlist",$systemrole);?>> -->
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">内容管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="content_index" title="列表" <?php echo systemroleInarray("content_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="content_jsonlist" title="列表json" <?php echo systemroleInarray("content_jsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="content_cateTreeJsonlist" title="左侧菜单json" <?php echo systemroleInarray("content_cateTreeJsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="content_addview" title="添加" <?php echo systemroleInarray("content_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="content_add" title="添加动作" <?php echo systemroleInarray("content_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="content_editview" title="编辑" <?php echo systemroleInarray("content_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="content_edit" title="编辑动作" <?php echo systemroleInarray("content_edit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="content_del" title="删除" <?php echo systemroleInarray("content_del",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="content_switchStatus" title="状态切换" <?php echo systemroleInarray("content_switchStatus",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="content_attribute" title="内容属性" <?php echo systemroleInarray("content_attribute",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="content_status" title="发布" <?php echo systemroleInarray("content_status",$systemrole);?>>
+    </div>
+  </div>
+  </div>
+</fieldset>
+<fieldset class="layui-elem-field">
+  <legend>管理员管理</legend>
+  <div class="layui-field-box">
+   <div class="layui-form-item">
+    <label class="layui-form-label">角色管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="admingroup_index" title="列表" <?php echo systemroleInarray("admingroup_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_jsonlist" title="列表json" <?php echo systemroleInarray("admingroup_jsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="admingroup_addview" title="添加" <?php echo systemroleInarray("admingroup_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_add" title="添加动作" <?php echo systemroleInarray("admingroup_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_editview" title="编辑" <?php echo systemroleInarray("admingroup_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_edit" title="编辑动作" <?php echo systemroleInarray("admingroup_edit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_del" title="删除" <?php echo systemroleInarray("admingroup_del",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_systemrole" title="系统权限编辑" <?php echo systemroleInarray("admingroup_systemrole",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_systemroleedit" title="系统权限编辑动作" <?php echo systemroleInarray("admingroup_systemroleedit",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="admingroup_channlrole" title="栏目权限编辑" <?php echo systemroleInarray("admingroup_channlrole",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_channlroleedit" title="栏目权限编辑动作" <?php echo systemroleInarray("admingroup_channlroleedit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_menurole" title="系统菜单编辑" <?php echo systemroleInarray("admingroup_menurole",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="admingroup_menuroleedit" title="系统菜单编辑动作" <?php echo systemroleInarray("admingroup_menuroleedit",$systemrole);?>>
+
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">管理员管理</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="systemrole[]" value="adminuser_index" title="列表" <?php echo systemroleInarray("adminuser_index",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_jsonlist" title="列表json" <?php echo systemroleInarray("adminuser_jsonlist",$systemrole);?>>
+	  <input type="checkbox" name="systemrole[]" value="adminuser_addview" title="添加" <?php echo systemroleInarray("adminuser_addview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_add" title="添加动作" <?php echo systemroleInarray("adminuser_add",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_editview" title="编辑" <?php echo systemroleInarray("adminuser_editview",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_edit" title="编辑动作" <?php echo systemroleInarray("adminuser_edit",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_del" title="删除" <?php echo systemroleInarray("adminuser_del",$systemrole);?>>
+      <input type="checkbox" name="systemrole[]" value="adminuser_switchStatus" title="状态切换" <?php echo systemroleInarray("adminuser_switchStatus",$systemrole);?>>
+    </div>
+  </div>
+  </div>
+</fieldset>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+	<input type="hidden" name="id" value="<{$info['id']}>">
+        <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+    </div>
+</div>
+</form>
+</div>
+</div>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+		form.render();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+			$.post('/admin.php?c=admingroup&a=systemroleedit',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000},function(){
+						loadMain("/admin.php?c=admingroup&a=index");
+					});
+                }else{
+                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+                }
+            });
+            return false;
+        });
+    });
+</script>

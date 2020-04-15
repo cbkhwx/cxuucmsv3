@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+<!-- 左侧导航区域-->
+<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+  <li class="layui-nav-item layui-nav-itemed">
+    <a class="" href="javascript:;">内容管理</a>
+  </li>
+</ul>
+<div id="contentCateTree" class="dtree" data-id="0"></div>
+<script>
+    layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree
+            , layer = layui.layer
+            , $ = layui.jquery;
+
+        // 初始化树
+        dtree.render({
+            elem: "#contentCateTree",
+            url: "/admin.php?c=content&a=cateTreeJsonlist", // 使用url加载（可与data加载同时存在）
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            //dataFormat: "list",  //配置data的风格为list
+            response: { message: "msg", statusCode: 0 },  //修改response中返回数据的定义
+            //checkbar:true,
+            icon: "2",  //修改二级图标样式
+            initLevel: "3"  //默认展开层级为1
+            //,accordion: true  // 开启手风琴
+        });
+
+        // 绑定节点点击
+        dtree.on("node('contentCateTree')", function (obj) {
+            if (obj.param.leaf) {
+                loadMain('/admin.php?c=content&cid=' + obj.param.nodeId);
+            } else {
+                var $div = obj.dom;
+                contentCateTree.clickSpread($div);  //调用内置函数展开节点
+            }
+        });
+    });
+</script>

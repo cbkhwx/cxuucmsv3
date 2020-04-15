@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<import file="block/common.html" name="header"/>
+<body>
+<import file="block/common.html" name="nav"/>
+
+<div class="layui-container">
+	<div class="layui-card">
+		<div class="layui-card-body cxuu_top_info">
+		    <div class="layui-col-xs7">
+				<import file="block/common.html" name="cateurl"/>
+			</div>
+			<div class="layui-col-xs5">
+				<import file="block/common.html" name="search"/>
+			</div>
+		</div>
+	</div>
+   
+ <div id="cxuu_main_content">   
+  <div class="layui-row cxuu_content">
+    <h1 class="cxuu_content_title"><{$info['title']}></h1>
+	<h4 class="cxuu_content_info">
+	<span>部门：<{$info['groupname']}> </span>
+	<span>审核：<{$info['examine']}> </span>
+	<span>拟稿/发布：<{$info['nickname']}> </span>
+	<span><i class="layui-icon">&#xe68d;</i> <?php echo historyTime($info['time']);?> </span>
+	<span><i class="layui-icon" style="color:red;">&#xe68c;</i> <{$info['hits']}> </span>
+	</h4>
+	<hr class="layui-bg-blue cxuu_content_info_hr">
+	<p><?php echo htmlspecialchars_decode($info['content']); ?></p>
+	<!--附件下载-->
+	<?php if(!empty($info['attid'])){ ?>
+	<p class="cxuu_content_download">
+		<span class="layui-badge layui-bg-blue">附件下载：</span> 
+		<a href="<{$info['atturl']}>" download="<{$info['priname']}>"><{$info['priname']}></a>
+	</p>
+	<?php } ?>
+    </div>
+  </div>
+</div>
+         
+<script src="/res/lib/layui/layui.js" charset="utf-8"></script>
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+
+<import file="block/common.html" name="footer"/>
+</body>
+</html>

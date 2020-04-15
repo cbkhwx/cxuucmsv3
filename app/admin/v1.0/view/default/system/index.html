@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 系统设置</h3><hr>
+</div>
+<div class="layui-fluid">
+ <div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">网站名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="sitename" lay-verify="required" lay-reqtext="网站名称不能为空" placeholder="请输入网站名称"  value="<{$config['sitename']}>" class="layui-input">
+            <tip>填写自己部署网站的名称。</tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">网站域名</label>
+        <div class="layui-input-inline" style="width:280px;">
+            <input type="text" name="siteurl" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名"  value="<{$config['siteurl']}>" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">META关键词</label>
+        <div class="layui-input-block">
+            <textarea name="keywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><{$config['keywords']}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">META描述</label>
+        <div class="layui-input-block">
+            <textarea name="descript" class="layui-textarea"><{$config['descript']}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">版权信息</label>
+        <div class="layui-input-block">
+            <textarea name="copyright" class="layui-textarea"><{$config['copyright']}></textarea>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">最大上传</label>
+        <div class="layui-input-inline" style="width: 80px;">
+            <input type="text" name="uploadsize" lay-verify="number" value="<{$config['uploadsize']}>" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-input-company">KB</div>
+        <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="uploadext" value="<{$config['uploadext']}>" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+		<?php echo sysrolTF("siteconfig_edit")?'<button class="layui-btn" lay-submit lay-filter="setting">确认保存</button>':''; ?> 
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer,
+			$ = layui.jquery;
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+        //监听提交
+		form.on('submit(setting)', function (data) {
+			//loading =layer.load(1, {shade: [0.1,'#fff'] });
+			$.post('/admin.php?c=system&a=edit',data.field,function(res){
+                //layer.close(loading);
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+                        loadMain("/admin.php?c=system&a=index");
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 1, anim: 6, time: 5000});
+                }
+            });
+		});
+    });
+</script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 管理员管理 / 添加管理员</h3><hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">用户组</label>
+			<div class="layui-input-inline">
+					<select name="gid" lay-verify="required" lay-reqtext="用户组不能为空">
+					 <option value="">选择用户组</option>
+					<?php foreach ($groupList as $key=>$vo){?>
+					  <option value="<{$vo['id']}>"><{$vo['groupname']}></option>
+					<?php }?>  
+					</select>  
+				</div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">               
+            </div> <tip>必须为 字母或者 字母和数字组合，数字不能放在第一个字</tip>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required"></label>
+            <div class="layui-input-inline">
+                <input type="text" name="nickname" lay-verify="required" lay-reqtext="昵称不能为空" placeholder="请输入昵称" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+			<input type="text" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入密码" value="" class="layui-input">
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+			  <input type="radio" name="status" value="1" title="启用" checked>
+			  <input type="radio" name="status" value="0" title="禁用">
+			</div>
+		  </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            $ = layui.$;
+        form.render();
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+			$.post('/admin.php?c=adminuser&a=add',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+						loadMain("/admin.php?c=adminuser&a=index");
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+                }
+            });
+            return false;
+        });
+
+    });
+</script>

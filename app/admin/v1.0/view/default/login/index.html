@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-CxuuWeb3.0</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/res/admin/v1.0/css/login.css">
+    <!--[if lt IE 9]>
+          <script src="/res/lib/js/html5shiv-printshiv.min.js"></script>
+          <script src="/res/lib/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="login-bg">
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">CxuuWeb3.0-管理登录</div>
+        <div id="darkbannerwrap"></div>
+
+        <form method="post" class="layui-form">
+            <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input" value="admin">
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input" value="123456">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+        </form>
+    </div>
+	<script src="/res/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['form', 'jquery'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+				$ = layui.jquery;
+
+            // 进行登录操作
+            form.on('submit(login)', function (data) {
+                data = data.field;
+                if (data.username == '') {
+                    layer.msg('用户名不能为空');
+                    return false;
+                }
+                if (data.password == '') {
+                    layer.msg('密码不能为空');
+                    return false;
+                }
+
+                loading = layer.load(1, { shade: [0.1, '#fff'] });//0.1透明度的白色背景{username:data.username,password:data.password}
+                $.post('/admin.php?c=login&a=login', data, function (res) {
+                    layer.close(loading);
+                    if (res.status == 1) {
+                        layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+                            location.href = "/admin.php";
+                        });
+                    } else {
+                        $('#captcha').val('');
+                        layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+                        $('.captcha img').attr('src', '/admin.php?c=login&a=verify' + Math.random());
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<import file="block/common.html" name="header"/>
+<body>
+<import file="block/common.html" name="nav"/>
+<div class="layui-container">
+
+    <div class="layui-card">
+		<div class="layui-card-body cxuu_top_info">
+		    <div class="layui-col-xs7">
+				<import file="block/common.html" name="cateurl"/>
+			</div>
+			<div class="layui-col-xs5 ">
+				<import file="block/common.html" name="search"/>
+			</div>
+		</div>
+	</div>
+	
+<div id="cxuu_main">
+    <div class="layui-row  layui-col-space10">
+		<div class="layui-col-xs8">
+			<div class="layui-card">
+			<div class="layui-card-header cxuu_cate_title"><?php echo $catename;?></div>
+			<div class="layui-card-body cxuu_list">
+			  <ul>
+				<?php foreach($list as $key=>$vo){ ?>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'Y-m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<?php if(($key+1)%5==0){echo '<hr class="layui-bg-gray">';}?>
+				<?php }?>
+			  </ul>
+			  </div>
+			</div>
+		<import file="block/common.html" name="page"/>
+		</div>
+		
+		<div class="layui-col-xs4">
+			<div class="layui-card cxuu_list">
+			  <ul>
+				<?php foreach($list as $key=>$vo){ ?>
+				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<?php }?>
+			  </ul>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</div>
+
+
+  <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
+  <script>
+  layui.use(['element','layer'], function(){
+  var laypage = layui.laypage
+  ,layer = layui.layer,
+  element = layui.element;
+      element.on('nav(demo)', function (elem) {
+        layer.msg(elem.text());
+      });
+
+    });
+  </script>
+<import file="block/common.html" name="footer"/>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>龙啸轩内容管理系统</title>
+  <link rel="stylesheet" href="<?php echo U_RES;?>/lib/layui/css/layui.css">
+  <link rel="stylesheet" href="/res/index/v1.0/css/main.css">
+  <link rel="stylesheet" href="/res/index/v1.0//css/index.css">
+</head>
+<body>
+<div class="layui-main cxuu_header_height"></div>
+<div class="layui-main">
+<ul class="layui-nav  layui-bg-blue cxuu_nav_title" lay-filter="">
+  <li class="layui-nav-item layui-this"><a href="/"> 首 页 </a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">常用平台</a>
+    <dl class="layui-nav-child"> <!-- 二级菜单 -->
+      <dd><a href="">移动模块</a></dd>
+      <dd><a href="">后台模版</a></dd>
+      <dd><a href="">电商平台</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="">社区</a></li>
+</ul>
+</div>
+
+<div class="layui-container">
+
+    <div class="layui-card">
+		<div class="layui-card-body cxuu_top_info">
+		    <div class="layui-col-xs7">
+				<span class="layui-breadcrumb cxuu_top_left">
+				<a href="/"><i class="layui-icon">&#xe68e;</i> 首页</a>
+				<a><cite>搜索结果页</cite></a>
+				</span>
+			</div>
+			<div class="layui-col-xs5 ">
+				<div class="cxuu_top_right">
+				<form action="/search.php" method="GET"> 
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+						  <input type="text" name="keywords" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+						</div>
+						<div class="layui-input-inline searchbotton">
+						  <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="submittitle"><i class="layui-icon">&#xe615;</i> 本站搜索 </button>
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<div id="cxuu_main">
+    <div class="layui-row  layui-col-space10">
+		<div class="layui-col-xs8">
+			<div class="layui-card">
+			<div class="layui-card-header cxuu_cate_title">搜索 <b style="color:red"><?php echo $_GET['keywords'];?></b> 结果</div>
+			<div class="layui-card-body cxuu_list">
+			  <ul>
+				<?php foreach($list as $key=>$vo){ ?>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><a href="<?php echo "/list/".$vo['cateid'];?>" target="_blank"> [<?php echo $vo['catename'];?>] </a><span class="cxuu_time"><?php echo fTime($vo['time'],'Y-m-d');?></span> <a href="<?php echo "/info/".$vo['id'];?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<?php if(($key+1)%5==0){echo '<hr class="layui-bg-gray">';}?>
+				<?php }?>
+			  </ul>
+			  </div>
+			</div>
+		<div id="page">
+			<div class="manu">
+				<?php if($page['prev'] != "javascript:;"){?><a href="<{$page['first']}>">头页 </a><?php }?>
+				<?php if($page['prev'] != "javascript:;"){?><span><a href="<{$page['prev']}>">&lt;</a></span><?php }?>
+				<?php foreach($page['list'] as $key=>$vo){ ?>
+					<?php if($vo != "javascript:;"){?><span class="disabled"><a href="<{$vo}>"><{$key}></a></span>
+					<?php }else{ ?><span class="current"><a href="<?php echo $vo;?>"><?php echo $key;?></a></span><?php } ?>
+				<?php }?>
+				<?php if($page['next'] != "javascript:;"){?><span><a href="<{$page['next']}>">&gt; </a></span><?php }?>
+				<?php if($page['last'] != "javascript:;"){?><span><a href="<{$page['last']}>">末页 </a></span><?php }?>
+			</div>
+		</div>
+		</div>
+		
+		<div class="layui-col-xs4">
+			<div class="layui-card cxuu_list">
+			  <ul>
+				<li></li>
+			  </ul>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</div>
+<div class="layui-container">
+<div id="cxuu_main_margintop10">
+  <div class="layui-card">
+  <div id="footer">
+<hr class="layui-bg-gray">  
+    <p><strong>龙啸轩内容管理系统 便捷易用的网站内容管理平台</strong></p>
+    <p><strong>2020 By Lasa</strong> </p>
+<hr class="layui-bg-gray">
+  </div>
+  </div>
+</div>
+</div>
+
+
+
+  <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
+  <script>
+  layui.use(['element','layer'], function(){
+  var laypage = layui.laypage
+  ,layer = layui.layer,
+  element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+      //监听导航点击
+      element.on('nav(demo)', function (elem) {
+        //console.log(elem)
+        layer.msg(elem.text());
+      });
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 缓存管理</h3><hr>
+</div>
+<div class="layui-fluid">
+    <table class="layui-table">
+	  <thead>
+		<tr>
+		  <th>缓存分类</th>
+		  <th>目录</th>
+		  <th>大小</th>
+		  <th>操作</th>
+		</tr> 
+	  </thead>
+	  <tbody>
+		<tr>
+		  <td>Redis所有库</td>
+		  <td>内存</td>
+		  <td>共 <?php echo RCA();?> 条数据</td>
+		  <td>
+		  <?php echo sysrolTF("cache_delRedisCache")?'<button type="button" onclick="cacheDel(\'delRedisCache\')" class="layui-btn layui-btn-danger">清除</button>':''; ?>
+		  </td>
+		</tr>
+		<tr>
+		  <td>HTML缓存</td>
+		  <td><{$dirsize['htmlCaheDir']}></td>
+		  <td><{$dirsize['htmlCahe']}></td>
+		  <td> <?php echo sysrolTF("cache_delhtmlCache")?'<button type="button" onclick="cacheDel(\'delFileCache&id=3\')" class="layui-btn layui-btn-danger">清除</button>':''; ?></td>
+		</tr>
+		<tr>
+		  <td>内容文件缓存 <?php //echo $cacheMod == 0?'<span class="layui-badge layui-bg-blue">当前使用</span>':'';?></td>
+		  <td><{$dirsize['fileCaheDir']}></td>
+		  <td><{$dirsize['fileCahe']}></td>
+		  <td> <?php echo sysrolTF("cache_delFileCache")?'<button type="button" onclick="cacheDel(\'delFileCache&id=1\')" class="layui-btn layui-btn-danger">清除</button>':''; ?></td>
+		</tr>
+		<tr>
+		  <td>前台程序缓存</td>
+		  <td><{$dirsize['fileHomeCaheDir']}></td>
+		  <td><{$dirsize['fileHomeCahe']}></td>
+		  <td><?php echo sysrolTF("cache_delFileCache")?'<button type="button" onclick="cacheDel(\'delFileCache&id=4\')" class="layui-btn layui-btn-danger">清除</button>':''; ?></td>
+		</tr>
+		<tr>
+		  <td>后台程序缓存</td>
+		  <td><{$dirsize['fileAdminCaheDir']}></td>
+		  <td><{$dirsize['fileAdminCahe']}></td>
+		  <td><?php echo sysrolTF("cache_delFileCache")?'<button type="button" onclick="cacheDel(\'delFileCache&id=2\')" class="layui-btn layui-btn-danger">清除</button>':''; ?></td>
+		</tr>
+
+	  </tbody>
+	</table> 
+</div>
+
+<script>
+function cacheDel(url){
+	$.post('/admin.php?c=cache&a='+url,function(res){
+        if(res.status == 1){
+            layer.msg(res.info, {icon: 1, time: 1000}, function(){
+                loadMain("/admin.php?c=cache");
+            });
+        }else{
+            layer.msg(res.info, {icon: 2, time: 1000});
+        }
+    });
+}
+</script>

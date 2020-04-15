@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 管理员管理 / 用户组列表</h3><hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+		<div class="layui-form-item">
+            <label class="layui-form-label required">角色名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="groupname" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" value="" class="layui-input">
+                <tip>一般 为中文 如：XX部</tip>
+            </div>
+        </div>
+		
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            $ = layui.$;
+
+        form.render();
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+			$.post('/admin.php?c=admingroup&a=add',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+						loadMain("/admin.php?c=admingroup&a=index");
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+                }
+            });
+            return false;
+        });
+
+    });
+</script>

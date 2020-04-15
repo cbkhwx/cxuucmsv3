@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 栏目管理 / 栏目列表</h3><hr>
+</div>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-btn-container">
+				<button class="layui-btn layui-btn-sm data-add-btn"> 添加栏目 </button>
+				<button id="btnExpandAll" class="layui-btn layui-btn-sm"> 全部展开 </button>
+				<button id="btnFoldAll" class="layui-btn layui-btn-sm"> 全部折叠 </button>
+			</div>
+
+	<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
+
+	<script type="text/html" id="currentTableBar">
+	<?php echo sysrolTF("articlecate_del")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?>
+	<?php echo sysrolTF("articlecate_editview")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?>
+    </script>
+	<script type="text/html" id="catetypeTableBar">
+		{{#  if(d.type == 1){ }}
+			列表
+		{{#  }else{ }}
+			<b style="color:red">频道</b>
+		{{#  } }}
+    </script>
+	<script type="text/html" id="themeTableBar">
+		{{#  if(d.theme.length == 0){ }}
+			默认(index.html)
+		{{#  }else{ }}
+			{{ d.theme }}
+		{{#  } }}
+    </script>
+		</div>
+	</div>
+
+</div>
+
+<script>
+	layui.use(['treeTable', 'table'], function () {
+		$ = layui.jquery,
+			table = layui.table,
+			form = layui.form;
+		var treeTable = layui.treeTable;
+
+		var insTb = treeTable.render({
+			elem: '#currentTableId',
+			text: {
+				none: '<div style="padding: 18px 0;">哎呀，一条数据都没有~</div>'
+			},
+			//data: data,
+			tree: {
+				iconIndex: 1,  // 折叠图标显示在第几列
+				idName: 'id',  // 自定义id字段的名称
+				pidName: 'pid',  // 自定义标识是否还有子节点的字段名称
+				haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
+				isPidData: true,  // 是否是pid形式数据
+				arrowType: 'arrow2',   // 自定义箭头风格
+				initLevel:5,
+				getIcon: function (d) {  // 自定义图标
+					// d是当前行的数据
+					if (d.haveChild) {  // 判断是否有子集
+						return '<i class="ew-tree-icon ew-tree-icon-folder"></i>';
+					} else {
+						return '<i class="ew-tree-icon ew-tree-icon-file"></i>';
+					}
+				}
+			},
+			cols: [
+				//{type: 'numbers'},
+				//{field: 'pid', title: 'PID'},
+				{ field: 'id', title: 'ID', width: 50 },
+				{ field: 'name', title: '栏目名称', width: 260 },
+				{ field: 'type', title: '类型', templet: '#catetypeTableBar' },
+				{ field: 'theme', title: '模板', templet: '#themeTableBar' },
+				{ title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center" }
+			],
+			reqData: function (data, callback) {
+				// 在这里写ajax请求，通过callback方法回调数据
+				$.get('/admin.php?c=contentcate&a=jsonlist', function (res) {
+					//console.log(res);
+					callback(res.data);  // 参数是数组类型
+				}, "json");
+			}
+		});
+
+		$(".data-add-btn").on("click", function () {
+			loadMain('/admin.php?c=contentcate&a=addview');
+			return false;
+		});
+
+		// 全部展开
+		$('#btnExpandAll').click(function () {
+			insTb.expandAll();
+		});
+
+		// 全部折叠
+		$('#btnFoldAll').click(function () {
+			insTb.foldAll();
+		});
+
+
+		treeTable.on('tool(currentTableId)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				loadMain('/admin.php?c=contentcate&a=editview&id=' + data.id);
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除么', function (index) {
+					$.post('/admin.php?c=contentcate&a=del', data, function (res) {
+						if (res.status == 1) {
+							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+								obj.del();
+								layer.close(index);
+							});
+						} else {
+							layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+						}
+					});
+				});
+			}
+		});
+	});
+
+</script>

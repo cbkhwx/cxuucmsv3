@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 菜单管理 / 添加菜单</h3><hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+		<div class="layui-form-item">
+            <label class="layui-form-label required">上级菜单</label>
+				<div class="layui-input-inline">
+					<select name="pid" lay-verify="">
+					 <option value="0">顶级</option>
+					<?php foreach($list as $key=>$vo){?>
+					  <option value="<{$vo['id']}>"><?php echo $vo['name'];?></option>
+					<?php } ?>  
+					</select>  
+					 <tip>选择上级菜单，支持二级分组</tip>
+				</div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" value="" class="layui-input">
+                 <tip>一般 为中文 如：后台首页</tip>
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">控制器及方法名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="controller" lay-verify="required" lay-reqtext="控制器及方法名不能为空" placeholder="请输入控制器及方法名" value="" class="layui-input">
+                 <tip>如：index_home</tip>
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">URL</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" lay-verify="required" lay-reqtext="URL不能为空" placeholder="请输入URL" value="" class="layui-input">
+                 <tip>/admin.php?c=index&a=home  系统的操作方法</tip>
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">图标</label>
+            <div class="layui-input-block">
+               <input type="text" id="iconPicker" name="ico" lay-filter="iconPicker" value="" style="display:none;">
+            </div>
+        </div>
+		
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+layui.use(['form', 'iconPicker'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$,
+			iconPicker = layui.iconPicker;
+
+        form.render();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+			$.post('/admin.php?c=systemmenu&a=add',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+						loadMain("/admin.php?c=systemmenu&a=index");
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+                }
+            });
+            return false;
+        });
+		
+		iconPicker.render({
+                // 选择器，推荐使用input
+                elem: '#iconPicker',
+                // 数据类型：fontClass/unicode，推荐使用fontClass
+                type: 'fontClass',
+                // 是否开启搜索：true/false，默认true
+                search: true,
+                // 是否开启分页：true/false，默认true
+                page: true,
+                // 每页显示数量，默认12
+                limit: 12,
+				// 每个图标格子的宽度：'43px'或'20%'
+				cellWidth: '43px',
+                // 点击回调
+                click: function (data) {
+                    //console.log(data);
+                },
+                // 渲染成功后的回调
+                success: function(d) {
+                    //console.log(d);
+                }
+            });
+
+    });
+</script>

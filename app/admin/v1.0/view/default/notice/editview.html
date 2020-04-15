@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 编辑公告</h3><hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">标题</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题" value="<{$notice['title']}>" class="layui-input">
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">图片</label>
+            <div class="layui-input-block">
+                <input type="text" id="imageval" name="img" value="<{$notice['img']}>" class="layui-input">
+				<button type="button" class="layui-btn" id="thumimg">
+				  <i class="layui-icon">&#xe67c;</i>上传图片
+				</button>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" class="layui-textarea" placeholder="请输入内容"><{$notice['content']}></textarea>
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+			  <input type="radio" name="status" value="1" title="审核" <?php echo $notice["status"] ==1?'checked=""':''; ?> >
+			  <input type="radio" name="status" value="0" title="存草稿" <?php echo $notice["status"] ==0?'checked=""':''; ?>>
+			</div>
+		  </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+			<input type="hidden" name="id" value="<{$notice['id']}>">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table','upload'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+			upload = layui.upload,
+            $ = layui.$;
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+			$.post('/admin.php?c=notice&a=edit',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000},function(){
+						loadMain("/admin.php?c=notice&a=index");
+					});
+                }else{
+                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+                }
+            });
+            return false;
+        });
+		var uploadInst = upload.render({
+			elem: '#thumimg' //绑定元素
+			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
+			,size: 1000
+			,accept:'images'
+			,acceptMime: 'image/*'
+			//,acceptMime: 'image/jpg, image/png'
+			,done: function(res){
+				if(res.status == 1){
+					$('#imageval').val(res.result[0].src);
+					layer.msg(res.info);
+				}else{
+					layer.msg(res.info);
+				}
+			}
+			,error: function(){
+			  //请求异常回调
+			}
+		});
+
+    });
+</script>

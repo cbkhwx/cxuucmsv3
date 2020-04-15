@@ -1,0 +1,65 @@
+body{
+    width: 100%;
+    min-height: 100%;
+    background:url("../images/header_bg2.jpg") top center no-repeat #fff;
+}
+
+.layui-form-item{margin-bottom:0}
+
+/**首页头条**/
+.cxuu_infofirst{line-height:60px;height:60px;font-size:28px;font-family:"微软雅黑","黑体";font-weight:bold;overflow:hidden;color:#d00022;padding:5px;text-align:center;}
+.cxuu_infofirst a{color:#d00022;}
+
+/**首页小头条**/
+.cxuu_infosecend{line-height:55px;height:55px;font-size:18px;font-family:"微软雅黑","黑体";overflow:hidden;color:#0071d0;padding-top:5px;text-align:center;}
+.cxuu_infosecend a{color:#0071d0;}
+
+/**首页轮播图**/
+.cxuu_imagefoce{height:430px;}
+.cxuu_imgfoce img{height:400px;width:640px;}
+.cxuu_imgfoce .title{height:35px;line-height:35px;font-size:16px;text-align:center;}
+.cxuu_imgfoce .title a{color:#004682;}
+/**广告横幅**/
+
+.cxuu_index_ad{height:150px;line-height:150px;background:url("../images/index_ad.jpg") top center no-repeat #fff;}
+
+/**top信息区域**/
+
+/**搜索区域**/
+.cxuu_top_left{line-height:40px;height:40px;float:left}
+.cxuu_top_right{float:right;overflow:hidden;}
+.cxuu_top_right .searchbotton{width:100px;}
+
+/**小图标链接列表**/
+.cxuu_appicolist{height:338px;padding:5px;}
+.cxuu_appicolist li{float:left;width:83px; height:110px;}
+.cxuu_appicolist li .cxuu_appicotitle{float:left;margin-top:70px;width:83px; height:40px;line-height:40px;font-size:16px;text-align:center;}
+.cxuu_appicolist .bg1{background:url("../images/app_ico.jpg") 5px 0 no-repeat #fff;}
+.cxuu_appicolist .bg2{background:url("../images/app_ico.jpg") 5px -126px no-repeat #fff;}
+.cxuu_appicolist .bg3{background:url("../images/app_ico.jpg") 5px -253px no-repeat #fff;}
+.cxuu_appicolist .bg4{background:url("../images/app_ico.jpg") 5px -379px no-repeat #fff;}
+.cxuu_appicolist .bg5{background:url("../images/app_ico.jpg") 5px -506px no-repeat #fff;}
+.cxuu_appicolist .bg6{background:url("../images/app_ico.jpg") 5px -631px no-repeat #fff;}
+/**首页信息列表**/
+.cxuu_index_list_title{padding-left:20px;line-height:50px;height:50px;font-size:22px;color:#fff;font-family:"微软雅黑","黑体";background:url("../images/infolistico.jpg") no-repeat #fff;}
+.cxuu_infolist{padding:5px 5px 10px 10px;}
+.cxuu_infolist li{line-height:35px;height:35px;font-size:16px;font-family:"微软雅黑","黑体";overflow:hidden;}
+.cxuu_infolist .layui-badge-dot{height:4px;width:4px;}
+.cxuu_infolist .cxuu_time{float:right;color:gray;width:40px;padding-right:10px;font-size:14px;line-height:35px;height:35px;text-align:right;}
+
+
+/**列表页列表**/
+.cxuu_cate_title{padding-left:10px;line-height:60px;height:60px;font-size:22px;font-family:"微软雅黑","黑体";}
+.cxuu_list{}
+.cxuu_list li{padding-left:10px;line-height:40px;height:40px;font-size:16px;font-family:"微软雅黑","黑体";overflow:hidden;}
+.cxuu_list .layui-badge-dot{height:4px;width:4px;}
+.cxuu_list .cxuu_time{float:right;color:gray;width:80px;padding-right:10px;font-size:14px;line-height:40px;height:40px;}
+.cxuu_list hr{margin-left:15px;margin-right:15px;}
+
+/**内容页**/
+.cxuu_content{background-color:#fff;padding:10px;}
+.cxuu_content_title{line-height:40px;text-align:center;color:#d00022;padding-bottom:20px;padding-top:20px;}
+.cxuu_content_info{height:40px;line-height:40px;text-align:center;color:#515151;}
+.cxuu_content_info span{padding-left:20px;}
+.cxuu_content_info_hr{height:2px;}
+.cxuu_content_download{height:40px;line-height:40px;font-size:16px;}

@@ -1,0 +1,4 @@
+location ~* ^((?!\.[a-z]).)*$ {
+    rewrite ^/(admin|demo)(.*)$ /$1.php$2 last;
+    rewrite ^/(.+)$ /index.php/$1 last;
+}
