@@ -65,7 +65,7 @@ class z
             $path = "{$GLOBALS['ZPHP_MAPPING'][$path_root]}{$sub_path}";
             if (is_file($file = "{$path}{$fileName}.class.php") || is_file($file = "{$path}{$fileName}.php")) {
                 require $file;
-            } elseif ($GLOBALS['ZPHP_CONFIG']['DEBUG'] || 'c' !== $path_root) {
+            } else {
                 throw new \Exception("file not fond: {$path}{$fileName}.class.php");
             }
         } else {

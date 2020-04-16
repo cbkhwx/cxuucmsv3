@@ -155,7 +155,7 @@ class cache
             $result = unserialize($str);
             if (isset($result['Z-PHP-CACHE-TIME-OUT'])) {
                 if (TIME < $result['Z-PHP-CACHE-TIME-OUT']) {
-                    $result = $result['Z-PHP-CACHE-TDATA'];
+                    $result = $result['Z-PHP-CACHE-DATA'];
                 } else {
                     unlink($file);
                     $result = false;
@@ -172,10 +172,10 @@ class cache
                     flock($h, LOCK_SH);
                     $result = fread($h, filesize($file));
                     $result && $result = unserialize($str);
-                    $result = $result['Z-PHP-CACHE-TDATA'] ?? $result;
+                    $result = $result['Z-PHP-CACHE-DATA'] ?? $result;
                 } else {
                     is_callable($data) && $data = $data() ?: '';
-                    $DATA = $expire ? ['Z-PHP-CACHE-TDATA' => $data, 'Z-PHP-CACHE-TIME-OUT' => TIME + $expire] : $data;
+                    $DATA = $expire ? ['Z-PHP-CACHE-DATA' => $data, 'Z-PHP-CACHE-TIME-OUT' => TIME + $expire] : $data;
                     $result = false === file_put_contents($file, serialize($DATA), LOCK_EX) ? false : $data;
                 }
             }

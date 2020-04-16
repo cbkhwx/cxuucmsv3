@@ -6,11 +6,7 @@ class view
     const
     ENCODE_PREFIX = 'z-php-encode',
     ENCODE_END_CHAR = '#',
-    OPTIONS = LIBXML_NSCLEAN + LIBXML_PARSEHUGE + LIBXML_NOBLANKS + LIBXML_NOERROR + LIBXML_HTML_NODEFDTD + LIBXML_ERR_FATAL + LIBXML_COMPACT,
-    PREG_COMPRESS = ['/<!--[\S\s]*-->|[\n\r]+/U', '/>\s+</U', '/\s{2,}/'],
-    REPLACE_COMPRESS = ['', '><', ' '],
-    PREG_NOTES = '/<!--[\S\s]*-->|[\n\r]+/U',
-    REPLACE_NOTES = '';
+    OPTIONS = LIBXML_NSCLEAN + LIBXML_PARSEHUGE + LIBXML_NOBLANKS + LIBXML_NOERROR + LIBXML_HTML_NODEFDTD + LIBXML_ERR_FATAL + LIBXML_COMPACT;
 
     private static $TAG, $PRE, $SUF, $DOMS, $TPL, $FILE, $PARAMS, $RUN, $PREG, $CHANGED, $IMPORTS, $SEARCH_FIX, $REPLACE_FIX;
     private static function replaceEncode($html)
@@ -124,10 +120,16 @@ class view
 
     private static function compressHtml($html, $compress)
     {
-        if (in_array($compress, [2, 3, 6, 7, 10, 11, 14, 15])) {
-            $html = preg_replace(self::PREG_COMPRESS, self::REPLACE_COMPRESS, $html);
-        } elseif (in_array($compress, [1, 5, 9, 13])) {
-            $html = preg_replace(self::PREG_NOTES, self::REPLACE_NOTES, $html);
+        switch ($compress) {
+            case 1:
+                $preg = '/<!--[\S\s]*-->/U';
+                $html = preg_replace($preg, '', $html);
+                break;
+            case 2:
+                $preg = ['/<!--[\S\s]*-->|[\n\r]+/U', '/>\s+</U', '/\s{2,}/'];
+                $replace = ['', '><', ' '];
+                $html = preg_replace($preg, $replace, $html);
+                break;
         }
         return $html;
     }
@@ -213,14 +215,14 @@ class view
             }
             if (!$run_time || self::$CHANGED > $run_time) {
                 if ($compress = $GLOBALS['ZPHP_CONFIG']['VIEW']['compress'] ?? 0) {
-                    in_array($compress, [4, 5, 6, 12, 13, 15]) && self::compressCss($dom);
-                    in_array($compress, [8, 9, 10, 12, 14, 15]) && self::compressJavaScript($dom);
+                    self::compressCss($dom, $compress[1] ?? $compress);
+                    self::compressJavaScript($dom, $compress[2] ?? $compress);
                 }
                 self::replacePHP($dom);
                 $html = $dom->saveHTML();
                 $html = self::replaceDecode($html);
                 $html = str_replace('<?php }?><?php }else{?>', '<?php }else{?>', $html);
-                $compress && $html = self::compressHtml($html, $compress);
+                $html = self::compressHtml($html, $compress[0] ?? $compress);
                 if (false === file_put_contents($run_file, $html)) {
                     throw new \Exception("file can not write:{$run_file}");
                 }
@@ -250,24 +252,44 @@ class view
         return $html;
     }
 
-    private static function compressJavaScript($dom)
+    private static function compressJavaScript($dom, $compress)
     {
+        switch ($compress) {
+            case 1:
+                $preg = '/\/\*[\s\S]*\*\/|\/\/.*[\r\n]/U';
+                $replace = '';
+                break;
+            case 2:
+                $preg = ['/\/\*[\s\S]*\*\/|\/\/.*[\r\n]|[\n\r]+/U', '/\s*([\,\;\:\{\}\[\]\(\)\=])\s*/', '/\s{2,}/'];
+                $replace = ['', '$1', ' '];
+                break;
+            default:
+                return false;
+        }
         $tags = $dom->getElementsByTagName('script');
         if ($tags->length) {
-            $preg = ['/\/\*[\s\S]*\*\/|\/\/.*[\r\n]|[\n\r]+/U', '/\s*([\,\;\:\{\}\[\]\(\)\=])\s*/', '/\s{2,}/'];
-            $replace = ['', '$1', ' '];
             foreach ($tags as $k => $v) {
                 $v->textContent = preg_replace($preg, $replace, $v->textContent);
             }
         }
     }
 
-    private static function compressCss($dom)
+    private static function compressCss($dom, $compress)
     {
+        switch ($compress) {
+            case 1:
+                $preg = '/\/\*[\s\S]*\*\//U';
+                $replace = '';
+                break;
+            case 2:
+                $preg = ['/\/\*[\s\S]*\*\/|[\n\r]+/U', '/\s*([\,\;\:\{\}\[\]\(\)\=])\s*/', '/\s{2,}/'];
+                $replace = ['', '$1', ' '];
+                break;
+            default:
+                return false;
+        }
         $tags = $dom->getElementsByTagName('style');
         if ($tags->length) {
-            $preg = ['/\/\*[\s\S]*\*\/|[\n\r]+/U', '/\s*([\,\;\:\{\}\[\]\(\)\=])\s*/', '/\s{2,}/'];
-            $replace = ['', '$1', ' '];
             foreach ($tags as $k => $v) {
                 $v->textContent = preg_replace($preg, $replace, $v->textContent);
             }
