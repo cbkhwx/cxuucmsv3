@@ -200,7 +200,7 @@ class router
                 }
                 break;
         }
-        isset($route['params']) && $route['query'] = $_GET + $route['params'];
+        $route['query'] = isset($route['params']) ? $route['params'] + $_GET : $_GET;
         $route['uri'] = $_SERVER['REQUEST_URI'];
         if (isset($route['module'])) {
             $module_path = APP_NAME . '/' . _VER . "/{$route['module']}";

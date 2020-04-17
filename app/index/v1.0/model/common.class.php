@@ -18,7 +18,7 @@ class common
         return $result;
     }
 	
-	//查询用户组的ID 和 用户组名列表，此数据长期缓存
+	//查询用户的ID 和 昵称名列表，此数据长期缓存
     protected static function getAdminUser()
     {
 		$db = \ext\db::Init();
@@ -26,7 +26,7 @@ class common
         return $result;
     }
 	
-	//查询所有栏目列表
+	//查询所有栏目列表，此数据长期缓存
 	protected static function getCateData()
     {
 		$db = \ext\db::Init();
@@ -34,7 +34,7 @@ class common
         return $result;
     }
 	
-	//文章内容栏目路径显示，前端根据数据进行判断，此数据长期缓存
+	//文章内容栏目路径显示
 	//foreach(\model\article_cate::getCateUrlData($cid) as $value){
     public static function getCateUrlData($cid)
     {

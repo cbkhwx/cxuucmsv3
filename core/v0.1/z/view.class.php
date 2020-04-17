@@ -170,21 +170,7 @@ class view
         return $run;
     }
 
-    public static function GetCache($time, $name = '')
-    {
-        $tpl = self::getTpl($name, true);
-        $run = self::getRun($tpl);
-        $html_path = P_HTML_ . THEME . '/' . $run[0] . '/' . $run[1];
-        $html_file = $html_path . '/' . md5(ROUTE['uri']) . '.html';
-        $html_time = is_file($html_file) ? filemtime($html_file) : 0;
-        if ($html_time && $html_time + $time > TIME) {
-            return file_get_contents($html_file);
-        } else {
-            return false;
-        }
-    }
-
-    public static function Fetch(string $name = '', int $cache = 0)
+    public static function Fetch(string $name = '', $cache_path = '', $cache_file = '')
     {
         $tpl = self::getTpl($name, true);
         2 === $GLOBALS['ZPHP_CONFIG']['DEBUG'] && debug::setMsg(1140, $tpl);
@@ -235,20 +221,14 @@ class view
         $html = ob_get_contents();
         ob_end_clean();
 
-        if ($cache) {
-            $html_path = P_HTML_ . THEME . '/' . $run[0] . '/' . $run[1];
-            $html_file = $html_path . '/' . md5(ROUTE['uri']) . '.html';
-            if (!file_exists($html_path) && !mkdir($html_path, 0755, true)) {
-                throw new \Exception("file can not write: {$html_path}");
+        if ($cache_path && $cache_file) {
+            if (!file_exists($cache_path) && !mkdir($cache_path, 0755, true)) {
+                throw new \Exception("can not make dir: {$cache_path}");
             }
-            $html_time = is_file($html_file) ? filemtime($html_file) : 0;
-            if (!$html_time || $html_time + $cache < TIME) {
-                if (false === file_put_contents($html_file, $html)) {
-                    throw new \Exception("file can not write:{$html_file}");
-                }
+            if (false === file_put_contents($cache_file, $html)) {
+                throw new \Exception("file can not write:{$cache_file}");
             }
         }
-
         return $html;
     }
 
@@ -348,10 +328,34 @@ class view
         }
     }
 
-    public static function Display(string $name = '', int $cache = 0)
+    public static function Display(string $name = '', $time = 0, $flag = 0)
     {
-        $html = self::Fetch($name, $cache);
-        echo $html;
+        if (!$time) {
+            echo self::Fetch($name);
+            return;
+        }
+        $tpl = self::getTpl($name, true);
+        $run = self::getRun($tpl);
+        if (!$flag) {
+            $html_path = P_HTML_ . THEME . '/' . $run[0];
+            $html_file = "{$html_path}/{$run[1]}.html";
+        } else {
+            if (is_array($flag)) {
+                foreach ($flag as $k) {
+                    $query[$k] = ROUTE['query'][$k] ?? '';
+                }
+            } else {
+                $query = ROUTE['query'];
+            }
+            $html_path = P_HTML_ . THEME . '/' . $run[0] . '/' . $run[1];
+            $html_file = $html_path . '/' . md5(serialize($query)) . '.html';
+        }
+        $html_time = is_file($html_file) ? filemtime($html_file) : 0;
+        if ($html_time && $html_time + $time > TIME) {
+            echo file_get_contents($html_file);
+        } else {
+            echo self::Fetch($name, $html_path, $html_file);
+        }
     }
 
     public static function Assign($key, $val)
