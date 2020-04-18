@@ -46,7 +46,7 @@ class article
 		$p = self::routerParams('p');
         $num = 10;  //每页显示条数
         $page = ['num' => $num, 'p' => $p, 'return' => ['prev', 'next', 'first', 'last', 'list']];
-		$result['data'] = $db->table('article')->cache(600)->where($where)->page($page)->order('id DESC')->select();
+		$result['data'] = $db->table('article')->where($where)->page($page)->order('id DESC')->select();
         $result['page'] = $db->getPage();
         $result['cid'] = $where['cid'];
         return $result;

@@ -13,6 +13,7 @@ class contents extends ctrl
 		if(!isset($_GET['cid']) & empty($_GET['cid']) & empty(ROUTE['params']['cid'])){
 			return  parent::_404();
 		}
+		
 		$d = new article;
 		$list = $d->listData();
 		
@@ -28,9 +29,9 @@ class contents extends ctrl
 		view::assign('cid',$list['cid']);
 		view::assign('catename',$findCate['name']);
 		if(empty($findCate['theme'])){
-			view::display();
+			view::display('',60,true);
 		}else{
-			view::display($findCate['theme']);
+			view::display($findCate['theme'],60,true);
 		}
 		
     }
