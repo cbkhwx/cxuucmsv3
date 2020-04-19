@@ -756,6 +756,7 @@ class debug
         }
         $GLOBALS['ZPHP_CONFIG']['DEBUG'] || \z\ctrl::_500($msg);
         self::$errs[256][] = $err;
+        ob_end_clean();
         echo "<div style='background:#FFAEB9;padding:20px;'><h1>ERROR</h1><h2 style='font-size:16px;'>{$err}</h2><pre style='font-size:14px;'>\r\n{$traceMsg}</pre></div>";
         self::ShowMsg();
     }

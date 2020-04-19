@@ -69,6 +69,17 @@ function SetConfig(string $key, $value)
         $GLOBALS['ZPHP_CONFIG'][$key] = $value;
     }
 }
+function ReadFileSH($file) {
+    if ($size = filesize($file)) {
+        $h = fopen($file, 'r');
+        if (!flock($h, LOCK_SH)) throw new \Exception('获取文件共享锁失败');
+        $result = fread($h, filesize($file));
+        flock($h, LOCK_UN) && fclose($h);
+    } else {
+        $result = '';
+    }
+    return $result;
+}
 function P($var, bool $echo = true)
 {
     ob_start();

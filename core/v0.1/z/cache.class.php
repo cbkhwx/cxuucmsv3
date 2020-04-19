@@ -148,36 +148,32 @@ class cache
     {
         IsFullPath($file) || $file = P_CACHE_ . $file;
         if (null === $data) {
-            if (!is_file($file) || !$str = file_get_contents($file)) {
+            if (!is_file($file) || !$str = ReadFileSH($file)) {
                 return false;
             }
-
             $result = unserialize($str);
             if (isset($result['Z-PHP-CACHE-TIME-OUT'])) {
                 if (TIME < $result['Z-PHP-CACHE-TIME-OUT']) {
-                    $result = $result['Z-PHP-CACHE-DATA'];
+                    $result = $result['Z-PHP-CACHE-TDATA'];
                 } else {
                     unlink($file);
                     $result = false;
                 }
             }
+        } elseif (0 === $expire) {
+            $result = is_file($file) && unlink($file);
         } else {
-            if (0 === $expire) {
-                $result = is_file($file) && unlink($file);
+            file_exists($dir = dirname($file)) || mkdir($dir, 0755, true);
+            if (2 === $lock && is_file($file) && filemtime($file) >= TIME) {
+                $h = fopen($file, 'r');
+                flock($h, LOCK_SH);
+                $result = fread($h, filesize($file));
+                $result && $result = unserialize($str);
+                $result = $result['Z-PHP-CACHE-TDATA'] ?? $result;
             } else {
-                file_exists($dir = dirname($file)) || mkdir($dir, 0755, true);
-                if (2 === $lock && is_file($file) && filemtime($file) >= TIME) {
-                    usleep(1000);
-                    $h = fopen($file, 'r');
-                    flock($h, LOCK_SH);
-                    $result = fread($h, filesize($file));
-                    $result && $result = unserialize($str);
-                    $result = $result['Z-PHP-CACHE-DATA'] ?? $result;
-                } else {
-                    is_callable($data) && $data = $data() ?: '';
-                    $DATA = $expire ? ['Z-PHP-CACHE-DATA' => $data, 'Z-PHP-CACHE-TIME-OUT' => TIME + $expire] : $data;
-                    $result = false === file_put_contents($file, serialize($DATA), LOCK_EX) ? false : $data;
-                }
+                is_callable($data) && $data = $data() ?: '';
+                $DATA = $expire ? ['Z-PHP-CACHE-TDATA' => $data, 'Z-PHP-CACHE-TIME-OUT' => TIME + $expire] : $data;
+                $result = false === file_put_contents($file, serialize($DATA), LOCK_EX) ? false : $data;
             }
         }
         return $result;

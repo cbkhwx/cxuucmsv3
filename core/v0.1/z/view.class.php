@@ -8,7 +8,7 @@ class view
     ENCODE_END_CHAR = '#',
     OPTIONS = LIBXML_NSCLEAN + LIBXML_PARSEHUGE + LIBXML_NOBLANKS + LIBXML_NOERROR + LIBXML_HTML_NODEFDTD + LIBXML_ERR_FATAL + LIBXML_COMPACT;
 
-    private static $TAG, $PRE, $SUF, $DOMS, $TPL, $FILE, $PARAMS, $RUN, $PREG, $CHANGED, $IMPORTS, $SEARCH_FIX, $REPLACE_FIX;
+    private static $TAG, $PRE, $SUF, $DOMS, $TPL, $DISPLAY_TPL, $H, $CACHE, $FILE, $PARAMS, $RUN, $PREG, $CHANGED, $IMPORTS, $SEARCH_FIX, $REPLACE_FIX;
     private static function replaceEncode($html)
     {
         $i = 0;
@@ -69,7 +69,7 @@ class view
         } elseif (IsFullPath($name)) {
             $file = '/' . $info['fullname'];
         } else {
-            $info = self::getTplInfo($name);
+            $info = self::GetTplInfo($name);
             $arr = explode('/', $info['fullname']);
             if (defined($arr[0]) && $file = rtrim(constant($arr[0]), '/')) {
                 unset($arr[0]);
@@ -90,7 +90,7 @@ class view
             throw new \Exception("file not fond: {$file}");
         }
 
-        $name && self::$FILE[$name] = $file;
+        self::$FILE[$name] = $file;
         return $file;
     }
 
@@ -141,7 +141,7 @@ class view
             foreach ($imports as $v) {
                 $name = $v->getAttribute('name');
                 $f = $v->getAttribute('file');
-                $tpl = $f ? self::getTpl($f) : $file;
+                $tpl = $f ? self::GetTpl($f) : $file;
                 $key = md5($tpl);
                 isset(self::$TPL[$key]) || self::getBlock($tpl);
                 if (!isset(self::$TPL[$key][$name])) {
@@ -170,17 +170,21 @@ class view
         return $run;
     }
 
-    public static function Fetch(string $name = '', $cache_path = '', $cache_file = '')
+    public static function Fetch(string $name = '')
     {
-        $tpl = self::getTpl($name, true);
+        if (self::$DISPLAY_TPL && self::$RUN) {
+            $tpl = self::$DISPLAY_TPL;
+            $run = self::$RUN;
+        } else {
+            $tpl = self::GetTpl($name, true);
+            $run = self::getRun($tpl);
+        }
         2 === $GLOBALS['ZPHP_CONFIG']['DEBUG'] && debug::setMsg(1140, $tpl);
         isset(self::$TAG) || self::$TAG = [
             'php' => $GLOBALS['ZPHP_CONFIG']['VIEW']['php_tag'] ?? 'php',
             'import' => $GLOBALS['ZPHP_CONFIG']['VIEW']['import_tag'] ?? 'import',
             'template' => $GLOBALS['ZPHP_CONFIG']['VIEW']['template_tag'] ?? 'template',
         ];
-
-        $run = self::getRun($tpl);
         $run_path = P_RUN_ . THEME;
         $run_file = $run_path . '/' . $run[0] . '-' . $run[1] . '.php';
         $run_time = is_file($run_file) ? filemtime($run_file) : 0;
@@ -209,7 +213,7 @@ class view
                 $html = self::replaceDecode($html);
                 $html = str_replace('<?php }?><?php }else{?>', '<?php }else{?>', $html);
                 $html = self::compressHtml($html, $compress[0] ?? $compress);
-                if (false === file_put_contents($run_file, $html)) {
+                if (false === file_put_contents($run_file, $html, LOCK_EX)) {
                     throw new \Exception("file can not write:{$run_file}");
                 }
             }
@@ -221,15 +225,31 @@ class view
         $html = ob_get_contents();
         ob_end_clean();
 
-        if ($cache_path && $cache_file) {
-            if (!file_exists($cache_path) && !mkdir($cache_path, 0755, true)) {
-                throw new \Exception("can not make dir: {$cache_path}");
+        if (self::$CACHE) {
+            if (!file_exists(self::$CACHE[0]) && !mkdir(self::$CACHE[0], 0755, true)) {
+                throw new \Exception('file can not write: ' . self::$CACHE[0]);
             }
-            if (false === file_put_contents($cache_file, $html)) {
-                throw new \Exception("file can not write:{$cache_file}");
+            if (false === file_put_contents(self::$CACHE[1], $html, LOCK_EX)) {
+                throw new \Exception('file can not write: ' . self::$CACHE[1]);
             }
         }
         return $html;
+    }
+
+    public static function GetCache($time, $name = '', $flag = 0)
+    {
+        $tpl = self::GetTpl($name, true);
+        $run = self::getRun($tpl);
+        $cache = self::getCacheFile($flag, $run);
+        $html_time = is_file($cache[1]) ? filemtime($cache[1]) : 0;
+        if ($html_time + $time > TIME) {
+            return ReadFileSH($cache[1]);
+        } else {
+            self::$DISPLAY_TPL = $tpl;
+            self::$CACHE = $cache;
+            self::$RUN = $run;
+        }
+        return false;
     }
 
     private static function compressJavaScript($dom, $compress)
@@ -328,14 +348,7 @@ class view
         }
     }
 
-    public static function Display(string $name = '', $time = 0, $flag = 0)
-    {
-        if (!$time) {
-            echo self::Fetch($name);
-            return;
-        }
-        $tpl = self::getTpl($name, true);
-        $run = self::getRun($tpl);
+    private static function getCacheFile($flag, $run) {
         if (!$flag) {
             $html_path = P_HTML_ . THEME . '/' . $run[0];
             $html_file = "{$html_path}/{$run[1]}.html";
@@ -347,15 +360,16 @@ class view
             } else {
                 $query = ROUTE['query'];
             }
-            $html_path = P_HTML_ . THEME . '/' . $run[0] . '/' . $run[1];
-            $html_file = $html_path . '/' . md5(serialize($query)) . '.html';
+            $html_path = P_HTML_ . THEME . "/{$run[0]}/{$run[1]}";
+            $html_file = "{$html_path}/" . md5(serialize($query)) . '.html';
         }
-        $html_time = is_file($html_file) ? filemtime($html_file) : 0;
-        if ($html_time && $html_time + $time > TIME) {
-            echo file_get_contents($html_file);
-        } else {
-            echo self::Fetch($name, $html_path, $html_file);
-        }
+        return [$html_path, $html_file];
+    }
+
+    public static function Display(string $name = '')
+    {
+        $html = self::Fetch($name);
+        echo $html;
     }
 
     public static function Assign($key, $val)
