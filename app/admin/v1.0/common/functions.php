@@ -193,8 +193,8 @@ function getTree($arr,$pid=0,$level=0)
 }
 
 /** 
- 统计目录文件大小的函数 
- @author xfcode 
+* 统计目录文件大小的函数 
+* @author xfcode 
 */
 function dirSize($dir){
 	$size=0;
