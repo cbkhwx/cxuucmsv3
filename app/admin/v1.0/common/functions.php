@@ -1,5 +1,5 @@
 <?php
-const CXUUCMS_V="cxuucms V3.0 柳梧公安版";
+const CXUUCMS_V="cxuucms V3.1";
 /* 
  *  获取 $_SESSION 值
  *  参照login.class.php 的登录方法调用相应数据
