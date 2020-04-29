@@ -103,7 +103,7 @@ class contentcate
 			$m = D('article_cate');			
 			$edit = $m->where($find)->delete();
 			if($edit){
-				parent::json(array('status'=> 1,'info'=>'删除成功'));
+				json(array('status'=> 1,'info'=>'删除成功'));
 			}
 		}else{
 			json(array('status'=> 0,'info'=>'ID错误！'));

@@ -1,17 +1,18 @@
 body{
     width: 100%;
     min-height: 100%;
-    background:url("../images/header_bg2.jpg") top center no-repeat #fff;
+    background:url("../images/header_bg.jpg") top center no-repeat #fff;
 }
+a:hover{color:#872b2f;}
 
 .layui-form-item{margin-bottom:0}
 
 /**首页头条**/
-.cxuu_infofirst{line-height:60px;height:60px;font-size:28px;font-family:"微软雅黑","黑体";font-weight:bold;overflow:hidden;color:#d00022;padding:5px;text-align:center;}
+.cxuu_infofirst{line-height:60px;height:60px;font-size:28px;font-family:"微软雅黑","黑体";font-weight:bold;overflow:hidden;color:#db000f;padding:5px;text-align:center;}
 .cxuu_infofirst a{color:#d00022;}
 
 /**首页小头条**/
-.cxuu_infosecend{line-height:55px;height:55px;font-size:18px;font-family:"微软雅黑","黑体";overflow:hidden;color:#0071d0;padding-top:5px;text-align:center;}
+.cxuu_infosecend{line-height:55px;height:55px;font-size:18px;font-family:"微软雅黑","黑体";overflow:hidden;color:#0056db;padding-top:5px;text-align:center;font-weight:bold;}
 .cxuu_infosecend a{color:#0071d0;}
 
 /**首页轮播图**/
@@ -23,11 +24,13 @@ body{
 
 .cxuu_index_ad{height:150px;line-height:150px;background:url("../images/index_ad.jpg") top center no-repeat #fff;}
 
-/**top信息区域**/
-
+/**nav信息区域**/
+.cxuu_nav_child{background-color:#0562f3;}
+.cxuu_nav_child a{color:#fff}
+.cxuu_nav_child a:hover{color:#0562f3}
 /**搜索区域**/
 .cxuu_top_left{line-height:40px;height:40px;float:left}
-.cxuu_top_right{float:right;overflow:hidden;}
+.cxuu_top_right{float:right;overflow:hidden;text-align:right;}
 .cxuu_top_right .searchbotton{width:100px;}
 
 /**小图标链接列表**/
@@ -40,8 +43,19 @@ body{
 .cxuu_appicolist .bg4{background:url("../images/app_ico.jpg") 5px -379px no-repeat #fff;}
 .cxuu_appicolist .bg5{background:url("../images/app_ico.jpg") 5px -506px no-repeat #fff;}
 .cxuu_appicolist .bg6{background:url("../images/app_ico.jpg") 5px -631px no-repeat #fff;}
+
+/**主页图片内容列表**/
+.cxuu_imglist{height:406px;padding:5px;}
+.cxuu_imglist li{float:left;width:170px; height:190px;margin-top:10px;}
+.cxuu_imglist li .cxuu_img{float:left;width:170px; height:120px;}
+.cxuu_imglist li .cxuu_img img{width:170px; height:120px;}
+.cxuu_imglist li .cxuu_imgtitle{float:left;width:160px; height:50px;line-height:25px;font-size:14px;text-align:center;padding:5px;overflow:hidden;}
+
 /**首页信息列表**/
-.cxuu_index_list_title{padding-left:20px;line-height:50px;height:50px;font-size:22px;color:#fff;font-family:"微软雅黑","黑体";background:url("../images/infolistico.jpg") no-repeat #fff;}
+.cxuu_index_list_title{padding-left:20px;line-height:50px;height:50px;background:url("../images/infolistico2.jpg") no-repeat #fff;}
+.cxuu_index_list_title .title{border-bottom:solid 2px #a4e3fa;width:100px;height:35px;line-height:35px;font-size:22px;color:#fff;font-family:"微软雅黑","黑体";padding-top:5px;padding-left:10px;}
+.cxuu_index_list_title a{color:#fff;}
+.cxuu_index_list_title a:hover{color:#bae1ff;}
 .cxuu_infolist{padding:5px 5px 10px 10px;}
 .cxuu_infolist li{line-height:35px;height:35px;font-size:16px;font-family:"微软雅黑","黑体";overflow:hidden;}
 .cxuu_infolist .layui-badge-dot{height:4px;width:4px;}
@@ -51,15 +65,43 @@ body{
 /**列表页列表**/
 .cxuu_cate_title{padding-left:10px;line-height:60px;height:60px;font-size:22px;font-family:"微软雅黑","黑体";}
 .cxuu_list{}
-.cxuu_list li{padding-left:10px;line-height:40px;height:40px;font-size:16px;font-family:"微软雅黑","黑体";overflow:hidden;}
+.cxuu_list li{line-height:40px;height:40px;font-size:14px;font-family:"微软雅黑","黑体";overflow:hidden;}
 .cxuu_list .layui-badge-dot{height:4px;width:4px;}
 .cxuu_list .cxuu_time{float:right;color:gray;width:80px;padding-right:10px;font-size:14px;line-height:40px;height:40px;}
 .cxuu_list hr{margin-left:15px;margin-right:15px;}
 
+/**主页图片内容列表**/
+.cxuu_contentlist_imglist{height:610px;padding:5px;}
+.cxuu_contentlist_imglist li{float:left;width:170px; height:200px;margin-top:10px;margin-left:5px;}
+.cxuu_contentlist_imglist li .cxuu_img{float:left;width:170px; height:120px;}
+.cxuu_contentlist_imglist li .cxuu_img img{width:170px; height:120px;}
+.cxuu_contentlist_imglist li .cxuu_imgtitle{float:left;width:160px; height:50px;line-height:25px;font-size:14px;text-align:center;padding:5px;overflow:hidden;}
+
 /**内容页**/
-.cxuu_content{background-color:#fff;padding:10px;}
-.cxuu_content_title{line-height:40px;text-align:center;color:#d00022;padding-bottom:20px;padding-top:20px;}
+.cxuu_content{background-color:#fff;padding:10px;width:1100px;}
+.cxuu_content_title{line-height:40px;text-align:center;color:red;padding-bottom:20px;padding-top:20px;font-family: "黑体";font-size:28px;font-weight:bold;}
 .cxuu_content_info{height:40px;line-height:40px;text-align:center;color:#515151;}
 .cxuu_content_info span{padding-left:20px;}
 .cxuu_content_info_hr{height:2px;}
 .cxuu_content_download{height:40px;line-height:40px;font-size:16px;}
+.cxuu_content p{margin-top:10px;color:#333;width:1100px;overflow:hidden;}
+
+
+/**图集切换**/
+.picScroll-left{ width:1120px;height:240px;overflow:hidden; position:relative;background-color:#fff;}
+.picScroll-left .hd{ overflow:hidden;  height:40px;line-height:40px; background:#f4f4f4; padding:0 10px;font-size:16px;padding-left:10px;}
+.picScroll-left .bd{ padding:10px;   }
+.picScroll-left .bd ul{ overflow:hidden; zoom:1; }
+.picScroll-left .bd ul li{ margin:0 8px; float:left; _display:inline; overflow:hidden; text-align:center;  }
+.picScroll-left .bd ul li .pic{ text-align:center; }
+.picScroll-left .bd ul li .pic img{ width:220px; height:150px; display:block;  padding:2px;}
+.picScroll-left .bd ul li .pic a:hover img{ border-color:#999;  }
+.picScroll-left .bd ul li .title{ line-height:30px; height:30px;  }
+
+/**图集列表**/
+.cxuu_imagelist ul{ overflow:hidden; zoom:1; }
+.cxuu_imagelist ul li{ margin:0 8px; float:left; _display:inline; overflow:hidden; text-align:center;  }
+.cxuu_imagelist ul li .pic{ text-align:center; }
+.cxuu_imagelist ul li .pic img{ width:220px; height:150px; display:block;  padding:2px;}
+.cxuu_imagelist ul li .pic a:hover img{ border-color:#999;  }
+.cxuu_imagelist ul li .title{ line-height:30px; height:30px;  }

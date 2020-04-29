@@ -12,7 +12,7 @@ body{width: 100%;min-height: 100%;background: #fff;/*background: #fff;*/}
 #cxuu_main_content{padding: 10px; background-color: #fbfbfb;margin-top:2px}
 #cxuu_main_nopadding{margin-top:2px}
 #cxuu_main_margintop10{margin-top:10px;}
-#footer{height:80px;text-align:center;color:#464646;padding: 30px;  background-color: #fff;}
+#footer{height:80px;text-align:center;color:#464646;padding: 30px 30px 0 30px;  background-color: #fff;}
 
 
 .cxuu_header_height{height:340px;}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 编辑值班人信息</h3>
+    <hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名"
+                    value="<{$member['name']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">职务</label>
+            <div class="layui-input-inline">
+                <input type="text" name="duties" lay-verify="required" lay-reqtext="职务不能为空" placeholder="请输入职务"
+                    value="<{$member['duties']}>" class="layui-input">
+            </div>
+        </div>
+        <?php if(sysrolTF("upload_imgUpload")){ ?>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">照片</label>
+            <div class="layui-input-block">
+                <input type="text" id="imageval" name="photo" value="<{$member['photo']}>" class="layui-input">
+				<button type="button" class="layui-btn" id="thumimg">
+				  <i class="layui-icon">&#xe67c;</i>上传图片
+				</button>
+				<tip>200X130px</tip>
+            </div>
+        </div>
+		<?php } ?>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">分管工作</label>
+            <div class="layui-input-block">
+                <input type="text" name="duty" lay-verify="required" lay-reqtext="分管工作不能为空" placeholder="请输入分管工作"
+                    value="<{$member['duty']}>" class="layui-input">
+            </div>
+        </div>
+		
+		<div class="layui-form-item">
+            <label class="layui-form-label required">单位排序</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sort" lay-verify="required" lay-reqtext="单位排序不能为空" placeholder="请输入单位排序"
+                    value="<{$member['sort']}>" class="layui-input">
+					<tip>填写数字如：2</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">前台显示</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="1" title="显示"
+                    <?php echo $member["status"] ==1?'checked=""':''; ?>>
+                <input type="radio" name="status" value="0" title="不显示"
+                    <?php echo $member["status"] ==0?'checked=""':''; ?>>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" name="id" value="<{$member['id']}>">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table','upload'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+			upload = layui.upload,
+            $ = layui.$;
+
+        form.render();
+		
+		var uploadInst = upload.render({
+			elem: '#thumimg' //绑定元素
+			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
+			,size: 1000
+			,accept:'images'
+			,acceptMime: 'image/*'
+			//,acceptMime: 'image/jpg, image/png'
+			,done: function(res){
+				if(res.status == 1){
+					$('#imageval').val(res.result[0].src);
+					layer.msg(res.info);
+				}else{
+					layer.msg(res.info);
+				}
+			}
+			,error: function(){
+			  //请求异常回调
+			}
+		});
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.post('/admin.php?c=member&a=edit', data.field, function (res) {
+                if (res.status == 1) {
+                    layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+                        loadMain("/admin.php?c=member&a=index");
+                    });
+                } else {
+                    layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+                }
+            });
+            return false;
+        });
+       
+    });
+</script>

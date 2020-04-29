@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 图集管理 / 图文列表</h3>
+	<hr>
+</div>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+	<div class="layui-col-md12">
+	当前图集：<h2><b><{$images['title']}></b></h2>
+	作者：<h3><{$images['auther']}></h3>
+	
+	</div>
+		<div class="layui-col-md12">
+			<script type="text/html" id="toolbarAE">
+            <div class="layui-btn-container">
+			<?php echo sysrolTF("imageinfo_addview")?'<button class="layui-btn layui-btn-sm data-add-btn">添加图文</button>':''; ?> 
+            </div>
+        </script>
+
+			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter">
+			</table>
+			<script type="text/html" id="imgTpl">
+			<img src="{{d.imgsrc}}" width="40" height="30">
+			</script>
+			<script type="text/html" id="switchTpl">
+			<input type="checkbox" name="status" id="{{d.id}}" value="{{d.status}}" lay-skin="switch" lay-text="已审|未审"
+				lay-filter="switchStatus" {{ d.status == 1 ? 'checked' : '' }}>
+			</script>
+
+			<script type="text/html" id="currentTableBar">
+		<?php echo sysrolTF("imageinfo_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
+		<?php echo sysrolTF("imageinfo_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
+        </script>
+
+		</div>
+	</div>
+
+</div>
+
+<script>
+	layui.use('table', function () {
+		var table = layui.table,
+			$ = layui.jquery,
+			form = layui.form;
+		table.render({
+			elem: '#currentTableId',
+			//url: '/res/admin/api/table.json',
+			url: '/admin.php?c=imageinfo&a=jsonlist&aid=<{$aid}>',
+			toolbar: '#toolbarAE',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+				layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
+				//,curr: 5 //设定初始在第 5 页
+				, groups: 1 //只显示 1 个连续页码
+				, first: false //不显示首页
+				, last: false //不显示尾页
+			},
+			cols: [[
+				//{type: "checkbox", width: 50, fixed: "left"},
+				{ field: 'id', width: 80, title: 'ID', sort: true },
+				{ field: 'imgsrc',width: 80, title: '图片' ,templet: '#imgTpl', unresize: true},
+				{ field: 'info',  title: '文字描述' },
+				{ title: '操作', width: 260, templet: '#currentTableBar', fixed: "right", align: "center" }
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true
+		});
+
+
+		// 监听添加操作
+		$(".data-add-btn").on("click", function () {
+			loadMain('/admin.php?c=imageinfo&a=addview&aid=<{$aid}>');
+			return false;
+		});
+		// 监听删除操作
+		$(".data-delete-btn").on("click", function () {
+			var checkStatus = table.checkStatus('currentTableId')
+				, data = checkStatus.data;
+			layer.alert(JSON.stringify(data));
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				loadMain('/admin.php?c=imageinfo&a=editview&id=' + data.id);
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除么', function (index) {
+					$.post('/admin.php?c=imageinfo&a=del', data, function (res) {
+						if (res.status == 1) {
+							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+								obj.del();
+								layer.close(index);
+							});
+						} else {
+							layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+						}
+					});
+				});
+			}
+		});
+	});
+</script>

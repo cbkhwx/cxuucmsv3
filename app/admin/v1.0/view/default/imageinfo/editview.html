@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 图集管理 / 图文信息编辑</h3>
+    <hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <?php if(sysrolTF("upload_imgUpload")){ ?>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">图片</label>
+            <div class="layui-input-block">
+                <input type="text" id="imageval" name="imgsrc" value="<{$image['imgsrc']}>" class="layui-input">
+				<button type="button" class="layui-btn" id="thumimg">
+				  <i class="layui-icon">&#xe67c;</i>上传图片
+				</button>
+				<tip>宽1100px</tip>
+            </div>
+        </div>
+		<?php } ?>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">图片描述</label>
+            <div class="layui-input-block">
+			 <textarea name="info" class="layui-textarea"><{$image['info']}></textarea>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" name="id" value="<{$image['id']}>">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">提交修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table','upload'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            upload = layui.upload,
+            $ = layui.$;
+			
+		var uploadInst = upload.render({
+			elem: '#thumimg' //绑定元素
+			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
+			,size: 1000
+			,accept:'images'
+			,acceptMime: 'image/*'
+			//,acceptMime: 'image/jpg, image/png'
+			,done: function(res){
+				if(res.status == 1){
+					$('#imageval').val(res.result[0].src);
+					layer.msg(res.info);
+				}else{
+					layer.msg(res.info);
+				}
+			}
+			,error: function(){
+			  //请求异常回调
+			}
+		});
+
+        form.render();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.post('/admin.php?c=imageinfo&a=edit', data.field, function (res) {
+                if (res.status == 1) {
+                    layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+                        loadMain("/admin.php?c=imageinfo&a=index&aid=<{$image['aid']}>");
+                    });
+                } else {
+                    layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+                }
+            });
+            return false;
+        });
+       
+    });
+</script>

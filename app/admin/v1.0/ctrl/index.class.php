@@ -3,6 +3,7 @@ namespace ctrl;
 
 use \middleware\adminrole;
 use model\notices;
+use model\article;
 use model\admin_menu;
 use z\view;
 
@@ -27,8 +28,12 @@ class index
     {	
 		adminrole::auth();//判断用户权限
 		$m = new notices;
-		$noticeList = $m->selectData(5);
+		$noticeList = $m->selectData(3);
+		
+		$count = new article;
+		$articleCountStatus = $count->findCountData();
 		view::assign('noticeList',$noticeList);
+		view::assign('articleCountStatus',$articleCountStatus);
 		view::display();
     }
 }

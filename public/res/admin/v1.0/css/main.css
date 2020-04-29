@@ -39,7 +39,7 @@ body{
     padding:10px;
 }
 .layui-logo{
-	color:#fff;font-family:"微软雅黑","黑体";
+	color:#fff;font-family:"微软雅黑","黑体";background: url(../images/admin_logo.jpg);
 }
 .layui-logo a{
 	color:#fff;

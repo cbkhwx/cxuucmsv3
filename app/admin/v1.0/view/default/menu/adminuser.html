@@ -1,12 +1,13 @@
- <!DOCTYPE html>
-<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+<!DOCTYPE html>
+<ul class="layui-nav layui-nav-tree" lay-filter="test">
   <li class="layui-nav-item layui-nav-itemed">
     <a class="" href="javascript:;">管理员管理</a>
     <dl class="layui-nav-child">
-	<?php foreach($list as $vo){?>
-      <dd><a href="javascript:;" onclick="loadMain('<?php echo $vo['url'];?>')"><i class="layui-icon <?php echo $vo['ico'];?>"></i> <?php echo $vo['name'];?></a></dd>
-	<?php }?>  
-     <!--  <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=adminuser&a=index')">管理员列表</a></dd>
+      <?php foreach($list as $vo){?>
+      <dd><a href="javascript:;" onclick="loadMain('<?php echo $vo['url'];?>')"><i
+            class="layui-icon <?php echo $vo['ico'];?>"></i> <?php echo $vo['name'];?></a></dd>
+      <?php }?>
+      <!--  <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=adminuser&a=index')">管理员列表</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=adminuser&a=addview')">添加管理员</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=admingroup&a=index')">角色列表</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=admingroup&a=addview')">添加角色</a></dd> -->

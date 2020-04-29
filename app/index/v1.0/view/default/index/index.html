@@ -6,7 +6,14 @@
 <div class="layui-container">
 	<div class="layui-card cxuu_top">
 		<div class="layui-card-body cxuu_top_info">
-			<div class="cxuu_top_left"><i class="layui-icon layui-icon-face-smile" style="font-size: 16px; color:red;"></i>  XX网站上线了！浏览器支持IE8+</div>
+			<div class="cxuu_top_left">
+			<i class="layui-icon layui-icon-face-smile" style="font-size: 16px; color:red;"></i> 
+			<?php $ondutyInfo = \model\ondutys::findData(); ?>
+			今日(<?php echo $ondutyInfo['ondutytime'];?>) 值班 - 
+			公司领导：<b> <?php echo $ondutyInfo['juname'];?></b>
+			部门领导：<b> <?php echo $ondutyInfo['chuname'];?></b>
+			值班员：<b> <?php echo $ondutyInfo['yuanname'];?></b>
+				</div>
 			<import file="block/common.html" name="search"/>
 		</div>
 	</div>
@@ -14,7 +21,7 @@
 	<div class="layui-card">
 	 <!--头条-->
 		<div class="layui-card-body cxuu_infofirst">
-		<?php foreach(\model\article::selectData(6,1,60,0,1) as $vo){?>
+		<?php foreach((array)\model\article::selectData(6,1,60,0,1) as $vo){?>
 			<a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],38);?></a></li>
 		<?php }?>
 		</div>
@@ -44,7 +51,7 @@
 		  --->
 		  
 		  <!--图片轮换-->
-			<?php foreach(\model\article::selectData('3,6',5,60,1,3) as $vo){?>
+			<?php foreach((array)\model\article::selectData('3,6',5,60,1,3) as $vo){?>
 			  <div>
 			  <a href="<?php echo urlInfo($vo['id']);?>" target="_blank">
 			  <div class="imgs"><img height=400 width=640 src="<?php echo $vo['img'];?>"></div>
@@ -59,15 +66,15 @@
 			<div class="layui-card">
 			<!--小头条-->
 			<div class="layui-card-header cxuu_infosecend">
-			<?php foreach(\model\article::selectData(6,1,60,0,2) as $vo){?>
+			<?php foreach((array)\model\article::selectData(6,1,60,0,2) as $vo){?>
 				<a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],20);?></a></li>
 			<?php }?>
 			</div>
 			<!--推荐列表位置 一般为最新内容-->
 			<div class="layui-card-body cxuu_infolist">
-				<?php foreach(\model\article::selectData(0,10,60) as $vo){?>
+				<?php foreach((array)\model\article::selectData(0,10,60) as $vo){?>
 				  <ul>
-					<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+					<li><span class="layui-badge-dot layui-bg-blue"></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],26);?></a></li>
 				  </ul>
 				<?php }?>
 			</div>
@@ -98,11 +105,11 @@
 		
 		<div class="layui-col-md5">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">企业文化</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title"><a href="<{ urlList(6) }>">公司要闻</a></div></div>
 			<div class="layui-card-body cxuu_infolist">
-			  <?php foreach(\model\article::selectData(3,8,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(3,8,60) as $vo){?>
 			  <ul>
-				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a> <?php echo $vo['imgbl'] ==1 ?'<i class="layui-icon layui-icon-picture" style="color:#f84c4c"></i>':'';?></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -111,11 +118,11 @@
 		
 		<div class="layui-col-md5">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">公司动态</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">通知通报</div></div>
 			<div class="layui-card-body cxuu_infolist">
-			  <?php foreach(\model\article::selectData(3,8,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(6,8,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a> <?php echo $vo['imgbl'] ==1 ?'<i class="layui-icon layui-icon-picture" style="color:#f84c4c"></i>':'';?></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -129,40 +136,41 @@
 	
 	<div id="cxuu_main">
 	  <div class="layui-row layui-col-space10">
-	  
-		<div class="layui-col-md4">
+		<div class="layui-col-md2">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">某某分校</div>
-			<div class="layui-card-body cxuu_infolist">
-			<!---CID  条数  缓存时间--->
-			  <?php foreach(\model\article::selectData(6,10,60) as $vo){?>
+			<div class="layui-card-body cxuu_imglist">
+			<!---首页图片列表--->
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
-			  </ul>
+			  <?php foreach((array)\model\article::selectData(0,2,60,1,3) as $vo){?>			  
+				<li>
+				<div class="cxuu_img"><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><img height=120 width=170 src="<?php echo $vo['img'];?>"></a></div>
+				<div class="cxuu_imgtitle"><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],24);?></a></div>
+				</li>  
 			<?php }?>
+			</ul>
 			</div>
 		  </div>
 		</div>
 		
-		<div class="layui-col-md4">
+		<div class="layui-col-md5">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">学习资料</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">部门新闻</div></div>
 			<div class="layui-card-body cxuu_infolist">
 			  <?php foreach(\model\article::selectData(3,10,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
 			  </ul>
 			<?php }?>
 			</div>
 		  </div>
 		</div>
-		<div class="layui-col-md4">
+		<div class="layui-col-md5">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">在线分享</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">基层新闻</div></div>
 			<div class="layui-card-body cxuu_infolist">
-			  <?php foreach(\model\article::selectData(3,10,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(3,10,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -171,19 +179,34 @@
 		
 	  </div>
 	</div> 
+	<div id="cxuu_main">
 	
+	<div class="picScroll-left">
+	<div class="hd"><a href="/images/">图集</a></div>
+			<div class="bd">
+				<ul class="picList">
+				<?php foreach((array)\model\images::selectData() as $vo){?>
+					<li>
+						<div class="pic"><a href="<?php echo urlImage($vo['id']);?>" target="_blank"><img src="<?php echo $vo['img'];?>" /></a></div>
+						<div class="title"><a href="<?php echo urlImage($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></div>
+					</li>
+				<?php }?>
+				</ul>
+			</div>
+		</div>
+	</div>
 	
 	<div id="cxuu_main">
 	  <div class="layui-row layui-col-space10">
 	  
 		<div class="layui-col-md4">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">不知道栏</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">学习资料</div></div>
 			<div class="layui-card-body cxuu_infolist">
 			<!---CID  条数  缓存时间--->
-			  <?php foreach(\model\article::selectData(6,10,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(6,10,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -192,11 +215,11 @@
 		
 		<div class="layui-col-md4">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">一个栏目</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">政策法规</div></div>
 			<div class="layui-card-body cxuu_infolist">
-			  <?php foreach(\model\article::selectData(3,10,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(3,10,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -204,11 +227,11 @@
 		</div>
 		<div class="layui-col-md4">
 		  <div class="layui-card">
-			<div class="layui-card-header cxuu_index_list_title">好多栏目</div>
+			<div class="layui-card-header cxuu_index_list_title"><div class="title">好多栏目</div></div>
 			<div class="layui-card-body cxuu_infolist">
-			  <?php foreach(\model\article::selectData(3,10,60) as $vo){?>
+			  <?php foreach((array)\model\article::selectData(3,10,60) as $vo){?>
 			  <ul>
-				<li><a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo $vo['title'];?></a></li>
+				<li><span class="layui-badge-dot layui-bg-blue"></span><span class="cxuu_time"><?php echo fTime($vo['time'],'m-d');?></span> <a href="<?php echo urlInfo($vo['id']);?>" target="_blank"><?php echo cxuuMbStr($vo['title'],22);?></a></li>
 			  </ul>
 			<?php }?>
 			</div>
@@ -218,7 +241,17 @@
 	  </div>
 	</div>
 </div>
-         
+<import file="block/common.html" name="footer"/>
+<div class="layui-container">
+	<div style="text-align: center;height: 50px;line-height: 50px;">
+		本站访问统计（PV值 缓存10分钟更新）- 今日访问：<span class="visit_today"></span> 
+		昨日：<span class="visit_yesterday"></span> 
+		总访问：<span class="visit_sum"></span> 
+		最高日访问：<span class="visit_max"></span>
+	</div>
+</div>
+<script src="/res/lib/jquery-1.11.3.min.js"></script>
+<script src="/res/lib/superslide/jquery.SuperSlide.2.1.1.js"></script>
 <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
 <script>
 layui.use(['carousel','element','form'], function(){
@@ -233,11 +266,11 @@ layui.use(['carousel','element','form'], function(){
   });
   
   //监听提交
-  form.on('submit(submittitle)', function(data){
-    loading = layer.load(1, { shade: [0.1, '#fff'] });
-    $.post('/search.php', data.field);
-    return false;
-  });
+//  form.on('submit(submittitle)', function(data){
+//   loading = layer.load(1, { shade: [0.1, '#fff'] });
+//   $.post('/search.php', data.field);
+//   return false;
+// });
   
   carousel.render({
     elem: '#headerfoce'
@@ -248,8 +281,19 @@ layui.use(['carousel','element','form'], function(){
 	,anim:'fade'
   });
   
+  //console.log('<?php echo ROUTE['uri'];?>');
+  
 });
+//图集切换
+$(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true,vis:6,trigger:"click"});
+
+$.getJSON('/visit', {}, function (data) {
+	//console.log(data);
+	$('.visit_today').text(data['today']);
+	$('.visit_yesterday').text(data['yesterday']);
+	$('.visit_sum').text(data['sum']);
+	$('.visit_max').text(data['max']);
+})
 </script>
-<import file="block/common.html" name="footer"/>
 </body>
 </html>

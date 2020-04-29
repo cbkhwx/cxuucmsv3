@@ -99,6 +99,8 @@ class admingroup
 			$del = $m->deleteOneData();
 			if($del){
 				json(array('status'=> 1,'info'=>'删除成功'));
+			}else{
+				json(array('status'=> 0,'info'=>'该用户组下有用户，请先删除组下管理员用户！'));
 			}
 		}else{
 			json(array('status'=> 0,'info'=>'ID错误！'));

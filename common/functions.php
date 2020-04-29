@@ -57,7 +57,7 @@ function setMyCookie($key,$value,$time,$path,$i=0){
  * 格式化显示时间
  * $t DateTime
  * $f Y/m/d H:i:s
- * 使用方法：在模板<?php echo cxuuMbStr($vo['title']);?> 
+ * 使用方法：在模板<?php echo fTime('2020-05-05','Y-m-d');?> 
  * */
 function fTime($t,$f)
 {

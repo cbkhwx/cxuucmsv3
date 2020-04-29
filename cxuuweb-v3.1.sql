@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-04-15 17:42:12
--- 服务器版本： 5.7.26
--- PHP 版本： 7.3.4
+-- 生成日期： 2020-04-29 08:00:40
+-- 服务器版本： 10.4.12-MariaDB
+-- PHP 版本： 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,9 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `cxuu_admin_group` (
   `id` int(10) NOT NULL,
   `groupname` varchar(50) DEFAULT NULL,
-  `systemrole` text,
-  `channlrole` text,
-  `menurole` text
+  `systemrole` text DEFAULT NULL,
+  `channlrole` text DEFAULT NULL,
+  `menurole` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -82,7 +81,12 @@ INSERT INTO `cxuu_admin_menu` (`id`, `pid`, `name`, `controller`, `url`, `ico`, 
 (14, 0, '栏目管理', 'index_home', '/admin.php?c=menu&a=channel', 'layui-icon-align-left', 2),
 (15, 14, '栏目列表', 'articlecontent_index', '/admin.php?c=contentcate', 'layui-icon-spread-left', 1),
 (16, 5, '添加管理员', 'adminuse_addview', '/admin.php?c=adminuser&a=addview', 'layui-icon-add-1', 2),
-(17, 5, '添加角色', 'admingroup_index', '/admin.php?c=admingroup&a=addview', 'layui-icon-user', 4);
+(17, 5, '添加角色', 'admingroup_index', '/admin.php?c=admingroup&a=addview', 'layui-icon-user', 4),
+(18, 0, '扩展功能', 'extend', '/admin.php?c=menu&a=extend', 'layui-icon-util', 6),
+(19, 18, '值班安排', 'onduty_index', '/admin.php?c=onduty', 'layui-icon-tabs', 1),
+(20, 18, '网站访问量', 'visits', '/admin.php?c=visit', 'layui-icon-date', 3),
+(21, 18, '图集功能', 'image', '/admin.php?c=image', 'layui-icon-picture', 3),
+(22, 18, '领导信息', 'member', '/admin.php?c=member', 'layui-icon-user', 4);
 
 -- --------------------------------------------------------
 
@@ -106,7 +110,7 @@ CREATE TABLE `cxuu_admin_user` (
 --
 
 INSERT INTO `cxuu_admin_user` (`id`, `gid`, `username`, `password`, `nickname`, `logintime`, `loginip`, `status`) VALUES
-(1, 1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '2020-04-15 17:27:56', '127.0.0.1', 1),
+(1, 1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '2020-04-29 15:56:11', '127.0.0.1', 1),
 (2, 2, 'test', 'e10adc3949ba59abbe56e057f20f883e', 'test', '2020-04-10 12:59:14', '127.0.0.1', 1),
 (3, 1, 'abcdownload', '4124bc0a9335c27f086f24ba207a4912', 'test', NULL, NULL, 1),
 (4, 2, 'test1', 'e10adc3949ba59abbe56e057f20f883e', 'test', NULL, NULL, 1);
@@ -119,7 +123,7 @@ INSERT INTO `cxuu_admin_user` (`id`, `gid`, `username`, `password`, `nickname`, 
 
 CREATE TABLE `cxuu_article` (
   `id` int(10) NOT NULL,
-  `cid` int(10) NOT NULL DEFAULT '0',
+  `cid` int(10) NOT NULL DEFAULT 0,
   `title` varchar(100) DEFAULT NULL,
   `attribute_a` tinyint(1) DEFAULT NULL COMMENT '文章属性 头条',
   `attribute_b` tinyint(1) DEFAULT NULL COMMENT '文章属性 小头条',
@@ -127,9 +131,9 @@ CREATE TABLE `cxuu_article` (
   `attid` int(10) DEFAULT NULL COMMENT '附件地址ID',
   `examine` varchar(10) DEFAULT NULL COMMENT '审核人',
   `img` varchar(100) DEFAULT NULL,
-  `imgbl` tinyint(1) NOT NULL DEFAULT '0' COMMENT '判断是否有图片',
+  `imgbl` tinyint(1) NOT NULL DEFAULT 0 COMMENT '判断是否有图片',
   `time` datetime DEFAULT NULL,
-  `hits` int(5) DEFAULT '1',
+  `hits` int(5) DEFAULT 1,
   `status` tinyint(1) DEFAULT NULL,
   `uid` int(5) DEFAULT NULL COMMENT '用户ID',
   `gid` int(5) DEFAULT NULL COMMENT '用户组ID'
@@ -157,12 +161,12 @@ INSERT INTO `cxuu_article` (`id`, `cid`, `title`, `attribute_a`, `attribute_b`, 
 (15, 6, '页面中hack一个cdn的html5.js不能使用，但是放到项目中就可以用？', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-02-25 15:56:52', 85, 1, NULL, 0),
 (16, 3, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-10 17:02:12', 62, 1, NULL, 0),
 (17, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-02-29 19:23:30', 7, 1, NULL, 0),
-(18, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-04-03 09:48:09', 21, 1, NULL, 0),
+(18, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-04-03 09:48:09', 23, 1, NULL, 0),
 (19, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a4a00ef62e0.jpg', 0, '2020-02-29 19:39:46', 4, 1, NULL, 0),
 (20, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-03-01 15:24:25', 3, 0, NULL, 0),
 (21, 6, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 09:46:08', 1, 1, NULL, 0),
 (22, 6, '管理员管理', NULL, NULL, 0, 0, NULL, '/uploads/img/202004/07/5e8bd703413c12329870.jpg', 0, '2020-04-07 09:46:34', 1, 1, NULL, 0),
-(39, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e9196a178dc61139780.jpg', 1, '2020-04-14 11:25:48', 5, 1, NULL, 0),
+(39, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e9196a178dc61139780.jpg', 1, '2020-04-14 11:25:48', 6, 1, NULL, 0),
 (38, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 10:23:11', 1, 1, NULL, 0),
 (28, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:46:45', 24, 1, NULL, 0),
 (29, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:47:45', 1, 0, NULL, 0),
@@ -173,17 +177,17 @@ INSERT INTO `cxuu_article` (`id`, `cid`, `title`, `attribute_a`, `attribute_b`, 
 (34, 8, '控制器中使用视图模板', 1, NULL, 0, 0, '经工', '', 0, '2020-04-12 11:28:42', 3, 1, NULL, 0),
 (35, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-07 12:58:46', 13, 1, NULL, 0),
 (37, 6, '2221111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-09 11:52:18', 1, 1, NULL, 0),
-(40, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 11:54:53', 1, 1, 1, 0),
+(40, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 11:54:53', 2, 1, 1, 0),
 (41, 3, '453253', NULL, NULL, 0, 0, NULL, '2354', 0, '2020-04-10 17:03:34', 2, 1, 2, 0),
 (42, 3, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 17:07:30', 6, 1, 1, NULL),
 (43, 6, '管理员管理', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e919697a65772715070.jpg', 1, '2020-04-14 11:25:40', 2, 1, 1, 1),
 (44, 6, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', 1, 1, 1, NULL, '经工', '/uploads/img/202004/11/5e91c59a286a2853700.jpg', 1, '2020-04-14 11:23:43', 60, 1, 1, 1),
 (45, 6, '111123丨统筹做好经济社会发展工作 习近平的战“疫”方略', 1, NULL, 1, 1, '经工', '/uploads/img/202004/11/5e9196865d1f06978160.jpg', 1, '2020-04-14 11:23:26', 92, 1, 1, 1),
 (46, 3, '11111111111111111111111111111111管理员管理', NULL, NULL, 1, 0, '经工', '/uploads/img/202004/11/5e91994c62b396254680.jpg', 1, '2020-04-13 14:27:32', 16, 1, 1, 1),
-(47, 6, '控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板', 1, NULL, NULL, 1, '经工', '/uploads/img/202004/15/5e96c2aeae7281289310.jpg', 1, '2020-04-14 11:21:38', 87, 1, 1, 1),
+(47, 6, '控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板', 1, NULL, NULL, 1, '经工', '/uploads/img/202004/15/5e96c2aeae7281289310.jpg', 1, '2020-04-14 11:21:38', 134, 1, 1, 1),
 (48, 9, '88888888888888888888888888', NULL, NULL, 0, 0, '经工', '', 0, '2020-04-12 12:39:18', 5, 1, 1, 1),
-(49, 3, '11111111111111111111111111111111管理员管理', 1, NULL, NULL, 6, '经工', '', 0, '2020-04-14 18:06:23', 48, 1, 1, 1),
-(50, 6, 'abc11111111111111111111111111111111管理员管理11', NULL, NULL, NULL, NULL, '经工', '/uploads/img/202004/14/5e9582738cd312533760.jpg', 1, '2020-04-15 16:10:31', 20, 1, 1, 1);
+(49, 3, '11111111111111111111111111111111管理员管理', 1, NULL, NULL, 6, '经工', '', 0, '2020-04-14 18:06:23', 51, 1, 1, 1),
+(50, 6, 'abc11111111111111111111111111111111管理员管理11', NULL, NULL, NULL, NULL, '经工', '/uploads/img/202004/14/5e9582738cd312533760.jpg', 1, '2020-04-15 16:10:31', 22, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -195,7 +199,7 @@ CREATE TABLE `cxuu_article_cate` (
   `id` int(10) NOT NULL,
   `pid` int(10) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT 0,
   `theme` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -223,7 +227,7 @@ INSERT INTO `cxuu_article_cate` (`id`, `pid`, `name`, `type`, `theme`) VALUES
 CREATE TABLE `cxuu_article_content` (
   `content_id` int(11) NOT NULL,
   `aid` int(11) DEFAULT NULL,
-  `content` mediumtext
+  `content` mediumtext DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -285,6 +289,78 @@ INSERT INTO `cxuu_attments` (`attid`, `aid`, `atturl`, `priname`, `ext`, `size`)
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `cxuu_images`
+--
+
+CREATE TABLE `cxuu_images` (
+  `id` int(10) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `img` varchar(150) DEFAULT NULL COMMENT '缩略图',
+  `auther` varchar(50) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `cxuu_images`
+--
+
+INSERT INTO `cxuu_images` (`id`, `title`, `img`, `auther`, `content`, `status`, `time`) VALUES
+(1, '拉萨扫黑除恶宣传片二', '/uploads/img/202004/28/5ea795a7947417044290.jpg', '汪汪', '拉萨扫黑除恶宣传片二', 1, '2020-04-28 10:24:39'),
+(2, '第101期 我局召开全市专题工作会议', '/uploads/img/202004/28/5ea7b6027d6d49573050.png', '汪汪', '2143214', 1, '2020-04-28 12:50:19');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cxuu_images_image`
+--
+
+CREATE TABLE `cxuu_images_image` (
+  `id` int(11) NOT NULL,
+  `aid` int(11) DEFAULT NULL,
+  `imgsrc` varchar(150) DEFAULT NULL,
+  `info` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `cxuu_images_image`
+--
+
+INSERT INTO `cxuu_images_image` (`id`, `aid`, `imgsrc`, `info`) VALUES
+(1, 1, '/uploads/img/202004/28/5ea7aab7da1c83470850.jpg\r\n', '415'),
+(2, 1, '/uploads/img/202004/28/5ea7b5be702651589320.jpg', '2'),
+(3, 1, '/uploads/img/202004/28/5ea7b5c4a457f7483780.jpg', '142'),
+(4, 1, '/uploads/img/202004/28/5ea7b5f15409c2673640.jpg', '4235'),
+(5, 2, '/uploads/img/202004/28/5ea7b611da9f69126270.jpg', '1234242');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cxuu_member`
+--
+
+CREATE TABLE `cxuu_member` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `duties` varchar(50) DEFAULT NULL,
+  `photo` varchar(150) DEFAULT NULL,
+  `duty` varchar(150) DEFAULT NULL,
+  `sort` int(3) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `cxuu_member`
+--
+
+INSERT INTO `cxuu_member` (`id`, `name`, `duties`, `photo`, `duty`, `sort`, `status`) VALUES
+(1, '周凯', '国家主席', '/uploads/img/202004/29/5ea8f9a48f9821088200.jpg', '主持全国工作，主持全国工作，主持全国工作，主持中央工作', 1, 1),
+(2, '常迎霞', '国务院总理、财政部长', '/uploads/img/202004/29/5ea8fa986a5246378700.jpg', '全国政府工作、全国财政工作', 2, 1);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `cxuu_notices`
 --
 
@@ -292,9 +368,9 @@ CREATE TABLE `cxuu_notices` (
   `id` int(11) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
   `img` varchar(100) DEFAULT NULL,
-  `content` mediumtext,
+  `content` mediumtext DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1'
+  `status` tinyint(1) DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -324,12 +400,36 @@ INSERT INTO `cxuu_notices` (`id`, `title`, `img`, `content`, `time`, `status`) V
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `cxuu_onduty`
+--
+
+CREATE TABLE `cxuu_onduty` (
+  `id` int(11) NOT NULL,
+  `juname` varchar(50) DEFAULT NULL COMMENT '局值班人',
+  `chuname` varchar(50) DEFAULT NULL COMMENT '处值班人',
+  `yuanname` varchar(50) DEFAULT NULL COMMENT '值班员',
+  `phone` varchar(12) DEFAULT NULL COMMENT '职务',
+  `ondutytime` date DEFAULT NULL COMMENT '值班时间',
+  `status` tinyint(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `cxuu_onduty`
+--
+
+INSERT INTO `cxuu_onduty` (`id`, `juname`, `chuname`, `yuanname`, `phone`, `ondutytime`, `status`) VALUES
+(1, '张某', '李某', '周某', '6888888', '2020-04-25', 1),
+(2, '张某', '李某', '周某', '13889009375', '2020-04-26', 1);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `cxuu_siteconfig`
 --
 
 CREATE TABLE `cxuu_siteconfig` (
   `name` varchar(50) NOT NULL,
-  `data` text
+  `data` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -339,6 +439,31 @@ CREATE TABLE `cxuu_siteconfig` (
 INSERT INTO `cxuu_siteconfig` (`name`, `data`) VALUES
 ('siteinfo', 'a:7:{s:8:\"sitename\";s:15:\"龙啸轩网络\";s:7:\"siteurl\";s:20:\"http://www.cxuu.net/\";s:8:\"keywords\";s:19:\"龙啸轩网络2233\";s:8:\"descript\";s:15:\"龙啸轩网络\";s:9:\"copyright\";s:88:\"龙啸轩内容管理系统 便捷易用的网站内容管理平台  浏览器支持IE8+\";s:10:\"uploadsize\";s:4:\"2048\";s:9:\"uploadext\";s:15:\"doc|zip|rar|mp3\";}'),
 ('uploadsize', '2048');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cxuu_visits`
+--
+
+CREATE TABLE `cxuu_visits` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `visits` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `cxuu_visits`
+--
+
+INSERT INTO `cxuu_visits` (`id`, `date`, `visits`) VALUES
+(39, '2020-04-29', 101),
+(38, '2020-04-28', 101),
+(37, '2020-04-26', 61),
+(36, '2020-04-25', 31),
+(35, '2020-04-24', 31),
+(34, '2020-04-22', 21333),
+(33, '2020-04-23', 326);
 
 --
 -- 转储表的索引
@@ -389,9 +514,33 @@ ALTER TABLE `cxuu_attments`
   ADD PRIMARY KEY (`attid`);
 
 --
+-- 表的索引 `cxuu_images`
+--
+ALTER TABLE `cxuu_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `cxuu_images_image`
+--
+ALTER TABLE `cxuu_images_image`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `cxuu_member`
+--
+ALTER TABLE `cxuu_member`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `cxuu_notices`
 --
 ALTER TABLE `cxuu_notices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `cxuu_onduty`
+--
+ALTER TABLE `cxuu_onduty`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -399,6 +548,12 @@ ALTER TABLE `cxuu_notices`
 --
 ALTER TABLE `cxuu_siteconfig`
   ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `cxuu_visits`
+--
+ALTER TABLE `cxuu_visits`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -414,7 +569,7 @@ ALTER TABLE `cxuu_admin_group`
 -- 使用表AUTO_INCREMENT `cxuu_admin_menu`
 --
 ALTER TABLE `cxuu_admin_menu`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- 使用表AUTO_INCREMENT `cxuu_admin_user`
@@ -447,10 +602,40 @@ ALTER TABLE `cxuu_attments`
   MODIFY `attid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- 使用表AUTO_INCREMENT `cxuu_images`
+--
+ALTER TABLE `cxuu_images`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用表AUTO_INCREMENT `cxuu_images_image`
+--
+ALTER TABLE `cxuu_images_image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- 使用表AUTO_INCREMENT `cxuu_member`
+--
+ALTER TABLE `cxuu_member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- 使用表AUTO_INCREMENT `cxuu_notices`
 --
 ALTER TABLE `cxuu_notices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- 使用表AUTO_INCREMENT `cxuu_onduty`
+--
+ALTER TABLE `cxuu_onduty`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用表AUTO_INCREMENT `cxuu_visits`
+--
+ALTER TABLE `cxuu_visits`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

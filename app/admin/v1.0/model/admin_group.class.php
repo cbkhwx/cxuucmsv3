@@ -148,9 +148,15 @@ class admin_group extends model
 	public function deleteOneData()
     {
         $db = $this->db();
-        $where['id'] = $_POST['id'];
-        $result = $db->table('admin_group')->where($where)->Delete(); 
-        return $result;
+		$find['aid'] = $_POST['id'];
+		$find = $db->table('admin_user')->where($find)->find(); 
+		if($find){
+			return false;
+		}else{
+			$where['id'] = $_POST['id'];
+			$result = $db->table('admin_group')->where($where)->Delete(); 
+			return $result;
+		}
     }
 
 }

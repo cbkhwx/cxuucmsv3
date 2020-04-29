@@ -31,7 +31,7 @@ class login
 				'systemrole' => $groupinfo['systemrole'],
 				'channlrole' => $groupinfo['channlrole'],
 				'menurole' => $groupinfo['menurole'],
-				'logintime' => date('Y-m-d H:i:s',time()),
+				'logintime' => $result['logintime'],
 				'loginip' => getip(),
 			);
 			$_SESSION["cxuu_admin"] = $adminUserInfo;

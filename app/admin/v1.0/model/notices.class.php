@@ -88,7 +88,7 @@ class notices extends model
     {
         $db = $this->db();	
         $p = intval($_GET['page'] ?? 0) ?: 1;
-        $num = intval($_GET['limit'] ?? 0) ?: 10;
+        $num = intval($_GET['limit'] ?? 0) ?: 15;
 		
         $page = ['num' => $num, 'p' => $p, 'return' => true];
 		$result['data'] = $db->table('notices')->Page($page)->order('id DESC')->select();

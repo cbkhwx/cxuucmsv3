@@ -5,6 +5,16 @@ use root\base\model;
 
 class article extends model
 {
+	//信息统计查询
+    public function findCountData()
+    {
+        $db = $this->db('article');
+		//$result = $db->where('status = 0')->Count();
+		$resultStatus = $db->Count();   
+        return $resultStatus;
+    }
+
+	
 	//关联查找一条数据
     public function findData()
     {
@@ -134,7 +144,7 @@ class article extends model
 		}
 		
         $p = intval($_GET['page'] ?? 0) ?: 1;
-        $num = intval($_GET['limit'] ?? 0) ?: 10;
+        $num = intval($_GET['limit'] ?? 0) ?: 15;
 		
         $page = ['num' => $num, 'p' => $p, 'return' => true];
 		

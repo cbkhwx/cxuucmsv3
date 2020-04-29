@@ -27,7 +27,7 @@ return [
 		'dsn'=>'mysql:host=127.0.0.1;dbname=cxuuweb;port=3306',
 		'db'=>'cxuuweb',
 		'user'=>'root',
-		'pass'=>'123456',
+		'pass'=>'cde',
 		'charset'=>'utf8',
 		'prefix'=>'cxuu_',
 		'cache_mod'=>1, //缓存模式：1:redis, 2:memcached, 默认：文件

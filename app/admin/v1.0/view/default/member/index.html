@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 领导信息</h3>
+	<hr>
+</div>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<script type="text/html" id="toolbarAE">
+            <div class="layui-btn-container">
+			<?php echo sysrolTF("member_addview")?'<button class="layui-btn layui-btn-sm data-add-btn">添加领导信息</button>':''; ?> 
+            </div>
+        </script>
+
+			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter">
+			</table>
+			<script type="text/html" id="imgTpl">
+			<img src="{{d.photo}}" width="40" height="30">
+			</script>
+
+			<script type="text/html" id="switchTpl">
+		  <!-- 这里的 checked 的状态只是演示 -->
+			<input type="checkbox" name="status" id="{{d.id}}" value="{{d.status}}" lay-skin="switch" lay-text="显示|不显示"
+				lay-filter="switchStatus" {{ d.status == 1 ? 'checked' : '' }}>
+			</script>
+
+			<script type="text/html" id="currentTableBar">
+		<?php echo sysrolTF("member_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
+		<?php echo sysrolTF("member_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
+        </script>
+
+		</div>
+	</div>
+
+</div>
+
+<script>
+	layui.use('table', function () {
+		var table = layui.table,
+			$ = layui.jquery,
+			form = layui.form;
+		table.render({
+			elem: '#currentTableId',
+			url: '/admin.php?c=member&a=jsonlist',
+			toolbar: '#toolbarAE',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+				layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
+				//,curr: 5 //设定初始在第 5 页
+				, groups: 1 //只显示 1 个连续页码
+				, first: false //不显示首页
+				, last: false //不显示尾页
+			},
+			cols: [[
+				//{type: "checkbox", width: 50, fixed: "left"},
+				{ field: 'id', width: 80, title: 'ID', sort: true },
+				{ field: 'sort', width: 100,  title: '单位排序' },
+				{ field: 'name',  title: '姓名' },
+				{ field: 'duties', title: '职务' },
+				{ field: 'photo',  title: '照片' ,templet: '#imgTpl', unresize: true},
+				{ field: 'duty', width: 200, title: '分管工作', sort: true },
+				{ field: 'status', width: 200, title: '前台是否显示', sort: true, templet: '#switchTpl', unresize: true },
+				{ title: '操作', width: 160, templet: '#currentTableBar', fixed: "right", align: "center" }
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true
+		});
+
+
+		// 监听添加操作
+		$(".data-add-btn").on("click", function () {
+			loadMain('/admin.php?c=member&a=addview');
+			return false;
+		});
+		// 监听删除操作
+		$(".data-delete-btn").on("click", function () {
+			var checkStatus = table.checkStatus('currentTableId')
+				, data = checkStatus.data;
+			layer.alert(JSON.stringify(data));
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+		//监听状态操作
+		form.on('switch(switchStatus)', function (obj) {
+			var data = obj.data;
+			console.log(this.id);
+			var checked = 0;
+			if (obj.elem.checked) {
+				checked = 1;
+			}
+			$.post('/admin.php?c=member&a=switchStatus', { id: this.id, status: checked }, function (res) {
+				if (res.status == 1) {
+					layer.tips(res.info + ' 状态为：' + checked, obj.othis);
+				} else {
+					layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+				}
+			});
+		});
+
+
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				loadMain('/admin.php?c=member&a=editview&id=' + data.id);
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除么', function (index) {
+					$.post('/admin.php?c=member&a=del', data, function (res) {
+						if (res.status == 1) {
+							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+								obj.del();
+								// 关闭弹出层
+								layer.close(index);
+							});
+						} else {
+							layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+						}
+					});
+				});
+			}
+		});
+	});
+</script>

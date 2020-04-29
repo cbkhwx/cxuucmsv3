@@ -37,14 +37,14 @@ class article
         return $result;
     }
 	
-	//查询 GET值 栏目分页列表
+	//查询 GET值 栏目分页列表  支持->cache(600)
     public static function listData()
     {
         $db = \ext\db::Init();
 		$where['cid'] = self::routerParams('cid');
 		$where['status'] = 1;
 		$p = self::routerParams('p');
-        $num = 10;  //每页显示条数
+        $num = 25;  //每页显示条数
         $page = ['num' => $num, 'p' => $p, 'return' => ['prev', 'next', 'first', 'last', 'list']];
 		$result['data'] = $db->table('article')->where($where)->page($page)->order('id DESC')->select();
         $result['page'] = $db->getPage();

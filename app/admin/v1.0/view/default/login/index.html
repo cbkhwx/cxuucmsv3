@@ -1,11 +1,13 @@
 <!doctype html>
-<html class="x-admin-sm">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <title>后台登录-CxuuWeb3.0</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="stylesheet" href="/res/admin/v1.0/css/login.css">
     <!--[if lt IE 9]>
@@ -14,27 +16,83 @@
     <![endif]-->
 </head>
 
-<body class="login-bg">
+<body>
     <div class="login layui-anim layui-anim-up">
-        <div class="message">CxuuWeb3.0-管理登录</div>
+        <div class="message">龙啸轩内容管理系统-管理登录</div>
         <div id="darkbannerwrap"></div>
-
+		<div id="dvhide">
         <form method="post" class="layui-form">
-            <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input" value="admin">
+            <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input"
+                value="">
             <hr class="hr15">
-            <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input" value="123456">
+            <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input"
+                value="">
             <hr class="hr15">
             <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20">
         </form>
+		</div>
+		<div id="dvshow" style="display:none; font-size:14px;color:red;">
+		<h2>系统检测到您的浏览器不支持进入本系统后台</h2>
+		本系统支持IE11以上及chrome、edge、火狐等核心浏览器！
+		<br>
+		<br>win7 及以上64位系统推荐下载安装（<a href="http://155.11.11.33/software/71.0.3559.6_chrome_installer.exe">chrome 71浏览器</a>）
+			或（<a href="http://155.11.11.33/software/76.0.3809.132_chrome64_stable_windows_installer.exe">chrome 76浏览器</a>）
+		<br>
+		<br>
+		winXP以下或32位系统推荐下载安装（<a href="http://155.11.11.33/software/ChromeStandalone_48.0.2564.116_Setup.1455850306.exe">chrome 48浏览器</a>）或者（<a href="http://155.11.11.33/software/45.0.2454.101_chrome32_stable_windows_installer.exe">chrome 45浏览器</a>）
+		</div>
+		
     </div>
-	<script src="/res/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <!-- <script src="/res/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script> -->
+	<script src="/res/lib/jquery-1.11.3.min.js"></script>
     <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
     <script>
+			$("#dvshow").hide();
+			$("#dvhide").hide();
+			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+			var isChrome = userAgent.indexOf("Chrome") > -1;//判断是否CHROME
+			var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器 
+			 function IEVersion() {
+					var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+					var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+					var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器 
+					var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+					if(isIE) {
+						var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+						reIE.test(userAgent);
+						var fIEVersion = parseFloat(RegExp["$1"]);
+						if(fIEVersion == 7) {
+							return 7;
+						} else if(fIEVersion == 8) {
+							return 8;
+						} else if(fIEVersion == 9) {
+							return 9;
+						} else if(fIEVersion == 10) {
+							return 10;
+						} else {
+							return 6;//IE版本<=7
+						}	
+					} else if(isEdge) {
+						return 'edge';//edge
+					} else if(isIE11) {
+						return 11; //IE11  
+					}else{
+						return -1;//不是ie浏览器
+					}
+				}
+			//if (isChrome || IEVersion()>=9 || isEdge){
+			if (isChrome || IEVersion()>=11 || isEdge){
+				$("#dvhide").show();
+			} else {
+				$("#dvshow").show();
+			};
+			
+			
         layui.use(['form', 'jquery'], function () {
             var form = layui.form,
                 layer = layui.layer,
-				$ = layui.jquery;
+                $ = layui.jquery;
 
             // 进行登录操作
             form.on('submit(login)', function (data) {

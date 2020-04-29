@@ -15,6 +15,25 @@ return [
         'act' => 'index',
 		'params'=>['cid','p']
     ],
+    '/visit' => [
+        'ctrl' => 'visit',
+        'act' => 'jsonList',
+		//'params'=>['cid','p']
+    ],
+	'/image' => [
+        'ctrl' => 'image',
+        'act' => 'index',
+		'params'=>['id']
+    ],
+	'/images' => [
+        'ctrl' => 'imagelist',
+        'act' => 'index',
+		'params'=>['p']
+    ],
+	'/member' => [
+        'ctrl' => 'member',
+        'act' => 'index',
+    ],
     '*' => [ // 以上匹配不到时使用此路由
         'ctrl' => 'index',
         'act' => 'index',

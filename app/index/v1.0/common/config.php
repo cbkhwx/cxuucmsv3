@@ -1,4 +1,5 @@
 <?php
+
 return [
     'DEBUG' => 2,
     'MODULE' => false,

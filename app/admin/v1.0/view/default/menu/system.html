@@ -1,12 +1,13 @@
- <!DOCTYPE html>
-<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+<!DOCTYPE html>
+<ul class="layui-nav layui-nav-tree" lay-filter="test">
   <li class="layui-nav-item layui-nav-itemed">
     <a class="" href="javascript:;">系统管理</a>
     <dl class="layui-nav-child">
-	<?php foreach($list as $vo){?>
-      <dd><a href="javascript:;" onclick="loadMain('<?php echo $vo['url'];?>')"><i class="layui-icon <?php echo $vo['ico'];?>"></i> <?php echo $vo['name'];?></a></dd>
-	<?php }?>  
-<!--       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=cache')">缓存管理</a></dd>
+      <?php foreach($list as $vo){?>
+      <dd><a href="javascript:;" onclick="loadMain('<?php echo $vo['url'];?>')"><i
+            class="layui-icon <?php echo $vo['ico'];?>"></i> <?php echo $vo['name'];?></a></dd>
+      <?php }?>
+      <!--       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=cache')">缓存管理</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=system')">系统设置</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=notice')">系统公告</a></dd>
       <dd><a href="javascript:;" onclick="loadMain('/admin.php?c=systemmenu')">系统菜单</a></dd> -->

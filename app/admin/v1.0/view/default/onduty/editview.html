@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 编辑值班人信息</h3>
+    <hr>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">局值班人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="juname" lay-verify="required" lay-reqtext="局值班人不能为空" placeholder="请输入局值班人"
+                    value="<{$onduty['juname']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">处值班人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="chuname" lay-verify="required" lay-reqtext="处值班人不能为空" placeholder="请输入处值班人"
+                    value="<{$onduty['chuname']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">值班员</label>
+            <div class="layui-input-inline">
+                <input type="text" name="yuanname" lay-verify="required" lay-reqtext="值班员不能为空" placeholder="请输入值班员"
+                    value="<{$onduty['yuanname']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">值班电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" lay-verify="required" lay-reqtext="值班电话不能为空" placeholder="请输入值班电话"
+                    value="<{$onduty['phone']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">值班时间</label>
+            <div class="layui-input-inline">
+                <input id="datetime" type="text" name="ondutytime" lay-verify="required" lay-reqtext="值班时间不能为空" placeholder="请输入值班时间" value="<{$onduty['ondutytime']}>" class="layui-input" autocomplete = "off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">值班人状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="1" title="在岗"
+                    <?php echo $onduty["status"] ==1?'checked=""':''; ?>>
+                <input type="radio" name="status" value="0" title="离岗"
+                    <?php echo $onduty["status"] ==0?'checked=""':''; ?>>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" name="id" value="<{$onduty['id']}>">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table','laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            $ = layui.$;
+			
+		laydate.render({
+			elem:'#datetime'
+			,type:'date'
+		});
+
+        form.render();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.post('/admin.php?c=onduty&a=edit', data.field, function (res) {
+                if (res.status == 1) {
+                    layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+                        loadMain("/admin.php?c=onduty&a=index");
+                    });
+                } else {
+                    layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+                }
+            });
+            return false;
+        });
+       
+    });
+</script>

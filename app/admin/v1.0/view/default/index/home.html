@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 后台首页 </h3><hr>
+    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 后台首页 </h3>
+    <hr>
 </div>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
@@ -8,7 +9,9 @@
             <div class="layui-card">
                 <div class="layui-card-body ">
                     <blockquote class="layui-elem-quote">欢迎管理员：
-                        <span class="x-red"><?php echo sessionInfo("groupname");?> <?php echo sessionInfo("nickname");?> (<?php echo sessionInfo("username");?>)</span>！你上次登录时间是: <?php echo sessionInfo("logintime");?>
+                        <span class="x-red"><?php echo sessionInfo("groupname");?> <?php echo sessionInfo("nickname");?>
+                            (<?php echo sessionInfo("username");?>)</span>！你上次登录时间是:
+                        <?php echo sessionInfo("logintime");?>
                     </blockquote>
                 </div>
             </div>
@@ -18,103 +21,88 @@
                 <div class="layui-card-header">数据统计</div>
                 <div class="layui-card-body ">
                     <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
-                        <li class="layui-col-md2 layui-col-xs6">
+                        <li class="layui-col-md4 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
                                 <h3>文章数</h3>
-                                <p>
-                                    <cite>66</cite></p>
+                                <p><cite><?php echo $articleCountStatus;?></cite></p>
                             </a>
                         </li>
-                        <li class="layui-col-md2 layui-col-xs6">
+                        <li class="layui-col-md4 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>会员数</h3>
-                                <p><cite>12</cite></p>
+                                <h3>未审核文章</h3>
+                                <p><cite>0</cite></p>
                             </a>
                         </li>
-                        <li class="layui-col-md2 layui-col-xs6">
+                        <li class="layui-col-md4 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>回复数</h3>
-                                <p>
-                                    <cite>99</cite></p>
+                                <h3>管理员数</h3>
+                                <p><cite>14</cite></p>
                             </a>
                         </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>商品数</h3>
-                                <p>
-                                    <cite>67</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>文章数</h3>
-                                <p>
-                                    <cite>67</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6 ">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>文章数</h3>
-                                <p>
-                                    <cite>6766</cite></p>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
         </div>
-        
+
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                  系统公告
+                    系统公告
                 </div>
                 <div class="layui-card-body ">
-                  <ul class="layui-timeline">
-				  <?php foreach($noticeList as $key=>$vo){?>
-                    <li class="layui-timeline-item">
-                      <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                      <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title"><{$vo['title']}> </h3>
-                        <p><{$vo['content']}><h4><{$vo['time']}></h4></p>
-                      </div>
-                    </li>
-					<?php } ?>
-                  </ul>
-            </div>
-          </div>
-        </div>
-		</div>
-        <div class="layui-col-md12">
-            <div class="layui-card">
-                <div class="layui-card-header">开发者信息</div>
-                <div class="layui-card-body ">
-                    <table class="layui-table">
-                        <tbody>
-                            <tr>
-                                <th>版权所有</th>
-                                <td>龙啸轩网络<a href="http://www.cxuu.net/" target="_blank">访问官网</a></td>
-                            </tr>
-							<tr>
-                                <th>版本</th>
-                                <td>V3.0 bete</td>
-                            </tr>
-                            <tr>
-                                <th>开发者</th>
-                                <td>CDeng</td>
-							</tr>
-							<tr>
-                                <th>基于</th>
-                                <td><a href="http://www.z-php.com/" target="_blank">z-php 4.0</a>  <a href="https://www.layui.com/" target="_blank">layui 2.5.x</a></td>
-							</tr>
-                        </tbody>
-                    </table>
+                    <ul class="layui-timeline">
+                        <?php foreach($noticeList as $key=>$vo){?>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" style="color:red;">
+                                    <{$vo['title']}>
+                                </h3>
+                                <p>
+                                    <{$vo['content']}>
+                                        <h4>
+                                            <{$vo['time']}>
+                                        </h4>
+                                </p>
+                            </div>
+                        </li>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">开发者信息</div>
+            <div class="layui-card-body ">
+                <table class="layui-table">
+                    <tbody>
+                        <tr>
+                            <th>版权所有</th>
+                            <td>龙啸轩网络 <a href="http://www.cxuu.net/" target="_blank">访问官网 cxuu.net</a></td>
+                        </tr>
+                        <tr>
+                            <th>版本</th>
+                            <td><?php echo CXUUCMS_V;?></td>
+                        </tr>
+                        <tr>
+                            <th>开发者</th>
+                            <td>CDeng 邓中华 18989010903 如有问题请电话咨询</td>
+                        </tr>
+                        <tr>
+                            <th>基于</th>
+                            <td>PHP 7.0+ MySql5.6+ </td>
+                        </tr>
+                        <tr>
+                            <th>本程序开源地址</th>
+                            <td>https://gitee.com/4856742/cxuucms-zphp 由开发者授权 可免费使用！！</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
-
-
-
-

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<import file="block/common.html" name="header"/>
+<link rel="stylesheet" href="<?php echo U_RES_VER;?>/css/images.css">
+<body>
+<import file="block/common.html" name="nav"/>
+
+
+<div class="fullSlide">
+		
+		<div class="bd">
+			<ul>
+			<?php foreach((array)$images as $vo){?>
+				<li _src="url(<?php echo $vo['imgsrc'];?>)" style="background:#E2025E center 0 no-repeat;"></li>
+			<?php }?>
+			</ul>
+		</div>
+
+		<div class="hd"><ul></ul></div>
+		<span class="prev"></span>
+		<span class="next"></span>
+	</div>
+
+<script src="/res/lib/jquery-1.11.3.min.js"></script>
+<script src="/res/lib/superslide/jquery.SuperSlide.2.1.1.js"></script>
+	<script type="text/javascript">
+		
+		/* 控制左右按钮显示 */
+		jQuery(".fullSlide").hover(function(){ jQuery(this).find(".prev,.next").stop(true,true).fadeTo("show",0.5) },function(){ jQuery(this).find(".prev,.next").fadeOut() });
+
+		/* 调用SuperSlide */
+		jQuery(".fullSlide").slide({ titCell:".hd ul", mainCell:".bd ul", effect:"fold",  autoPlay:true, autoPage:true, trigger:"click",
+			startFun:function(i){
+				var curLi = jQuery(".fullSlide .bd li").eq(i); /* 当前大图的li */
+				if( !!curLi.attr("_src") ){
+					curLi.css("background-image",curLi.attr("_src")).removeAttr("_src") /* 将_src地址赋予li背景，然后删除_src */
+				}
+			}
+		});
+	</script>
+<import file="block/common.html" name="footer"/>
+</body>
+</html>

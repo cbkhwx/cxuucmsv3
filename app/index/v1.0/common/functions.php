@@ -1,14 +1,34 @@
 <?php
 
+
+
 /* 
- *  路由 内容页 URL 生成方法
- *  使用方法：在模板<?php echo urlInfo($vo['id']);?> 
+ *  获取网站系统配置信息方法
+ *  使用方法：在模板<?php echo urgetSiteConfiglInfo($vo['id']);?> 
  */
 function siteInfo($key){
 	$info = \model\siteconfig::getSiteConfig($key);
 	return $info;
 }
-
+/* 
+ *  路由 图集内容页 URL 生成方法
+ *  使用方法：在模板<?php echo urlImage($vo['id']);?> 
+ */
+function urlImage($val){
+	$routeMod = $GLOBALS['ZPHP_CONFIG']['URL_MOD'];
+	switch($routeMod){
+		case 0:
+			$url = "/?c=image&a=index&id=".$val;
+			break;
+		case 1:
+			$url = "/image/index/id/".$val;
+			break;
+		case 2:
+			$url = "/image/".$val;
+			break;
+	}
+	return $url;
+}
 
 /* 
  *  路由 内容页 URL 生成方法

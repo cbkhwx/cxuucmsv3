@@ -43,4 +43,9 @@ class menu
 		view::assign('list',self::selectData());
         view::display();
     }
+    public static function extend()
+    {
+		view::assign('list',self::selectData());
+        view::display();
+    }
 }

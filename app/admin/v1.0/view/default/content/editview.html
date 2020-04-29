@@ -28,13 +28,11 @@
                 <input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题" value="<?php echo $info['title'];?>" class="layui-input">
             </div>
         </div>
-		<div class="layui-form-item">
-            <label class="layui-form-label required">内容属性</label>
+		<div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
-				<input type="checkbox" name="attribute_a" value="1" title="头条" <?php echo $info['attribute_a'] == 1?'checked=""':'';?>>
-				<input type="checkbox" name="attribute_b" value="1" title="小头条" <?php echo $info['attribute_b'] == 1?'checked=""':'';?>>
-				<input type="checkbox" name="attribute_c" value="1" title="图片轮换" <?php echo $info['attribute_c'] == 1?'checked=""':'';?>>
-            </div><tip>图片轮换 图片位置必须要有有效图片地址</tip>
+                <textarea id="contentEdit" name="content" ><{$info['content']}></textarea>
+            </div>
         </div>
 		<div class="layui-form-item">
             <label class="layui-form-label required">审核人</label>
@@ -42,9 +40,19 @@
                 <input type="text" name="examine" lay-verify="required" lay-reqtext="审核人不能为空" placeholder="请输入审核人" value="<?php echo $info['examine'];?>" class="layui-input">
             </div>
         </div>
+		<?php if(sysrolTF("content_attribute")){ ?>
+		<div class="layui-form-item">
+            <label class="layui-form-label required">内容属性</label>
+            <div class="layui-input-block">
+				<input type="checkbox" name="attribute_a" value="1" title="头条" <?php echo $info['attribute_a'] == 1?'checked=""':'';?>>
+				<input type="checkbox" name="attribute_b" value="1" title="小头条" <?php echo $info['attribute_b'] == 1?'checked=""':'';?>>
+				<span id="lunhuantu" ><input type="checkbox" name="attribute_c" value="1" title="图片轮换" <?php echo $info['attribute_c'] == 1?'checked=""':'';?>></span>
+            </div>
+        </div>
+		<?php } ?>		
 		<?php if(sysrolTF("upload_imgUpload")){ ?>
 		<div class="layui-form-item">
-            <label class="layui-form-label required">图片</label>
+            <label class="layui-form-label required">轮换缩略图</label>
             <div class="layui-input-block">
                 <input type="text" id="imageval" name="img" value="<{$info['img']}>" class="layui-input">
 				<!-- <button type="button" class="layui-btn" id="thumimg">
@@ -55,17 +63,11 @@
 				</button>
             </div>
         </div>
-		<?php } ?>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">内容</label>
-            <div class="layui-input-block">
-                <textarea id="contentEdit" name="content" ><{$info['content']}></textarea>
-            </div>
-        </div>
+		<?php } ?>        
 		<?php if(sysrolTF("upload_attmentUpload")){ ?>
 		<div class="layui-form-item">
             <label class="layui-form-label required">附件</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <div id="attval" class="cxuu_attmentupload"><?php echo empty($info['attid'])?"无附件":'<span class="layui-badge layui-bg-blue">'.$info['priname'].'</span>';?></div>
 				<input type="hidden" name="attid" value="<{$info['attid']}>" id="attid">
 				<button type="button" class="layui-btn" id="attupload">
@@ -106,8 +108,8 @@
 			plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave indent2em autoresize lineheight axupimgs',
             toolbar: 'code fullscreen | undo redo restoredraft | cut copy paste | forecolor bold italic underline link | alignleft aligncenter alignright alignjustify outdent indent | fontselect fontsizeselect | table <?php if(sysrolTF("upload_tinymceUpload")){ ?>image<?php } ?> charmap emoticons insertdatetime preview | indent2em lineheight <?php if(sysrolTF("upload_tinymceUpload")){ ?>axupimgs<?php } ?>',
 			autosave_interval: "20s",//自动存稿时间
-			font_formats: '微软雅黑=Microsoft YaHei,sans-serif;仿宋GB2312=仿宋GB2312,Microsoft YaHei,sans-serif;宋体=simsun,serif;黑体=黑体',
-            height: 650, //编辑器高度
+			font_formats: '微软雅黑=Microsoft YaHei,sans-serif;仿宋_GB2312=仿宋_GB2312,Microsoft YaHei,sans-serif;宋体=宋体;仿宋=仿宋;黑体=黑体',
+			height: 650, //编辑器高度
             min_height: 400,
 			draggable_modal: true,
 			images_upload_base_path: '/',
@@ -222,7 +224,24 @@
 	function getFirstImg(){
 		var content = tinyMCE.editors[0].getContent();
 		var getval = $(content).find("img").eq(0).attr("src");
-		$('#imageval').val(getval);
+		if(getval.length > 0){
+			$('#imageval').val(getval);
+			$('#lunhuantu').show(); //如果有内容，显示轮换选择框
+		}	
 	}
-	
+	//如果没有提取缩略图，就不能选择 轮换图
+	var imageval = $('#imageval').val();
+		if(imageval.length < 1){
+			$('#lunhuantu').hide();
+		}else{
+			$('#lunhuantu').show();
+		}
+	$('#imageval').bind('input propertychange',function(){
+		if($(this).val().length){
+			$('#lunhuantu').show();
+		}else{
+			$('#lunhuantu').hide();
+		}
+		
+	});
 </script>

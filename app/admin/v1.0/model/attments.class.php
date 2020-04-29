@@ -4,8 +4,7 @@ namespace model;
 use root\base\model;
 
 class attments extends model
-{
-	
+{	
 	//添加数据
 	public function insertData($atturl,$priname,$ext,$size)
     {
@@ -23,5 +22,6 @@ class attments extends model
 			$result = 'error';
 		}
         return $result;
-    }	
+    }
+
 }

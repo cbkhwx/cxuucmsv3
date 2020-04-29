@@ -27,7 +27,7 @@
 	<span><i class="layui-icon" style="color:red;">&#xe68c;</i> <{$info['hits']}> </span>
 	</h4>
 	<hr class="layui-bg-blue cxuu_content_info_hr">
-	<p><?php echo htmlspecialchars_decode($info['content']); ?></p>
+	<p class="cxuu_content_content"><?php echo htmlspecialchars_decode($info['content']); ?></p>
 	<!--附件下载-->
 	<?php if(!empty($info['attid'])){ ?>
 	<p class="cxuu_content_download">
@@ -41,12 +41,17 @@
          
 <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
 <script>
-layui.use('element', function(){
-  var element = layui.element;
+layui.use(['element','jquery'], function(){
+  var element = layui.element,
+  $ = layui.jquery;
   element.on('nav(demo)', function(elem){
     //console.log(elem)
     layer.msg(elem.text());
   });
+  //删除图片样式
+	$("img").parents("p").removeAttr("style");	
+	$("img").parents("span").removeAttr("style");
+	$("img").parents("a").contents().unwrap();
 });
 </script>
 
