@@ -29,28 +29,7 @@
 	<div class="layui-row cxuu_imagefoce">
 		<div class="layui-col-xs7">
 		  <div class="layui-carousel cxuu_imgfoce" id="headerfoce">
-		  <div carousel-item="">
-		  <!---
-		  一、列表调用方法：
-		  foreach(\model\article::selectData('3,6',5,60,1,3) as $vo){
-		  1、CID单个栏目直接填写数据 如： 2 ，多个栏目："3,6,5" 或 0全部栏目;
-		  2、条数 支持偏移如："2,10";
-		  3、缓存时间 600; 
-		  4、是否图片 1; 
-		  5、是否头条 1 或小头条 2 或 图片轮换 3;
-		  二、路由模式下的链接生成方法
-		  1、echo urlInfo($vo['id']);  生成内容页链接
-		  2、echo urlList($vo['id']);  生成列表页链接
-		  2、echo urlImage($vo['id']);  生成图集内容页链接
-		  三、截取字符长度
-		  echo cxuuMbStr($vo['title'],20);
-		  
-		  四、格式化时间显示
-		  1、显示多久以前   echo historyTime($info['time']);
-		  2、格式化时间     echo fTime($vo['time'],'Y-m-d');
-		  
-		  --->
-		  
+		  <div carousel-item="">		  
 		  <!--图片轮换-->
 			<?php foreach((array)\model\article::selectData('3,6',5,60,1,3) as $vo){?>
 			  <div>

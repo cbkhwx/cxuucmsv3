@@ -4,7 +4,7 @@
 
 /* 
  *  获取网站系统配置信息方法
- *  使用方法：在模板<?php echo urgetSiteConfiglInfo($vo['id']);?> 
+ *  使用方法：在模板<?php echo siteInfo('copyright');?> 
  */
 function siteInfo($key){
 	$info = \model\siteconfig::getSiteConfig($key);
