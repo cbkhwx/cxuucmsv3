@@ -4,8 +4,7 @@
     <a class="" href="javascript:;">扩展功能</a>
     <dl class="layui-nav-child">
       <?php foreach($list as $v){?>
-        <dd><a href="javascript:;" onclick="loadMain('<{caUrl($v['controller'],$v['action'])}>')"><i
-              class="layui-icon <?php echo $v['ico'];?>"></i> <?php echo $v['name'];?></a></dd>
+        <dd><a href="javascript:;" onclick="loadMain('<{caUrl($v['controller'],$v['action'])}>')"><i class="layui-icon <?php echo $v['ico'];?>"></i> <?php echo $v['name'];?></a></dd>
         <?php }?>
     </dl>
   </li>
