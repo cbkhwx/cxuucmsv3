@@ -1,18 +1,16 @@
 <!doctype html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>后台登录-CxuuWeb3.0</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="stylesheet" href="/res/admin/v1.0/css/login.css">
+    <link rel="stylesheet" href="<?php echo U_RES_APP;?>/css/login.css">
     <!--[if lt IE 9]>
-          <script src="/res/lib/js/html5shiv-printshiv.min.js"></script>
-          <script src="/res/lib/js/respond.min.js"></script>
+          <script src="<?php echo U_RES;?>/lib/js/html5shiv-printshiv.min.js"></script>
+          <script src="<?php echo U_RES;?>/lib/js/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -36,17 +34,17 @@
 		<h2>系统检测到您的浏览器不支持进入本系统后台</h2>
 		本系统支持IE11以上及chrome、edge、火狐等核心浏览器！
 		<br>
-		<br>win7 及以上64位系统推荐下载安装（<a href="http://155.11.11.33/software/71.0.3559.6_chrome_installer.exe">chrome 71浏览器</a>）
-			或（<a href="http://155.11.11.33/software/76.0.3809.132_chrome64_stable_windows_installer.exe">chrome 76浏览器</a>）
+		<br>win7 及以上64位系统推荐下载安装（<a href="">chrome 71浏览器</a>）
+			或（<a href="">chrome 76浏览器</a>）
 		<br>
 		<br>
-		winXP以下或32位系统推荐下载安装（<a href="http://155.11.11.33/software/ChromeStandalone_48.0.2564.116_Setup.1455850306.exe">chrome 48浏览器</a>）或者（<a href="http://155.11.11.33/software/45.0.2454.101_chrome32_stable_windows_installer.exe">chrome 45浏览器</a>）
+		winXP以下或32位系统推荐下载安装（<a href="">chrome 48浏览器</a>）或者（<a href="">chrome 45浏览器</a>）
 		</div>
 		
     </div>
     <!-- <script src="/res/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script> -->
-	<script src="/res/lib/jquery-1.11.3.min.js"></script>
-    <script src="/res/lib/layui/layui.js" charset="utf-8"></script>
+	<script src="<?php echo U_RES;?>/lib/jquery-1.11.3.min.js"></script>
+    <script src="<?php echo U_RES;?>/lib/layui/layui.js" charset="utf-8"></script>
     <script>
 			$("#dvshow").hide();
 			$("#dvhide").hide();
@@ -107,16 +105,16 @@
                 }
 
                 loading = layer.load(1, { shade: [0.1, '#fff'] });//0.1透明度的白色背景{username:data.username,password:data.password}
-                $.post('/admin.php?c=login&a=login', data, function (res) {
+                $.post('<{caUrl("login","login")}>', data, function (res) {
                     layer.close(loading);
                     if (res.status == 1) {
                         layer.msg(res.info, { icon: 1, time: 1000 }, function () {
-                            location.href = "/admin.php";
+                            location.href = "<{PHP_FILE}>";
                         });
                     } else {
                         $('#captcha').val('');
                         layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
-                        $('.captcha img').attr('src', '/admin.php?c=login&a=verify' + Math.random());
+                        $('.captcha img').attr('src', '<{caUrl("login","verify")}>' + Math.random());
                     }
                 });
                 return false;

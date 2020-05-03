@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 栏目管理 / 栏目列表</h3><hr>
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 栏目管理 / 栏目列表</h3>
+	<hr>
 </div>
 <div class="layui-fluid">
 	<div class="layui-row layui-col-space15">
@@ -11,26 +12,26 @@
 				<button id="btnFoldAll" class="layui-btn layui-btn-sm"> 全部折叠 </button>
 			</div>
 
-	<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
+			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
 
-	<script type="text/html" id="currentTableBar">
-	<?php echo sysrolTF("articlecate_del")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?>
-	<?php echo sysrolTF("articlecate_editview")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?>
-    </script>
-	<script type="text/html" id="catetypeTableBar">
-		{{#  if(d.type == 1){ }}
-			列表
-		{{#  }else{ }}
-			<b style="color:red">频道</b>
-		{{#  } }}
-    </script>
-	<script type="text/html" id="themeTableBar">
-		{{#  if(d.theme.length == 0){ }}
-			默认(index.html)
-		{{#  }else{ }}
-			{{ d.theme }}
-		{{#  } }}
-    </script>
+			<script type="text/html" id="currentTableBar">
+			<?php echo sysrolTF("articlecate_del")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?>
+			<?php echo sysrolTF("articlecate_editview")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?>
+			</script>
+			<script type="text/html" id="catetypeTableBar">
+				{{#  if(d.type == 1){ }}
+					列表
+				{{#  }else{ }}
+					<b style="color:red">频道</b>
+				{{#  } }}
+			</script>
+			<script type="text/html" id="themeTableBar">
+				{{#  if(d.theme.length == 0){ }}
+					默认(index.html)
+				{{#  }else{ }}
+					{{ d.theme }}
+				{{#  } }}
+			</script>
 		</div>
 	</div>
 
@@ -56,7 +57,7 @@
 				haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
 				isPidData: true,  // 是否是pid形式数据
 				arrowType: 'arrow2',   // 自定义箭头风格
-				initLevel:5,
+				initLevel: 5,
 				getIcon: function (d) {  // 自定义图标
 					// d是当前行的数据
 					if (d.haveChild) {  // 判断是否有子集
@@ -77,7 +78,7 @@
 			],
 			reqData: function (data, callback) {
 				// 在这里写ajax请求，通过callback方法回调数据
-				$.get('/admin.php?c=contentcate&a=jsonlist', function (res) {
+				$.get('<{caUrl("contentcate","jsonlist")}>', function (res) {
 					//console.log(res);
 					callback(res.data);  // 参数是数组类型
 				}, "json");
@@ -85,7 +86,7 @@
 		});
 
 		$(".data-add-btn").on("click", function () {
-			loadMain('/admin.php?c=contentcate&a=addview');
+			loadMain('<{caUrl("contentcate","addview")}>');
 			return false;
 		});
 
@@ -103,11 +104,11 @@
 		treeTable.on('tool(currentTableId)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'edit') {
-				loadMain('/admin.php?c=contentcate&a=editview&id=' + data.id);
+				loadMain('<{caUrl("contentcate","editview")}>&id=' + data.id);
 				return false;
 			} else if (obj.event === 'delete') {
 				layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=contentcate&a=del', data, function (res) {
+					$.post('<{caUrl("contentcate","del")}>', data, function (res) {
 						if (res.status == 1) {
 							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
 								obj.del();

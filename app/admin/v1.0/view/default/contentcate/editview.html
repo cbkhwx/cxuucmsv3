@@ -51,18 +51,12 @@ layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$;
-
-        /**
-         * 初始化表单，要加上，不然刷新部分组件可能会不加载
-         */
         form.render();
-
-        //监听提交
         form.on('submit(saveBtn)', function (data) {
-			$.post('/admin.php?c=contentcate&a=edit',data.field,function(res){
+			$.post('<{caUrl("contentcate","edit")}>',data.field,function(res){
                 if(res.status == 1){
                     layer.msg(res.info, {icon: 1, time: 1000},function(){
-						loadMain("/admin.php?c=contentcate&a=index");
+						loadMain('<{caUrl("contentcate","index")}>');
 					});
                 }else{
                     layer.msg(res.info, {icon: 2, anim: 6, time: 5000});

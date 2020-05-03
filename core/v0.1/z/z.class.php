@@ -145,7 +145,7 @@ class router
     $ROUTER = [],
     $FORMAT = [],
     $APP_ISMODULE,
-    $APP_MAP
+        $APP_MAP
     ;
     public static function init()
     {
@@ -161,7 +161,7 @@ class router
         define('U_HOME', U_ROOT . '/');
         define('U_TMP', U_HOME . 'tmp');
         define('U_RES', U_HOME . 'res');
-        define('U_RES_APP', U_RES . '/' . APP_NAME . '/');
+        define('U_RES_APP', U_RES . '/' . APP_NAME);
         define('U_RES_VER', U_RES_APP . _VER);
         define('TPL_EXT', $GLOBALS['ZPHP_CONFIG']['VIEW']['ext'] ?? '.html');
         define('THEME', $GLOBALS['ZPHP_CONFIG']['VIEW']['theme'] ?? 'default');
@@ -291,26 +291,34 @@ class router
         self::$VER[$name] ?? self::$VER[$name] = VER;
         return self::$VER[$name];
     }
-    private static function getIsmodule (string $app, string $ver) {
-        if($app === APP_NAME) return self::$IS_MODULE;
+    private static function getIsmodule(string $app, string $ver)
+    {
+        if ($app === APP_NAME) {
+            return self::$IS_MODULE;
+        }
+
         $ver || $ver = self::getVer($app);
-        if(!isset(self::$APP_ISMODULE[$app])){
-            if(is_file($file = P_ROOT . "app/{$app}/v{$ver}/config.php") && $config = require $file){
+        if (!isset(self::$APP_ISMODULE[$app])) {
+            if (is_file($file = P_ROOT . "app/{$app}/v{$ver}/config.php") && $config = require $file) {
                 $ismodule = $config['MODULE'] ?? null;
             }
-            if(!isset($ismodule) && is_file($file = P_ROOT . "app/{$app}/config.php") && $config = require $file) {
+            if (!isset($ismodule) && is_file($file = P_ROOT . "app/{$app}/config.php") && $config = require $file) {
                 $ismodule = $config['MODULE'] ?? null;
             }
-            if(!isset($ismodule) && is_file($file = P_ROOT . 'common/config.php') && $config = require $file) {
+            if (!isset($ismodule) && is_file($file = P_ROOT . 'common/config.php') && $config = require $file) {
                 $ismodule = $config['MODULE'] ?? false;
             }
             self::$APP_ISMODULE[$app] = $ismodule;
         }
         return self::$APP_ISMODULE[$app];
     }
-    private static function getAppName (string $php) {
-        if(isset(self::$APP_MAP[$php])) return self::$APP_MAP[$php];
-        if(is_file($file = P_IN . $php) && $str = file_get_contents($file)){
+    private static function getAppName(string $php)
+    {
+        if (isset(self::$APP_MAP[$php])) {
+            return self::$APP_MAP[$php];
+        }
+
+        if (is_file($file = P_IN . $php) && $str = file_get_contents($file)) {
             $preg = '/define.+\,\s*\'(\w+)\'\s*\)/';
             preg_match($preg, $str, $match);
             self::$APP_MAP[$php] = $match[1] ?? false;
@@ -390,52 +398,59 @@ class router
             return $uf;
         }
         $arr = is_array($path) ? $path : explode('/', $path);
-        if('.php' === substr($arr[0], -4)){
+        if ('.php' === substr($arr[0], -4)) {
             $uf['app'][0] = $arr[0];
             $uf['app'][1] = self::getAppName($uf['app'][0]);
-            if($ismodule = self::getIsmodule($uf['app'][1], $ver)){
-                if(4 !== count($arr)) throw new \Exception('RUL(参数错误)，格式："入口文件名/模块名/控制器/操作"');
+            if ($ismodule = self::getIsmodule($uf['app'][1], $ver)) {
+                if (4 !== count($arr)) {
+                    throw new \Exception('RUL(参数错误)，格式："入口文件名/模块名/控制器/操作"');
+                }
+
                 $uf['m'] = $arr[1];
                 $uf['c'] = $arr[2];
                 $uf['a'] = $arr[3];
-            }else{
-                if(3 !== count($arr)) throw new \Exception('URL(参数错误)，格式："入口文件名/控制器/操作"');
+            } else {
+                if (3 !== count($arr)) {
+                    throw new \Exception('URL(参数错误)，格式："入口文件名/控制器/操作"');
+                }
+
                 $uf['c'] = $arr[1];
                 $uf['a'] = $arr[2];
             }
-        }elseif(self::$IS_MODULE){
+        } elseif (self::$IS_MODULE) {
             switch (count($arr)) {
                 case 1:
                     $uf['m'] = ROUTE['module'];
                     $uf['c'] = ROUTE['ctrl'];
                     $uf['a'] = $arr[0];
-                break;
+                    break;
                 case 2:
                     $uf['m'] = ROUTE['module'];
                     $uf['c'] = $arr[0];
                     $uf['a'] = $arr[1];
-                break;
+                    break;
                 case 3:
                     $uf['m'] = $arr[0];
                     $uf['c'] = $arr[1];
                     $uf['a'] = $arr[2];
-                break;
+                    break;
             }
         } else {
             switch (count($arr)) {
                 case 1:
                     $uf['c'] = ROUTE['ctrl'];
                     $uf['a'] = $arr[0];
-                break;
+                    break;
                 case 2:
                     $uf['c'] = $arr[0];
                     $uf['a'] = $arr[1];
-                break;
+                    break;
             }
         }
         return $uf;
     }
-    private static function getInPath($info, $ver = '', $param = false){
+    private static function getInPath($info, $ver = '', $param = false)
+    {
         if (isset($info['app'])) {
             $php = $info['app'][0];
             $app = $info['app'][1];
@@ -444,9 +459,9 @@ class router
             $app = APP_NAME;
         }
         $m = $info['m'] ?? ROUTE['module'] ?? false;
-        if($route = self::format($app, $m, $ver)){
+        if ($route = self::format($app, $m, $ver)) {
             $url = isset($route[0]) ? U_HOME . $route[0] : U_ROOT;
-        }else{
+        } else {
             $url = !$param && 'index.php' === $php ? U_ROOT : U_HOME . $php;
         }
         return $url;
@@ -530,7 +545,7 @@ class router
             }
             $route ?? $route = $data[$c]['*'][''] ?? null;
             $route && $route[0] .= '/' . $a;
-        }else{
+        } else {
             throw new \Exception("没有匹配到路由，[ctrl：{$c}，act：{$a}]");
         }
         if (isset($route)) {
@@ -737,6 +752,7 @@ class debug
         $ERROR_LOG = $GLOBALS['ZPHP_CONFIG']['ERROR_LOG'] ?? false;
         $msg = TransCode($e->getMessage());
         $GLOBALS['ZPHP_CONFIG']['DEBUG'] || $ERROR_LOG || \z\ctrl::_500($msg);
+        $isJson = isset($GLOBALS['ZPHP_CONFIG']['DEBUG_MSG']) && 'json' === $GLOBALS['ZPHP_CONFIG']['DEBUG_MSG'];
         $traceMsg = [];
         $trace = $e->getTrace();
         $file = $e->getFile();
@@ -754,11 +770,16 @@ class debug
             $file = "{$dir}/" . date('Ymd') . '.log';
             file_put_contents($file, '[' . date('H:i:s') . "] {$err}\r\n{$traceMsg}\r\n\r\n", FILE_APPEND);
         }
-        $GLOBALS['ZPHP_CONFIG']['DEBUG'] || \z\ctrl::_500($msg);
-        self::$errs[256][] = $err;
+
         ob_end_clean();
-        echo "<div style='background:#FFAEB9;padding:20px;'><h1>ERROR</h1><h2 style='font-size:16px;'>{$err}</h2><pre style='font-size:14px;'>\r\n{$traceMsg}</pre></div>";
-        self::ShowMsg();
+        header('status: 500');
+        if ($isJson) {
+            header('Content-Type:application/json; charset=utf-8');
+            $json = json_encode(['error' => $traceArr, 'trace' => $trace], 320);
+            die($json);
+        } else {
+            echo "<div style='background:#FFAEB9;padding:20px;'><h1>ERROR</h1><h2 style='font-size:16px;'>{$err}</h2><pre style='font-size:14px;'>\r\n{$traceMsg}</pre></div>";
+        }
     }
     public static function setMsg($errno, $str)
     {
@@ -769,7 +790,7 @@ class debug
         if (!$GLOBALS['ZPHP_CONFIG']['DEBUG']) {
             return;
         }
-
+        $errstr = TransCode($errstr);
         !IS_AJAX && $errstr = str_replace('\\', '\\\\', $errstr);
         self::$errs[$errno][] = "{$errstr} [" . str_replace('\\', '/', $errfile) . " ] : {$errline}";
     }

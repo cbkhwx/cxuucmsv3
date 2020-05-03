@@ -1,114 +1,111 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 管理员管理 / 用户组列表</h3><hr>
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 管理员管理 / 用户组列表</h3>
+	<hr>
 </div>
 <div class="layui-fluid">
-<div class="layui-row layui-col-space15">
-    <div class="layui-col-md12">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
 		<script type="text/html" id="toolbarAE">
             <div class="layui-btn-container">
 			<?php echo sysrolTF("admingroup_addview")?'<button class="layui-btn layui-btn-sm data-add-btn"> 添加角色 </button>':''; ?> 
             </div>
-        </script>
+       	</script>
 
-        <table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
-		
-        <script type="text/html" id="currentTableBar">
+		<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
+
+		<script type="text/html" id="currentTableBar">
 		<?php echo sysrolTF("admingroup_editview")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑信息</a>':''; ?> 
 		<?php echo sysrolTF("admingroup_systemrole")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit_systemrole">系统权限</a>':''; ?> 
 		<?php echo sysrolTF("admingroup_channlrole")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit_channlrole">内容栏目权限</a>':''; ?> 
 		<?php echo sysrolTF("admingroup_menurole")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit_menurole">后台菜单权限</a>':''; ?> 
 		<?php echo sysrolTF("adminuser_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
         </script>
-		
-    </div>
+
+		</div>
+	</div>
+
 </div>
 
-</div> 
-
 <script>
-layui.use('table', function(){
-    var table = layui.table,
-	$ = layui.jquery,
-	form = layui.form;
-	table.render({
-		elem: '#currentTableId',
-		//url: '/res/admin/api/table.json',
-		url: '/admin.php?c=admingroup&a=jsonlist',
-		toolbar: '#toolbarAE',
-		defaultToolbar: ['filter', 'exports', 'print', {
-			title: '提示:管理员帐号请不要随意改动！',
-			layEvent: 'LAYTABLE_TIPS',
-			icon: 'layui-icon-tips'
-		}],
-		page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-		  layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
-		  //,curr: 5 //设定初始在第 5 页
-		  ,groups: 1 //只显示 1 个连续页码
-		  ,first: false //不显示首页
-		  ,last: false //不显示尾页
-		},
-		cols: [[
-			//{type: "checkbox", width: 50, fixed: "left"},
-			{field: 'id', width: 80, title: 'ID', sort: true},
-			{field: 'groupname', title: '角色名称'},
-			
-			{title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
-		]],
-		limits: [10, 15, 20, 25, 50, 100],
-		limit: 10,
-		page: true
-	});
-	
-
-// 监听添加操作
-        $(".data-add-btn").on("click", function () {
-			loadMain('/admin.php?c=admingroup&a=addview');
-            return false;
+	layui.use('table', function () {
+		var table = layui.table,
+			$ = layui.jquery,
+			form = layui.form;
+		table.render({
+			elem: '#currentTableId',
+			//url: '/res/admin/api/table.json',
+			url: '<{caUrl("admingroup","jsonlist")}>',
+			toolbar: '#toolbarAE',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示:管理员帐号请不要随意改动！',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+				layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
+				//,curr: 5 //设定初始在第 5 页
+				, groups: 1 //只显示 1 个连续页码
+				, first: false //不显示首页
+				, last: false //不显示尾页
+			},
+			cols: [[
+				//{type: "checkbox", width: 50, fixed: "left"},
+				{ field: 'id', width: 80, title: 'ID', sort: true },
+				{ field: 'groupname', title: '角色名称' },
+				{ title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center" }
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true
 		});
-        // 监听删除操作
-        $(".data-delete-btn").on("click", function () {
-            var checkStatus = table.checkStatus('currentTableId')
-                , data = checkStatus.data;
-            layer.alert(JSON.stringify(data));
-        });
 
-        //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
-            console.log(obj)
-        });
-				
 
-        table.on('tool(currentTableFilter)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') {
-			//layer.alert('编辑行：<br>'+ JSON.stringify(data))
-				loadMain('/admin.php?c=admingroup&a=editview&id='+data.id);
-                return false;
-            } else if (obj.event === 'edit_systemrole') {
-				loadMain('/admin.php?c=admingroup&a=systemrole&id='+data.id);
-                return false;
-            }else if (obj.event === 'edit_menurole') {
-				loadMain('/admin.php?c=admingroup&a=menurole&id='+data.id);
-                return false;
-			}else if (obj.event === 'edit_channlrole') {
-				loadMain('/admin.php?c=admingroup&a=channlrole&id='+data.id);
-                return false;
-            }else if (obj.event === 'delete') {
-                layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=admingroup&a=del',data,function(res){
-						if(res.status == 1){
-							layer.msg(res.info, {icon: 1, time: 1000}, function(){
-							obj.del();
-							// 关闭弹出层
-							layer.close(index);
+		// 监听添加操作
+		$(".data-add-btn").on("click", function () {
+			loadMain('<{caUrl("admingroup","addview")}>');
+			return false;
+		});
+		// 监听删除操作
+		$(".data-delete-btn").on("click", function () {
+			var checkStatus = table.checkStatus('currentTableId')
+				, data = checkStatus.data;
+			layer.alert(JSON.stringify(data));
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				loadMain('<{caUrl("admingroup","editview")}>&id=' + data.id);
+				return false;
+			} else if (obj.event === 'edit_systemrole') {
+				loadMain('<{caUrl("admingroup","systemrole")}>&id=' + data.id);
+				return false;
+			} else if (obj.event === 'edit_menurole') {
+				loadMain('<{caUrl("admingroup","menurole")}>&id=' + data.id);
+				return false;
+			} else if (obj.event === 'edit_channlrole') {
+				loadMain('<{caUrl("admingroup","channlrole")}>&id=' + data.id);
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除么', function (index) {
+					$.post('<{caUrl("admingroup","del")}>', data, function (res) {
+						if (res.status == 1) {
+							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+								obj.del();
+								layer.close(index);
 							});
-						}else{
-							layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+						} else {
+							layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
 						}
 					});
-                });
-            }
-        });
-});
+				});
+			}
+		});
+	});
 </script>

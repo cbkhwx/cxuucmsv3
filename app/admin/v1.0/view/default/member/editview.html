@@ -7,7 +7,7 @@
     <div class="layui-form">
         <div class="layui-form-item">
             <label class="layui-form-label required">姓名</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" name="name" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名"
                     value="<{$member['name']}>" class="layui-input">
             </div>
@@ -76,7 +76,7 @@
 		
 		var uploadInst = upload.render({
 			elem: '#thumimg' //绑定元素
-			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
+			,url: '<{caUrl("upload","imgUpload")}>' //图片上传接口 /admin.php?c=upload&a=imgUpload
 			,size: 1000
 			,accept:'images'
 			,acceptMime: 'image/*'
@@ -95,10 +95,10 @@
 		});
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            $.post('/admin.php?c=member&a=edit', data.field, function (res) {
+            $.post('<{caUrl("member","edit")}>', data.field, function (res) {
                 if (res.status == 1) {
                     layer.msg(res.info, { icon: 1, time: 1000 }, function () {
-                        loadMain("/admin.php?c=member&a=index");
+                        loadMain('<{caUrl("member","index")}>');
                     });
                 } else {
                     layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });

@@ -1,123 +1,128 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 系统管理 / 系统菜单列表</h3><hr>
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 系统管理 / 系统菜单列表</h3>
+	<hr>
 </div>
 <div class="layui-fluid">
-<div class="layui-row layui-col-space15">
-    <div class="layui-col-md12">
-            <div class="layui-btn-container">
-			<?php echo sysrolTF("adminmenu_addview")?'<button class="layui-btn layui-btn-sm data-add-btn"> 添加菜单 </button>':''; ?> 
-                <button id="btnExpandAll" class="layui-btn layui-btn-sm"> 全部展开 </button>
-                <button id="btnFoldAll" class="layui-btn layui-btn-sm"> 全部折叠 </button>
-            </div>
-
-        <table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
-		
-        <script type="text/html" id="currentTableBar">
-		<?php echo sysrolTF("adminmenu_editview")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
-		<?php echo sysrolTF("adminmenu_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
-        </script>
-		
-		<script type="text/html" id="icoTableBar">
-           <i class="layui-icon {{d.ico}}"></i> 
-        </script>
-		<script type="text/html" id="sortTableBar">
-           {{d.sort}}
-        </script>
-		
-    </div>
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-body ">
+					<blockquote class="layui-elem-quote">控制器名和方法名必须对应程序的控制名和方法名，用于系统调用生成对应路径！！</blockquote>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-btn-container">
+				<?php echo sysrolTF("adminmenu_addview")?'<button class="layui-btn layui-btn-sm data-add-btn"> 添加菜单 </button>':''; ?>
+				<button id="btnExpandAll" class="layui-btn layui-btn-sm"> 全部展开 </button>
+				<button id="btnFoldAll" class="layui-btn layui-btn-sm"> 全部折叠 </button>
+			</div>
+			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter">
+			</table>
+			<script type="text/html" id="currentTableBar">
+			<?php echo sysrolTF("adminmenu_editview")?'<a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
+			<?php echo sysrolTF("adminmenu_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
+			</script>
+			<script type="text/html" id="icoTableBar">
+         	    <i class="layui-icon {{d.ico}}"></i> 
+			</script>
+			<script type="text/html" id="sortTableBar">
+			{{d.sort}}
+			</script>
+		</div>
+	</div>
 </div>
 
-</div> 
-
 <script>
-layui.use(['treeTable','table'], function () {    
-	var $ = layui.jquery,
-	table = layui.table,
-	form = layui.form,
-	treeTable = layui.treeTable;
-	
-	var insTb = treeTable.render({
-		elem: '#currentTableId',
-		text: {
-			none: '<div style="padding: 18px 0;">哎呀，一条数据都没有~</div>'
-		},
-		//data: data,
-		tree: {
-			iconIndex: 1,  // 折叠图标显示在第几列
-			idName: 'id',  // 自定义id字段的名称
-			pidName: 'pid',  // 自定义标识是否还有子节点的字段名称
-			haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
-			isPidData: true,  // 是否是pid形式数据
-			arrowType: 'arrow2',   // 自定义箭头风格
-			getIcon: function(d) {  // 自定义图标
-				// d是当前行的数据
-				if (d.haveChild) {  // 判断是否有子集
-					return '<i class="ew-tree-icon ew-tree-icon-folder"></i>';
-				} else {
-					return '<i class="ew-tree-icon ew-tree-icon-file"></i>';
+	layui.use(['treeTable', 'table'], function () {
+		var $ = layui.jquery,
+			table = layui.table,
+			form = layui.form,
+			treeTable = layui.treeTable;
+
+		var insTb = treeTable.render({
+			elem: '#currentTableId',
+			text: {
+				none: '<div style="padding: 18px 0;">哎呀，一条数据都没有~</div>'
+			},
+			//data: data,
+			tree: {
+				iconIndex: 1,  // 折叠图标显示在第几列
+				idName: 'id',  // 自定义id字段的名称
+				pidName: 'pid',  // 自定义标识是否还有子节点的字段名称
+				haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
+				isPidData: true,  // 是否是pid形式数据
+				arrowType: 'arrow2',   // 自定义箭头风格
+				getIcon: function (d) {  // 自定义图标
+					// d是当前行的数据
+					if (d.haveChild) {  // 判断是否有子集
+						return '<i class="ew-tree-icon ew-tree-icon-folder"></i>';
+					} else {
+						return '<i class="ew-tree-icon ew-tree-icon-file"></i>';
+					}
 				}
+			},
+			cols: [
+				//{type: 'numbers'},
+				//{field: 'pid', title: 'PID'},
+				{ field: 'id', title: 'ID', width: 50 },
+				{ field: 'name', title: 'name', width: 260 },
+				{ field: 'controller', title: '控制器名', width: 260 },
+				{ field: 'action', title: '方法名' },
+				{ field: 'ico', title: '图标', minWidth: 50, templet: '#icoTableBar', fixed: "right", align: "center" },
+				{ field: 'sort', title: '排序', minWidth: 50, templet: '#sortTableBar', fixed: "right", align: "center" },
+				{ title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center" }
+			],
+			reqData: function (data, callback) {
+				$.get('<{caUrl("systemmenu","jsonlist")}>', function (res) {
+					//console.log(res);
+					callback(res.data);  // 参数是数组类型
+				}, "json");
 			}
-		},
-		cols: [
-			//{type: 'numbers'},
-			//{field: 'pid', title: 'PID'},
-			{field: 'id', title: 'ID', width: 50},			
-			{field: 'name', title: 'name', width: 260},
-			{field: 'controller', title: '控制器及方法名', width: 260},
-			{field: 'url', title: '地址'},
-			{field: 'ico', title: '图标',minWidth: 50, templet: '#icoTableBar', fixed: "right", align: "center"},
-			{field: 'sort', title: '排序',minWidth: 50, templet: '#sortTableBar', fixed: "right", align: "center"},
-			{title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
-		],
-		reqData: function(data, callback) {
-			$.get('/admin.php?c=systemmenu&a=jsonlist', function (res) {
-			//console.log(res);
-				callback(res.data);  // 参数是数组类型
-			},"json");
-		}
-	});
-	
-	$(".data-add-btn").on("click", function () {
-            loadMain('/admin.php?c=systemmenu&a=addview');
-            return false;
 		});
-		
+
+		$(".data-add-btn").on("click", function () {
+			loadMain('<{caUrl("systemmenu","addview")}>');
+			return false;
+		});
+
 		// 全部展开
-        $('#btnExpandAll').click(function () {
-            insTb.expandAll();
-        });
+		$('#btnExpandAll').click(function () {
+			insTb.expandAll();
+		});
 
-        // 全部折叠
-        $('#btnFoldAll').click(function () {
-            insTb.foldAll();
-        });
+		// 全部折叠
+		$('#btnFoldAll').click(function () {
+			insTb.foldAll();
+		});
 
 
-        treeTable.on('tool(currentTableId)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') {
-				loadMain('/admin.php?c=systemmenu&a=editview&id='+data.id);
-                return false;
-            } else if (obj.event === 'delete') {
-                layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=systemmenu&a=del',data,function(res){
-						if(res.status == 1){
-							layer.msg(res.info, {icon: 1, time: 1000}, function(){
-							obj.del();
-							// 关闭弹出层
-							layer.close(index);
+		treeTable.on('tool(currentTableId)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				loadMain('<{caUrl("systemmenu","editview")}>&id=' + data.id);
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除么', function (index) {
+					$.post('<{caUrl("systemmenu","del")}>', data, function (res) {
+						if (res.status == 1) {
+							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+								obj.del();
+								layer.close(index);
 							});
-						}else{
-							layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
+						} else {
+							layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
 						}
 					});
-                });
-            }
-        });
-	
-	
+				});
+			}
+		});
 
-});
+
+
+	});
 
 </script>

@@ -52,10 +52,10 @@
 
 <script>
 function cacheDel(url){
-	$.post('/admin.php?c=cache&a='+url,function(res){
+	$.post('admin.php?c=cache&a='+url,function(res){
         if(res.status == 1){
             layer.msg(res.info, {icon: 1, time: 1000}, function(){
-                loadMain("/admin.php?c=cache");
+                loadMain('<{caUrl("cache","index")}>');
             });
         }else{
             layer.msg(res.info, {icon: 2, time: 1000});

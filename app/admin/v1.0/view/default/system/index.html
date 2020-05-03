@@ -8,7 +8,6 @@
         <label class="layui-form-label required">网站名称</label>
         <div class="layui-input-inline">
             <input type="text" name="sitename" lay-verify="required" lay-reqtext="网站名称不能为空" placeholder="请输入网站名称"  value="<{$config['sitename']}>" class="layui-input">
-            <tip>填写自己部署网站的名称。</tip>
         </div>
     </div>
     <div class="layui-form-item">
@@ -62,20 +61,14 @@
         var form = layui.form
             , layer = layui.layer,
 			$ = layui.jquery;
-
-        /**
-         * 初始化表单，要加上，不然刷新部分组件可能会不加载
-         */
         form.render();
 
         //监听提交
 		form.on('submit(setting)', function (data) {
-			//loading =layer.load(1, {shade: [0.1,'#fff'] });
-			$.post('/admin.php?c=system&a=edit',data.field,function(res){
-                //layer.close(loading);
+			$.post('<{caUrl("system","edit")}>',data.field,function(res){
                 if(res.status == 1){
                     layer.msg(res.info, {icon: 1, time: 1000}, function(){
-                        loadMain("/admin.php?c=system&a=index");
+                        loadMain('<{caUrl("system","index")}>');
                     });
                 }else{
                     layer.msg(res.info, {icon: 1, anim: 6, time: 5000});

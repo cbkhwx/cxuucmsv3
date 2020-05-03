@@ -5,35 +5,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>龙啸轩内容管理系统</title>
-  <link rel="stylesheet" href="/res/lib/layui/css/layui.css">
-  <link rel="stylesheet" href="/res/admin/v1.0/css/main.css">
-  <link rel="stylesheet" href="/res/lib/lay-module/dtree/dtree.css">
-  <link rel="stylesheet" href="/res/lib/lay-module/dtree/font/dtreefont.css">
+  <link rel="stylesheet" href="<?php echo U_RES;?>/lib/layui/css/layui.css">
+  <link rel="stylesheet" href="<?php echo U_RES_APP;?>/css/main.css">
+  <link rel="stylesheet" href="<?php echo U_RES;?>/lib/lay-module/dtree/dtree.css">
+  <link rel="stylesheet" href="<?php echo U_RES;?>/lib/lay-module/dtree/font/dtreefont.css">
 </head>
 
 <body class="layui-layout-body">
   <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-      <a href="/admin.php"><div class="layui-logo"></div></a>
+      <a href="<{PHP_FILE}>">
+        <div class="layui-logo"></div>
+      </a>
       <ul class="layui-nav layui-layout-left">
-        <?php foreach($topMenu as $vo){?>
+        <?php foreach($topMenu as $v){?>
         <li class="layui-nav-item"><a href="javascript:;"
-            onclick="loadMenu('<?php echo $vo['url'].'&pid='.$vo['id'];?>')"><i
-              class="layui-icon <?php echo $vo['ico'];?>"></i> <?php echo $vo['name'];?></a></li>
+            onclick="loadMenu('<{caUrl($v['controller'],$v['action'])}>&pid=<{$v['id']}>')"><i
+              class="layui-icon <?php echo $v['ico'];?>"></i> <{$v['name']}></a></li>
         <?php }?>
-        <!--       <li class="layui-nav-item"><a href="javascript:;" onclick="loadMenu('/admin.php?c=menu&a=content')">文章内容</a></li>
-      <li class="layui-nav-item"><a href="javascript:;" onclick="loadMenu('/admin.php?c=menu&a=system')">系统管理</a></li>
-      <li class="layui-nav-item"><a href="javascript:;" onclick="loadMenu('/admin.php?c=menu&a=adminuser')">用户管理</a></li>
-      <li class="layui-nav-item"><a href="javascript:;" onclick="loadMenu('/admin.php?c=menu&a=channel')">栏目管理</a></li>
-
-      <li class="layui-nav-item">
-        <a href="javascript:;">扩展功能</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li> -->
       </ul>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
@@ -42,23 +31,21 @@
             <?php echo sessionInfo("nickname");?>
           </a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;"
-                onclick="loadMain('/admin.php?c=adminuser&a=rewritepassword&id=<?php echo sessionInfo("userid");?>')">密码修改</a>
+            <dd><a href="javascript:;" onclick="loadMain('<{caUrl("adminuser","rewritepassword")}>&id=<?php echo sessionInfo("userid");?>')">密码修改</a>
             </dd>
-            <dd><a href="/admin.php?c=login&a=loginOut">退出</a></dd>
+            <dd><a href="<{caUrl('login','loginOut')}>">退出</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item"><a href="/" target="_blank">前台首页</a></li>
       </ul>
     </div>
-    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
     <div class="layui-side layui-bg-black">
       <div class="layui-side-scroll" id="leftMenu">
         <ul class="layui-nav layui-nav-tree" lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed">
             <a class="" href="javascript:;">常用功能</a>
             <dl class="layui-nav-child">
-              <dd><a href="javascript:;" onclick="loadMenu('/admin.php?c=menu&a=content&pid=12');">内容列表</a></dd>
+              <dd><a href="javascript:;" onclick="loadMenu('<{caUrl("menu","content")}>&pid=12');">内容列表</a></dd>
             </dl>
           </li>
         </ul>
@@ -71,13 +58,12 @@
 
     <div class="layui-footer">
       <!-- 底部固定区域 -->
-      © cxuu.net - 龙啸轩内容管理系统-- 专用版
+      © cxuu.net - 龙啸轩内容管理系统
     </div>
   </div>
-  <!-- <script src="/res/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script> -->
-  <script src="/res/lib/jquery-1.11.3.min.js"></script>
-  <script src="/res/lib/layui/layui.js"></script>
-  <script src="/res/lib/lay-config.js?v=1.0.1" charset="utf-8"></script>
+  <script src="<?php echo U_RES;?>/lib/jquery-1.11.3.min.js"></script>
+  <script src="<?php echo U_RES;?>/lib/layui/layui.js"></script>
+  <script src="<?php echo U_RES;?>/lib/lay-config.js?v=1.0.1" charset="utf-8"></script>
   <script>
     layui.use(['element', 'layer', 'jquery'], function () {
       var element = layui.element,
@@ -85,7 +71,7 @@
         $ = layui.jquery;
     });
 
-    $("#main").load('/admin.php?c=index&a=home');
+    $("#main").load('<{caUrl("index","home")}>');
 
     function loadMain(url) {
       $("#main").load(url);

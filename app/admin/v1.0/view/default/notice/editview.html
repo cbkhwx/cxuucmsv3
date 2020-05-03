@@ -51,17 +51,14 @@
             upload = layui.upload,
             $ = layui.$;
 
-        /**
-         * 初始化表单，要加上，不然刷新部分组件可能会不加载
-         */
         form.render();
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            $.post('/admin.php?c=notice&a=edit', data.field, function (res) {
+            $.post('<{caUrl("notice","edit")}>', data.field, function (res) {
                 if (res.status == 1) {
                     layer.msg(res.info, { icon: 1, time: 1000 }, function () {
-                        loadMain("/admin.php?c=notice&a=index");
+                        loadMain('<{caUrl("notice","index")}>');
                     });
                 } else {
                     layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
@@ -71,7 +68,7 @@
         });
         var uploadInst = upload.render({
             elem: '#thumimg' //绑定元素
-            , url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
+            , url: '<{caUrl("upload","imgUpload")}>' //图片上传接口
             , size: 1000
             , accept: 'images'
             , acceptMime: 'image/*'

@@ -12,18 +12,18 @@
                     value="<{$image['title']}>" class="layui-input">
             </div>
         </div>
-		<?php if(sysrolTF("upload_imgUpload")){ ?>
-		<div class="layui-form-item">
+        <?php if(sysrolTF("upload_imgUpload")){ ?>
+        <div class="layui-form-item">
             <label class="layui-form-label required">缩略图</label>
             <div class="layui-input-block">
                 <input type="text" id="imageval" name="img" value="<{$image['img']}>" class="layui-input">
-				<button type="button" class="layui-btn" id="thumimg">
-				  <i class="layui-icon">&#xe67c;</i>上传图片
-				</button>
-				<tip>200X130px</tip>
+                <button type="button" class="layui-btn" id="thumimg">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <tip>200X130px</tip>
             </div>
         </div>
-		<?php } ?>
+        <?php } ?>
         <div class="layui-form-item">
             <label class="layui-form-label required">作者</label>
             <div class="layui-input-inline">
@@ -34,17 +34,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">简要描述</label>
             <div class="layui-input-block">
-			 <textarea name="content" class="layui-textarea"><{$image['content']}></textarea>
+                <textarea name="content" class="layui-textarea"><{$image['content']}></textarea>
             </div>
         </div>
-        
+
         <div class="layui-form-item">
             <label class="layui-form-label">图集状态</label>
             <div class="layui-input-block">
-                <input type="radio" name="status" value="1" title="发布"
-                    <?php echo $image["status"] ==1?'checked=""':''; ?>>
-                <input type="radio" name="status" value="0" title="未审"
-                    <?php echo $image["status"] ==0?'checked=""':''; ?>>
+                <input type="radio" name="status" value="1" title="发布" <?php echo $image["status"] ==1?'checked=""':''; ?>>
+                <input type="radio" name="status" value="0" title="未审" <?php echo $image["status"] ==0?'checked=""':''; ?>>
             </div>
         </div>
         <div class="layui-form-item">
@@ -56,40 +54,40 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'table','upload'], function () {
+    layui.use(['form', 'table', 'upload'], function () {
         var form = layui.form,
             layer = layui.layer,
             upload = layui.upload,
             $ = layui.$;
-			
-		var uploadInst = upload.render({
-			elem: '#thumimg' //绑定元素
-			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
-			,size: 1000
-			,accept:'images'
-			,acceptMime: 'image/*'
-			//,acceptMime: 'image/jpg, image/png'
-			,done: function(res){
-				if(res.status == 1){
-					$('#imageval').val(res.result[0].src);
-					layer.msg(res.info);
-				}else{
-					layer.msg(res.info);
-				}
-			}
-			,error: function(){
-			  //请求异常回调
-			}
-		});
+
+        var uploadInst = upload.render({
+            elem: '#thumimg' //绑定元素
+            , url: '<{caUrl("upload","imgUpload")}>' //图片上传接口
+            , size: 1000
+            , accept: 'images'
+            , acceptMime: 'image/*'
+            //,acceptMime: 'image/jpg, image/png'
+            , done: function (res) {
+                if (res.status == 1) {
+                    $('#imageval').val(res.result[0].src);
+                    layer.msg(res.info);
+                } else {
+                    layer.msg(res.info);
+                }
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
 
         form.render();
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            $.post('/admin.php?c=image&a=edit', data.field, function (res) {
+            $.post('<{caUrl("image","edit")}>', data.field, function (res) {
                 if (res.status == 1) {
                     layer.msg(res.info, { icon: 1, time: 1000 }, function () {
-                        loadMain("/admin.php?c=image&a=index");
+                        loadMain('<{caUrl("image","index")}>');
                     });
                 } else {
                     layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
@@ -97,6 +95,6 @@
             });
             return false;
         });
-       
+
     });
 </script>

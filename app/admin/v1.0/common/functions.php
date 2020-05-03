@@ -1,5 +1,16 @@
 <?php
 const CXUUCMS_V="cxuucms V3.1";
+
+
+/* 
+ *  生成后台常用路径 生成 admin.php?c=member&a=del  后台部分未使用路由模式，使用这种方式较好
+ *  使用方法：在模板<?php echo caUrl('member','del');?> 
+ */
+function caUrl($c,$a){
+	$adminUrl = PHP_FILE.'?c='.$c.'&a='.$a;
+	return $adminUrl;
+}
+
 /* 
  *  获取 $_SESSION 值
  *  参照login.class.php 的登录方法调用相应数据

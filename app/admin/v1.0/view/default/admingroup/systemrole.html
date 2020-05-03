@@ -224,10 +224,10 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-			$.post('/admin.php?c=admingroup&a=systemroleedit',data.field,function(res){
+			$.post('<{caUrl("admingroup","systemroleedit")}>',data.field,function(res){
                 if(res.status == 1){
                     layer.msg(res.info, {icon: 1, time: 1000},function(){
-						loadMain("/admin.php?c=admingroup&a=index");
+						loadMain('<{caUrl("admingroup","index")}>');
 					});
                 }else{
                     layer.msg(res.info, {icon: 2, anim: 6, time: 5000});

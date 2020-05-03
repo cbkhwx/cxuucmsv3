@@ -122,11 +122,11 @@ class view
     {
         switch ($compress) {
             case 1:
-                $preg = '/<!--[\S\s]*-->/U';
+                $preg = '/<!--(?!\[|\<if\s)[\S\s]*-->/U';
                 $html = preg_replace($preg, '', $html);
                 break;
             case 2:
-                $preg = ['/<!--[\S\s]*-->|[\n\r]+/U', '/>\s+</U', '/\s{2,}/'];
+                $preg = ['/<!--(?!\[|\<if\s)[\S\s]*-->|[\n\r]+/U', '/>\s+</U', '/\s{2,}/'];
                 $replace = ['', '><', ' '];
                 $html = preg_replace($preg, $replace, $html);
                 break;

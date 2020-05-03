@@ -1,116 +1,121 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
 	<div class="layui-row">
-    <div class="layui-col-md11">
-      <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 添加 </h3>
-    </div>
-    <div class="layui-col-md1" style="text-align:right;">
-     <button class="layui-btn layui-btn-sm" onclick="loadMain('/admin.php?c=content&cid=<{$_GET['cid']}>')">返回列表</button>
-    </div>
-  </div>
-<hr>
+		<div class="layui-col-md11">
+			<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 添加 </h3>
+		</div>
+		<div class="layui-col-md1" style="text-align:right;">
+			<button class="layui-btn layui-btn-sm" onclick="loadMain('<{caUrl(" content","index")}>&cid=<{$_GET['cid']}>
+					')">返回列表</button>
+		</div>
+	</div>
+	<hr>
 </div>
 <div class="layui-fluid">
-    <div class="layui-form">
+	<div class="layui-form">
 		<div class="layui-form-item">
 			<label class="layui-form-label required">选择栏目</label>
-			<div class="layui-input-inline">			
+			<div class="layui-input-inline">
 				<select name="cid" lay-verify="">
-				<?php foreach($list as $key=>$vo){?>
-				  <option value="<?php echo $vo['id'];?>" <?php echo $_GET['cid'] == $vo['id']?'selected=""':''; echo $vo['type']==0 ?'disabled=""':''; ?>> <?php echo $vo['cname'];?></option>
-				<?php }?>  
-				</select>
+					<?php foreach($list as $key=>$vo){?>
+					  <option value="<?php echo $vo['id'];?>" <?php echo $_GET['cid'] == $vo['id']?'selected=""':''; echo $vo['type']==0 ?'disabled=""':''; ?>> <?php echo $vo['cname'];?></option>
+					<?php }?>  
+					</select>
 			</div>
 		</div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">标题</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题" value="" class="layui-input">
-            </div>
-        </div>
-		<div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">内容</label>
-            <div class="layui-input-block">
-                <textarea id="contentEdit" name="content" class="layui-textarea" placeholder="请输入内容"></textarea>
-            </div>
-        </div>
 		<div class="layui-form-item">
-            <label class="layui-form-label required">审核人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="examine" lay-verify="required" lay-reqtext="审核人不能为空" placeholder="请输入审核人" value="" class="layui-input">
-            </div>
-        </div>
+			<label class="layui-form-label required">标题</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题" value=""
+					class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">内容</label>
+			<div class="layui-input-block">
+				<textarea id="contentEdit" name="content" class="layui-textarea" placeholder="请输入内容"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label required">审核人</label>
+			<div class="layui-input-inline">
+				<input type="text" name="examine" lay-verify="required" lay-reqtext="审核人不能为空" placeholder="请输入审核人"
+					value="" class="layui-input">
+			</div>
+		</div>
 		<?php if(sysrolTF("content_attribute")){ ?>
 		<div class="layui-form-item">
-            <label class="layui-form-label required">内容属性</label>
-            <div class="layui-input-block">
-			  <input type="checkbox" name="attribute_a" value="1" title="头条">
-			  <input type="checkbox" name="attribute_b" value="1" title="小头条">
-			  <span id="lunhuantu" ><input type="checkbox" name="attribute_c" value="1" title="图片轮换"></span>
-            </div>
-        </div>
-		<?php } ?>		
+			<label class="layui-form-label required">内容属性</label>
+			<div class="layui-input-block">
+				<input type="checkbox" name="attribute_a" value="1" title="头条">
+				<input type="checkbox" name="attribute_b" value="1" title="小头条">
+				<span id="lunhuantu"><input type="checkbox" name="attribute_c" value="1" title="图片轮换"></span>
+			</div>
+		</div>
+		<?php } ?>
 		<?php if(sysrolTF("upload_imgUpload")){ ?>
 		<div class="layui-form-item">
-            <label class="layui-form-label required">轮换缩略图</label>
-            <div class="layui-input-block">
-                <input type="text" id="imageval" name="img" value="" class="layui-input">
+			<label class="layui-form-label required">轮换缩略图</label>
+			<div class="layui-input-block">
+				<input type="text" id="imageval" name="img" value="" class="layui-input">
 				<!-- <button type="button" class="layui-btn" id="thumimg">
 				  <i class="layui-icon">&#xe67c;</i>上传图片
 				</button> -->
 				<button type="button" class="layui-btn" id="getimage" onclick="getFirstImg()">
-				  <i class="layui-icon">&#xe60d;</i>获取内容第一张
+					<i class="layui-icon">&#xe60d;</i>获取内容第一张
 				</button>
-            </div>
-        </div>
+			</div>
+		</div>
 		<?php } ?>
-        
+
 		<?php if(sysrolTF("upload_attmentUpload")){ ?>
 		<div class="layui-form-item">
-            <label class="layui-form-label required">附件</label>
-            <div class="layui-input-block">
-                <div id="attval" class="cxuu_attmentupload">无附件</div>
+			<label class="layui-form-label required">附件</label>
+			<div class="layui-input-block">
+				<div id="attval" class="cxuu_attmentupload">无附件</div>
 				<input type="hidden" name="attid" value="" id="attid">
 				<button type="button" class="layui-btn" id="attupload">
-				  <i class="layui-icon">&#xe62f;</i>上传附件
-				</button><tip>目前只支持单一附件上传，多个内容请打压缩包，不超过2M！ 支持格式：zip、rar、7z、doc、docx、xlsx、xls。</tip>
-            </div>
-        </div>
+					<i class="layui-icon">&#xe62f;</i>上传附件
+				</button>
+				<tip>目前只支持单一附件上传，多个内容请打压缩包，不超过2M！ 支持格式：zip、rar、7z、doc、docx、xlsx、xls。</tip>
+			</div>
+		</div>
 		<?php } ?>
 		<div class="layui-form-item">
 			<label class="layui-form-label">状态</label>
 			<div class="layui-input-inline">
-			  <?php if(sysrolTF("content_status")){ ?><input type="radio" name="status" value="1" title="发布"><?php } ?>
-			  <input type="radio" name="status" value="0" title="草稿" checked>
+				<?php if(sysrolTF("content_status")){ ?><input type="radio" name="status" value="1"
+					title="发布"><?php } ?>
+				<input type="radio" name="status" value="0" title="草稿" checked>
 			</div>
-		  </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
-            </div>
-        </div>
-    </div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+			</div>
+		</div>
+	</div>
 </div>
-<script type="text/javascript" src="/res/lib/tinymce/tinymce.min.js?v=1"></script>
+<script type="text/javascript" src="<{U_ROOT}>/res/lib/tinymce/tinymce.min.js?v=1"></script>
 <script>
-    layui.use(['form', 'table','upload'], function () {
-        var form = layui.form,
-            layer = layui.layer,
-            table = layui.table,
+	layui.use(['form', 'table', 'upload'], function () {
+		var form = layui.form,
+			layer = layui.layer,
+			table = layui.table,
 			upload = layui.upload,
-            $ = layui.$;
-			
+			$ = layui.$;
+
 		tinymce.init({
 			selector: '#contentEdit',
-			language:'zh_CN',
-			relative_urls : false, 
-			remove_script_host : true,
+			language: 'zh_CN',
+			relative_urls: false,
+			remove_script_host: true,
 			plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave indent2em autoresize lineheight axupimgs',
-            toolbar: 'code fullscreen | undo redo restoredraft | cut copy paste | forecolor bold italic underline link | alignleft aligncenter alignright alignjustify outdent indent | fontselect fontsizeselect | table <?php if(sysrolTF("upload_tinymceUpload")){ ?>image<?php } ?> charmap emoticons insertdatetime preview | indent2em lineheight <?php if(sysrolTF("upload_tinymceUpload")){ ?>axupimgs<?php } ?>',
-            autosave_interval: "20s",//自动存稿时间
+			toolbar: 'code fullscreen | undo redo restoredraft | cut copy paste | forecolor bold italic underline link | alignleft aligncenter alignright alignjustify outdent indent | fontselect fontsizeselect | table <?php if(sysrolTF("upload_tinymceUpload")){ ?>image<?php } ?> charmap emoticons insertdatetime preview | indent2em lineheight <?php if(sysrolTF("upload_tinymceUpload")){ ?>axupimgs<?php } ?>',
+			autosave_interval: "20s",//自动存稿时间
 			font_formats: '微软雅黑=Microsoft YaHei,sans-serif;仿宋_GB2312=仿宋_GB2312,Microsoft YaHei,sans-serif;宋体=宋体;仿宋=仿宋;黑体=黑体',
 			height: 650, //编辑器高度
-            min_height: 400,
+			min_height: 400,
 			draggable_modal: true,
 			images_upload_base_path: '/',
 			images_reuse_filename: true,
@@ -119,8 +124,8 @@
 				var file = blobInfo.blob();//转化为易于理解的file对象
 				xhr = new XMLHttpRequest();
 				xhr.withCredentials = false;
-				xhr.open('POST', '/admin.php?c=upload&a=tinymceUpload');
-				xhr.onload = function() {
+				xhr.open('POST', '<{caUrl("upload","tinymceUpload")}>');
+				xhr.onload = function () {
 					var json;
 					if (xhr.status != 200) {
 						failFun('HTTP Error: ' + xhr.status);
@@ -136,105 +141,105 @@
 				};
 				//console.log(file);
 				formData = new FormData();
-				formData.append('file', file, file.name+'.jpg' );//此处与源文档不一样
+				formData.append('file', file, file.name + '.jpg');//此处与源文档不一样
 				xhr.send(formData);
 			}
-		  });
+		});
 
-        form.render();
+		form.render();
 
-        //监听提交
-        form.on('submit(saveBtn)', function (data) {
-			$.post('/admin.php?c=content&a=add',
-			{
-			cid : data.field.cid,
-			title : data.field.title,
-			attid : data.field.attid,
-			attribute_a : data.field.attribute_a,
-			attribute_b : data.field.attribute_b,
-			attribute_c : data.field.attribute_c,
-			examine : data.field.examine,
-			img : data.field.img,
-			content : tinyMCE.editors[0].getContent(),
-			status : data.field.status
-			},function(res){
-                if(res.status == 1){
-                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
-                    loadMain("/admin.php?c=content&cid="+res.cid);
-                    });
-                }else{
-                    layer.msg(res.info, {icon: 2, anim: 6, time: 5000});
-                }
-            });
-            return false;
-        });
-		
+		//监听提交
+		form.on('submit(saveBtn)', function (data) {
+			$.post('<{caUrl("content","add")}>',
+				{
+					cid: data.field.cid,
+					title: data.field.title,
+					attid: data.field.attid,
+					attribute_a: data.field.attribute_a,
+					attribute_b: data.field.attribute_b,
+					attribute_c: data.field.attribute_c,
+					examine: data.field.examine,
+					img: data.field.img,
+					content: tinyMCE.editors[0].getContent(),
+					status: data.field.status
+				}, function (res) {
+					if (res.status == 1) {
+						layer.msg(res.info, { icon: 1, time: 1000 }, function () {
+							loadMain('<{caUrl("content","index")}>&cid=' + res.cid);
+						});
+					} else {
+						layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
+					}
+				});
+			return false;
+		});
+
 		var uploadInst = upload.render({
 			elem: '#thumimg' //绑定元素
-			,url: '/admin.php?c=upload&a=imgUpload' //图片上传接口
-			,size: 1000
-			,accept:'images'
-			,acceptMime: 'image/*'
+			, url: '<{caUrl("upload","imgUpload")}>' //图片上传接口
+			, size: 1000
+			, accept: 'images'
+			, acceptMime: 'image/*'
 			//,acceptMime: 'image/jpg, image/png'
-			,done: function(res){
-				if(res.status == 1){
+			, done: function (res) {
+				if (res.status == 1) {
 					$('#imageval').val(res.result[0].src);
 					layer.msg(res.info);
-				}else{
+				} else {
 					layer.msg(res.info);
 				}
 			}
-			,error: function(){
-			  //请求异常回调
+			, error: function () {
+				//请求异常回调
 			}
 		});
-		
+
 		var uploadAttment = upload.render({
 			elem: '#attupload' //绑定元素
-			,url: '/admin.php?c=upload&a=attmentUpload' //附件上传接口
-			,size: 2000
-			,accept:'file'
-			,acceptMime: 'file/*'
+			, url: '<{caUrl("upload","attmentUpload")}>' //附件上传接口
+			, size: 2000
+			, accept: 'file'
+			, acceptMime: 'file/*'
 			//,acceptMime: 'image/jpg, image/png'
-			,exts: 'zip|rar|7z|doc|docx|xlsx|xls|'
-			,done: function(res){
-				if(res.status == 1){
-					$('#attval').html('<span class="layui-badge layui-bg-blue">'+res.result[0].originName+'</span>');
+			, exts: 'zip|rar|7z|doc|docx|xlsx|xls|'
+			, done: function (res) {
+				if (res.status == 1) {
+					$('#attval').html('<span class="layui-badge layui-bg-blue">' + res.result[0].originName + '</span>');
 					$('#attid').val(res.prekey);
 					//res.result[0].src + res.result[0].suffix + res.result[0].size
 					layer.msg(res.info);
-				}else{
+				} else {
 					layer.msg(res.info);
 				}
 			}
-			,error: function(){
-			  //请求异常回调
+			, error: function () {
+				//请求异常回调
 			}
 		});
-    });
+	});
 	//获取编辑器内容的第一张图片
-	function getFirstImg(){
+	function getFirstImg() {
 		var content = tinyMCE.editors[0].getContent();
 		var getval = $(content).find("img").eq(0).attr("src");
-		if(getval.length > 0){
+		if (getval.length > 0) {
 			$('#imageval').val(getval);
 			$('#lunhuantu').show(); //如果有内容，显示轮换选择框
 		}
 	}
-	
+
 	//如果没有提取缩略图，就不能选择 轮换图
 	var imageval = $('#imageval').val();
-		if(imageval.length < 1){
-			$('#lunhuantu').hide();
-		}else{
+	if (imageval.length < 1) {
+		$('#lunhuantu').hide();
+	} else {
+		$('#lunhuantu').show();
+	}
+	$('#imageval').bind('input propertychange', function () {
+		if ($(this).val().length) {
 			$('#lunhuantu').show();
-		}
-	$('#imageval').bind('input propertychange',function(){
-		if($(this).val().length){
-			$('#lunhuantu').show();
-		}else{
+		} else {
 			$('#lunhuantu').hide();
 		}
-		
+
 	});
 </script>

@@ -46,7 +46,7 @@
 		// 初始化树
     dtree.render({
 		elem: "#contentCateTree",
-		url: "/admin.php?c=contentcate&a=contentCateTreeJsonlist", // 使用url加载（可与data加载同时存在）
+		url: "<{caUrl('contentcate','contentCateTreeJsonlist')}>", // 使用url加载（可与data加载同时存在）
 		dataStyle: "layuiStyle",  //使用layui风格的数据格式
 		//dataFormat: "list",  //配置data的风格为list
 		response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
@@ -66,10 +66,10 @@
         //监听提交
         form.on('submit(saveBtn)', function (data) {
 			var params = dtree.getCheckbarJsonArrParam("contentCateTree");
-			$.post('/admin.php?c=admingroup&a=channlroleedit',{id:<{$info['id']}>,channlrole:params.nodeId},function(res){
+			$.post('<{caUrl("admingroup","channlroleedit")}>',{id:<{$info["id"]}>,channlrole:params.nodeId},function(res){
                 if(res.status == 1){
                     layer.msg(res.info, {icon: 1, time: 1000},function(){
-						loadMain("/admin.php?c=admingroup&a=index");
+						loadMain('<{caUrl("admingroup","index")}>');
 					});
                 }else{
                     layer.msg(res.info, {icon: 2, anim: 6, time: 5000});

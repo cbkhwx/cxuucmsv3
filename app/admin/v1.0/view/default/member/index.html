@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 领导信息</h3>
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 领导信息 </h3>
 	<hr>
 </div>
 <div class="layui-fluid">
@@ -41,7 +41,7 @@
 			form = layui.form;
 		table.render({
 			elem: '#currentTableId',
-			url: '/admin.php?c=member&a=jsonlist',
+			url: '<{caUrl("member","jsonlist")}>',
 			toolbar: '#toolbarAE',
 			defaultToolbar: ['filter', 'exports', 'print', {
 				title: '提示',
@@ -58,11 +58,11 @@
 			cols: [[
 				//{type: "checkbox", width: 50, fixed: "left"},
 				{ field: 'id', width: 80, title: 'ID', sort: true },
-				{ field: 'sort', width: 100,  title: '单位排序' },
-				{ field: 'name',  title: '姓名' },
+				{ field: 'sort', width: 100,  title: '单位排序', align: "center" },
+				{ field: 'name', width: 120, title: '姓名' , align: "center"},
 				{ field: 'duties', title: '职务' },
-				{ field: 'photo',  title: '照片' ,templet: '#imgTpl', unresize: true},
-				{ field: 'duty', width: 200, title: '分管工作', sort: true },
+				{ field: 'photo', width: 120,  title: '照片' ,templet: '#imgTpl', unresize: true, align: "center"},
+				{ field: 'duty', title: '分管工作'},
 				{ field: 'status', width: 200, title: '前台是否显示', sort: true, templet: '#switchTpl', unresize: true },
 				{ title: '操作', width: 160, templet: '#currentTableBar', fixed: "right", align: "center" }
 			]],
@@ -74,7 +74,7 @@
 
 		// 监听添加操作
 		$(".data-add-btn").on("click", function () {
-			loadMain('/admin.php?c=member&a=addview');
+			loadMain('<{caUrl("member","addview")}>');
 			return false;
 		});
 		// 监听删除操作
@@ -97,7 +97,7 @@
 			if (obj.elem.checked) {
 				checked = 1;
 			}
-			$.post('/admin.php?c=member&a=switchStatus', { id: this.id, status: checked }, function (res) {
+			$.post('<{caUrl("member","switchStatus")}>', { id: this.id, status: checked }, function (res) {
 				if (res.status == 1) {
 					layer.tips(res.info + ' 状态为：' + checked, obj.othis);
 				} else {
@@ -111,11 +111,11 @@
 		table.on('tool(currentTableFilter)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'edit') {
-				loadMain('/admin.php?c=member&a=editview&id=' + data.id);
+				loadMain('<{caUrl("member","editview")}>&id=' + data.id);
 				return false;
 			} else if (obj.event === 'delete') {
 				layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=member&a=del', data, function (res) {
+					$.post('<{caUrl("member","del")}>', data, function (res) {
 						if (res.status == 1) {
 							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
 								obj.del();

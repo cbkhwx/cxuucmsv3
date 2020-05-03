@@ -16,21 +16,17 @@
 			</table>
 
 			<script type="text/html" id="switchTpl">
-		  <!-- 这里的 checked 的状态只是演示 -->
 			<input type="checkbox" name="status" id="{{d.id}}" value="{{d.status}}" lay-skin="switch" lay-text="审|未审"
 				lay-filter="switchStatus" {{ d.status == 1 ? 'checked' : '' }}>
 			</script>
 
 			<script type="text/html" id="currentTableBar">
-		<?php echo sysrolTF("notice_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
-		<?php echo sysrolTF("notice_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
-        </script>
-
+			<?php echo sysrolTF("notice_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
+			<?php echo sysrolTF("notice_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
+			</script>
 		</div>
 	</div>
-
 </div>
-
 <script>
 	layui.use('table', function () {
 		var table = layui.table,
@@ -39,7 +35,7 @@
 		table.render({
 			elem: '#currentTableId',
 			//url: '/res/admin/api/table.json',
-			url: '/admin.php?c=notice&a=jsonlist',
+			url: '<{caUrl("notice","jsonlist")}>',
 			toolbar: '#toolbarAE',
 			defaultToolbar: ['filter', 'exports', 'print', {
 				title: '提示',
@@ -70,7 +66,7 @@
 
 		// 监听添加操作
 		$(".data-add-btn").on("click", function () {
-			loadMain('/admin.php?c=notice&a=addview');
+			loadMain('<{caUrl("notice","addview")}>');
 			return false;
 		});
 		// 监听删除操作
@@ -93,7 +89,7 @@
 			if (obj.elem.checked) {
 				checked = 1;
 			}
-			$.post('/admin.php?c=notice&a=switchStatus', { id: this.id, status: checked }, function (res) {
+			$.post('<{caUrl("notice","switchStatus")}>', { id: this.id, status: checked }, function (res) {
 				if (res.status == 1) {
 					layer.tips(res.info + ' 状态为：' + checked, obj.othis);
 				} else {
@@ -108,11 +104,11 @@
 		table.on('tool(currentTableFilter)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'edit') {
-				loadMain('/admin.php?c=notice&a=editview&id=' + data.id);
+				loadMain('<{caUrl("notice","editview")}>&id=' + data.id);
 				return false;
 			} else if (obj.event === 'delete') {
 				layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=notice&a=del', data, function (res) {
+					$.post('<{caUrl("notice","del")}>', data, function (res) {
 						if (res.status == 1) {
 							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
 								obj.del();

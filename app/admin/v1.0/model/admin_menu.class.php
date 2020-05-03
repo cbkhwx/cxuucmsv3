@@ -57,7 +57,7 @@ class admin_menu extends model
 			'pid' => $_POST['pid'],
 			'name' => $_POST['name'],
 			'controller' => $_POST['controller'],
-			'url' => $_POST['url'],
+			'action' => $_POST['action'],
 			'sort' => $_POST['sort'],
 			'ico' => $_POST['ico'],
 			];
@@ -79,7 +79,7 @@ class admin_menu extends model
 			'name' => $_POST['name'],
 			'controller' => $_POST['controller'],
 			'sort' => $_POST['sort'],
-			'url' => $_POST['url'],
+			'action' => $_POST['action'],
 			'ico' => $_POST['ico'],
 			];
         $re_key = $db->table('admin_menu')->Where($where)->Update($data);

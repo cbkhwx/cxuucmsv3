@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="content-top-nav">
-    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 编辑值班人信息</h3>
+    <h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 扩展功能 / 编辑值班人信息</h3>
     <hr>
 </div>
 <div class="layui-fluid">
@@ -36,7 +36,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">值班时间</label>
             <div class="layui-input-inline">
-                <input id="datetime" type="text" name="ondutytime" lay-verify="required" lay-reqtext="值班时间不能为空" placeholder="请输入值班时间" value="<{$onduty['ondutytime']}>" class="layui-input" autocomplete = "off">
+                <input id="datetime" type="text" name="ondutytime" lay-verify="required" lay-reqtext="值班时间不能为空"
+                    placeholder="请输入值班时间" value="<{$onduty['ondutytime']}>" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
@@ -57,25 +58,25 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'table','laydate'], function () {
+    layui.use(['form', 'table', 'laydate'], function () {
         var form = layui.form,
             layer = layui.layer,
             laydate = layui.laydate,
             $ = layui.$;
-			
-		laydate.render({
-			elem:'#datetime'
-			,type:'date'
-		});
+
+        laydate.render({
+            elem: '#datetime'
+            , type: 'date'
+        });
 
         form.render();
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            $.post('/admin.php?c=onduty&a=edit', data.field, function (res) {
+            $.post('<{caUrl("onduty","edit")}>', data.field, function (res) {
                 if (res.status == 1) {
                     layer.msg(res.info, { icon: 1, time: 1000 }, function () {
-                        loadMain("/admin.php?c=onduty&a=index");
+                        loadMain('<{caUrl("onduty","index")}>');
                     });
                 } else {
                     layer.msg(res.info, { icon: 2, anim: 6, time: 5000 });
@@ -83,6 +84,6 @@
             });
             return false;
         });
-       
+
     });
 </script>

@@ -5,20 +5,23 @@
 </div>
 <div class="layui-fluid">
 	<div class="layui-row layui-col-space15">
-	<div class="layui-col-md12">
-	当前图集：<h2><b><{$images['title']}></b></h2>
-	作者：<h3><{$images['auther']}></h3>
-	
-	</div>
+		<div class="layui-col-md12">
+			当前图集：<h2><b>
+					<{$images['title']}>
+				</b></h2>
+			作者：<h3>
+				<{$images['auther']}>
+			</h3>
+
+		</div>
 		<div class="layui-col-md12">
 			<script type="text/html" id="toolbarAE">
-            <div class="layui-btn-container">
-			<?php echo sysrolTF("imageinfo_addview")?'<button class="layui-btn layui-btn-sm data-add-btn">添加图文</button>':''; ?> 
-            </div>
-        </script>
+				<div class="layui-btn-container">
+				<?php echo sysrolTF("imageinfo_addview")?'<button class="layui-btn layui-btn-sm data-add-btn">添加图文</button>':''; ?> 
+				</div>
+			</script>
 
-			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter">
-			</table>
+			<table class="layui-hide" id="currentTableId" lay-data="{id: 'idReload'}" lay-filter="currentTableFilter"></table>
 			<script type="text/html" id="imgTpl">
 			<img src="{{d.imgsrc}}" width="40" height="30">
 			</script>
@@ -28,9 +31,9 @@
 			</script>
 
 			<script type="text/html" id="currentTableBar">
-		<?php echo sysrolTF("imageinfo_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
-		<?php echo sysrolTF("imageinfo_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
-        </script>
+			<?php echo sysrolTF("imageinfo_editview")?' <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>':''; ?> 
+			<?php echo sysrolTF("imageinfo_del")?'<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>':''; ?> 
+			</script>
 
 		</div>
 	</div>
@@ -45,7 +48,7 @@
 		table.render({
 			elem: '#currentTableId',
 			//url: '/res/admin/api/table.json',
-			url: '/admin.php?c=imageinfo&a=jsonlist&aid=<{$aid}>',
+			url: '<{caUrl("imageinfo","jsonlist")}>&aid=<{$aid}>',
 			toolbar: '#toolbarAE',
 			defaultToolbar: ['filter', 'exports', 'print', {
 				title: '提示',
@@ -62,8 +65,8 @@
 			cols: [[
 				//{type: "checkbox", width: 50, fixed: "left"},
 				{ field: 'id', width: 80, title: 'ID', sort: true },
-				{ field: 'imgsrc',width: 80, title: '图片' ,templet: '#imgTpl', unresize: true},
-				{ field: 'info',  title: '文字描述' },
+				{ field: 'imgsrc', width: 80, title: '图片', templet: '#imgTpl', unresize: true },
+				{ field: 'info', title: '文字描述' },
 				{ title: '操作', width: 260, templet: '#currentTableBar', fixed: "right", align: "center" }
 			]],
 			limits: [10, 15, 20, 25, 50, 100],
@@ -74,7 +77,7 @@
 
 		// 监听添加操作
 		$(".data-add-btn").on("click", function () {
-			loadMain('/admin.php?c=imageinfo&a=addview&aid=<{$aid}>');
+			loadMain('<{caUrl("imageinfo","addview")}>&aid=<{$aid}>');
 			return false;
 		});
 		// 监听删除操作
@@ -93,11 +96,11 @@
 		table.on('tool(currentTableFilter)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'edit') {
-				loadMain('/admin.php?c=imageinfo&a=editview&id=' + data.id);
+				loadMain('<{caUrl("imageinfo","editview")}>&id=' + data.id);
 				return false;
 			} else if (obj.event === 'delete') {
 				layer.confirm('真的删除么', function (index) {
-					$.post('/admin.php?c=imageinfo&a=del', data, function (res) {
+					$.post('<{caUrl("imageinfo","del")}>', data, function (res) {
 						if (res.status == 1) {
 							layer.msg(res.info, { icon: 1, time: 1000 }, function () {
 								obj.del();
