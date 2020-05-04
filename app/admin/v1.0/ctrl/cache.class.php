@@ -19,15 +19,15 @@ class cache
 		//文件缓存赋值
 		$dirsize = array();
 		$dirsize['htmlCaheDir'] = P_HTML;
-		$dirsize['htmlCahe'] = round(@dirSize($dirsize['htmlCaheDir'])/1024,2) .' KB';
+		$dirsize['htmlCahe'] = file_size_format(@dirSize($dirsize['htmlCaheDir']));
 		$dirsize['fileCaheDir'] = P_CACHE;
-		$dirsize['fileCahe'] = round(@dirSize($dirsize['fileCaheDir'])/1024,2) .' KB';
+		$dirsize['fileCahe'] = file_size_format(@dirSize($dirsize['fileCaheDir']));
 		$dirsize['fileHomeCaheDir'] = P_RUN.'index/';
-		$dirsize['fileHomeCahe'] = round(@dirSize($dirsize['fileHomeCaheDir'])/1024,2) .' KB';
+		$dirsize['fileHomeCahe'] = file_size_format(@dirSize($dirsize['fileHomeCaheDir']));
 		$dirsize['fileAdminCaheDir'] = P_RUN.'admin/';
-		$dirsize['fileAdminCahe'] = round(@dirSize($dirsize['fileAdminCaheDir'])/1024,2) .' KB';
+		$dirsize['fileAdminCahe'] = file_size_format(@dirSize($dirsize['fileAdminCaheDir']));
 		$dirsize['phpErLogCaheDir'] = P_RUN.'php_error_log/';
-		$dirsize['phpErLogCahe'] = round(@dirSize($dirsize['phpErLogCaheDir'])/1024,2) .' KB';
+		$dirsize['phpErLogCahe'] = file_size_format(@dirSize($dirsize['phpErLogCaheDir']));
 		view::assign('dirsize',$dirsize);
         view::display();
 	}

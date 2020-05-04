@@ -204,27 +204,23 @@ function getTree($arr,$pid=0,$level=0)
 }
 
 /** 
-* 统计目录文件大小的函数 
-* @author xfcode 
+* 统计目录文件大小
 */
-function dirSize($dir){
-	$size=0;
-	//打开目录
-	$dd=@opendir($dir);  		//--opendir("")打开一个目录，返回此目录的资源句柄
-	@readdir($dd); 				//--通过读两次，来跳过特殊目录"."、".."
-	@readdir($dd);
-	//遍历目录累加大小
-	while($f = @readdir($dd)){ 	//--readdir(资源句柄)从目中读取一个目录或文件，并指针向下移动一位。
-		$file = $dir."/".$f; 	//--为文件名添加目录名
-		if(is_file($file)){
-			$size += filesize($file);
-		}
-		if(is_dir($file)){
-			$size +=dirSize($file); //--递归调用
+function dirSize($file) {
+	$size = 0;
+	$dir = opendir($file);
+	while($filename = readdir($dir)) {
+		if($filename!="." && $filename !="..") {
+			$filename = $file."/".$filename;
+			if(is_dir($filename)) {
+				//使用递归
+				$size += dirsize($filename);
+			} else {
+				$size += filesize($filename);
+			}
 		}
 	}
-	//关闭目录
-	@closedir($dd);				//--closedir(资源句柄)关闭打开的目录
+	closedir($dir);
 	return $size;
 }
 
