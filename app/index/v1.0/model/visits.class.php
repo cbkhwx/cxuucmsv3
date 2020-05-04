@@ -20,18 +20,19 @@ class visits
         }else{
             $setCache = cache::R('visits_inc', 1, 2000, 2);
         }
+        
+        $num = 11;//可根据网站访问量适当将数据设置得大一些，建议设置成单数
 
-        if($setCache >= 10){
+        if($setCache >= $num){
             $setCache = cache::R('visits_inc', 1, 0, 2);
-
             $pdo = \z\pdo::Init();
             $prefix = $pdo->GetConfig();
             $fix = $prefix['prefix'];
             $date = date('Y-m-d',time());
-            $sql = "UPDATE {$fix}visits SET visits = visits+10 WHERE DATEDIFF(date,NOW()) = 0";
+            $sql = "UPDATE {$fix}visits SET visits = visits+{$num} WHERE DATEDIFF(date,NOW()) = 0";
             $result = $pdo->Submit($sql);
             if(empty($result)){
-                $insertSql = "INSERT INTO `{$fix}visits` (`id`, `date`, `visits`) VALUES (NULL, '{$date}', '1')";
+                $insertSql = "INSERT INTO `{$fix}visits` (`id`, `date`, `visits`) VALUES (NULL, '{$date}', '{$num}')";
                 $pdo->Submit($insertSql);
             }
         }
