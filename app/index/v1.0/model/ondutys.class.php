@@ -9,7 +9,7 @@ class ondutys
    public static function findData()
    {
          $db = \ext\db::Init();
-        $result = $db->table('onduty')->where('DATEDIFF(ondutytime,NOW()) = 0')->find();
+        $result = $db->table('onduty')->where('DATEDIFF(ondutytime,NOW()) = 0')->cache(20000)->find();
         return $result;
    }
 

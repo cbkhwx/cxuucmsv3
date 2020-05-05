@@ -3,6 +3,7 @@ namespace ctrl;
 
 use \middleware\adminrole;
 use model\attments;
+use model\siteconfig;
 class upload
 {
 	static function init(){
@@ -12,11 +13,13 @@ class upload
 		
 	static function imgUpload(){
 		adminrole::auth();//判断用户权限
+		$d = new siteconfig;
+		$ext = $d->getUploadConfigImage();
 		$up = new \ext\upload();
 		$date = date('Ym',time());
 		$time = date('d',time());
 		$up->set('path', P_PUBLIC . 'uploads/img/'.$date.'/'.$time);        //定义文件上传路径
-		$up->set('allowType', ['.jpg', '.gif', '.png', '.jpeg']);   //定义允许上传的文件后缀
+		$up->set('allowType', $ext);   //定义允许上传的文件后缀['.jpg', '.gif', '.png', '.jpeg']
 		$up->set('maxSize', 2*1024*1024);               //定义允许上传的最大尺寸
 		$result = $up->upload();                      //执行上传
 		$info = $up->getInfo();                       //返回上传文件信息，索引数组
@@ -30,11 +33,14 @@ class upload
 	
 	static function attmentUpload(){
 		adminrole::auth();//判断用户权限
+		$d = new siteconfig;
+		$ext = $d->getUploadConfigAttment();
+
 		$up = new \ext\upload();
 		$date = date('Ym',time());
 		$time = date('d',time());
 		$up->set('path', P_PUBLIC . 'uploads/attment/'.$date.'/'.$time);        //定义文件上传路径
-		$up->set('allowType', ['.doc', '.xls', '.xlsx', '.docx', '.rar', '.7z', '.txt','zip']);   //定义允许上传的文件后缀
+		$up->set('allowType', $ext);   //定义允许上传的文件后缀['.doc', '.xls', '.xlsx', '.docx', '.rar', '.7z', '.txt','.zip']
 		$up->set('maxSize', 2*1024*1024);               //定义允许上传的最大尺寸
 		$result = $up->upload();                      //执行上传
 		$info = $up->getInfo();                       //返回上传文件信息，索引数组
@@ -77,12 +83,14 @@ class upload
 	
 	static function tinymceUpload(){
 		adminrole::auth();//判断用户权限
+		$d = new siteconfig;
+		$ext = $d->getUploadConfigImage();
 	    $up = new \ext\upload();
 	    $date = date('Ym',time());
 	    $time = date('d',time());
 	    $up->set('path', P_PUBLIC . 'uploads/img/'.$date.'/'.$time);        //定义文件上传路径
-	    $up->set('allowType', ['.jpg', '.gif', '.png', '.jpeg']);   //定义允许上传的文件后缀
-	    $up->set('maxSize', 2*1024*1024);               //定义允许上传的最大尺寸
+	    $up->set('allowType', $ext);   //定义允许上传的文件后缀['.jpg', '.gif', '.png', '.jpeg']
+	    $up->set('maxSize', 2*1024*1024);             //定义允许上传的最大尺寸
 	    $result = $up->upload();                      //执行上传
 	    $info = $up->getInfo();                       //返回上传文件信息，索引数组		//"result":[{"name":"5e4f4e423b3610.jpg","suffix":"jpg","originName":"92532836.jpg","type":"image/jpeg","size":272594,"path":"D:/PHP/htdocs/Z-PHP/public_html/public/uploads/img/5e4f4e423b3610.jpg","src":"/public/uploads/img/5e4f4e423b3610.jpg"}]
 	    $err = $up->getError();                       //返回错误信息，数组

@@ -187,6 +187,7 @@
 			, accept: 'images'
 			, acceptMime: 'image/*'
 			//,acceptMime: 'image/jpg, image/png'
+			, exts: '<{$uploadimgext}>'
 			, done: function (res) {
 				if (res.status == 1) {
 					$('#imageval').val(res.result[0].src);
@@ -206,7 +207,8 @@
 			, accept: 'file'
 			, acceptMime: 'file/*'
 			//,acceptMime: 'image/jpg, image/png'
-			, exts: 'zip|rar|7z|doc|docx|xlsx|xls|'
+			//, exts: 'zip|rar|7z|doc|docx|xlsx|xls|'
+			, exts: '<{$uploadattext}>'
 			, done: function (res) {
 				if (res.status == 1) {
 					$('#attval').html('<span class="layui-badge layui-bg-blue">' + res.result[0].originName + '</span>');

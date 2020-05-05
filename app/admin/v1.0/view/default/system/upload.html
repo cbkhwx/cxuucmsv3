@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 系统设置</h3><hr>
+</div>
+<div class="layui-fluid">
+    <button type="button" class="layui-btn layui-btn-primary" onclick="loadMain('<{caUrl('system','index')}>&name=siteinfo')">网站设置</button>
+    <button type="button" class="layui-btn layui-btn-primary" onclick="loadMain('<{caUrl('system','index')}>&name=cache')">缓存设置</button>
+    <button type="button" class="layui-btn" onclick="loadMain('<{caUrl('system','index')}>&name=upload')">上传设置</button>
+</div>
+<div class="layui-fluid">
+ <div class="layui-form">
+	<div class="layui-form-item">
+        <label class="layui-form-label">最大上传</label>
+        <div class="layui-input-inline" style="width: 80px;">
+            <input type="text" name="uploadsize" lay-verify="number" value="<{$config['uploadsize']}>" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-input-company">KB</div>
+        <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片上传类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="imguploadext" value="<{$config['imguploadext']}>" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">如：.jpg|.png|.jpeg|.gif</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">附件上传类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="attuploadext" value="<{$config['attuploadext']}>" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">如：.doc|.docx|.zip|.7z|.zip|.xls|.xlsx</div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+		<?php echo sysrolTF("siteconfig_edit")?'<button class="layui-btn" lay-submit lay-filter="setting">确认保存</button>':''; ?> 
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer,
+			$ = layui.jquery;
+        form.render();
+
+        //监听提交
+		form.on('submit(setting)', function (data) {
+			$.post('<{caUrl("system","edit")}>&name=upload',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+                        loadMain('<{caUrl("system","index")}>&name="upload"');
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 1, anim: 6, time: 5000});
+                }
+            });
+		});
+    });
+</script>

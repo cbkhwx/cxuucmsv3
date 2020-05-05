@@ -72,7 +72,6 @@
         一、内容列表前端调用方法：
 		  <?php foreach(\model\article::selectData('3,6',5,60,1,3) as $v){
 			 	echo $v['title']; //标题
-			 	echo $v['title']; //标题
 				echo urlInfo($vo['id']);　//按照路由模式生成相应的 链接地址
 				echo fTime($vo['time'],'m-d'); //生成格式化时间
 				..........
@@ -84,6 +83,15 @@
 		  3、缓存时间 600单位秒; 
 		  4、是否图片 1; 
 		  5、是否头条 1 或小头条 2 或 图片轮换 3;
+		  
+		  ## 带栏目调用 ##		  
+		  foreach(\model\article::selectJoinData(7,5,60) as $vo){ 
+			  echo $vo['catename']; //栏目名称
+			  ...
+			  }
+		  $cid = 栏目ID   $limit  = 1,10条数,  $cache  = 缓存时间 秒
+
+
 
 		二、值班安排调用（可根据实际使用场景自定义）
 

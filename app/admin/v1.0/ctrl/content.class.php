@@ -4,6 +4,7 @@ namespace ctrl;
 use \middleware\adminrole;
 use model\article;
 use model\article_cate;
+use model\siteconfig;
 use z\view;
 
 class content
@@ -27,8 +28,15 @@ class content
 	
 	public static function addview(){
 		adminrole::auth();
+		//获取栏目数据
 		$m = new article_cate;
 		$cateListTree = $m->SelectTreeData();
+		//获取上传类型
+		$d = new siteconfig;
+		$uploadattext = $d->getUploadAttmentSwitch();
+		$uploadimgext = $d->getUploadImageSwitch();
+		view::assign('uploadattext',$uploadattext);
+		view::assign('uploadimgext',$uploadimgext);
 		view::assign('list',$cateListTree);
 		view::display();
 	}
@@ -57,6 +65,13 @@ class content
 			//获取栏目树形数据
 			$catelist = new article_cate;
 			$cateListTree = $catelist->SelectTreeData();
+			//获取上传类型
+			$d = new siteconfig;
+			$uploadattext = $d->getUploadAttmentSwitch();
+			$uploadimgext = $d->getUploadImageSwitch();
+			view::assign('uploadattext',$uploadattext);
+			view::assign('uploadimgext',$uploadimgext);
+
 			view::assign('list',$cateListTree);
 			view::assign('info',$info);
 			view::display();

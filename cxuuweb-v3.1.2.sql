@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `cxuu_admin_user` (
 -- Dumping data for table cxuuweb.cxuu_admin_user: 4 rows
 /*!40000 ALTER TABLE `cxuu_admin_user` DISABLE KEYS */;
 INSERT INTO `cxuu_admin_user` (`id`, `gid`, `username`, `password`, `nickname`, `logintime`, `loginip`, `status`) VALUES
-	(1, 1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '2020-05-03 10:41:58', '127.0.0.1', 1),
+	(1, 1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '2020-05-05 14:22:08', '127.0.0.1', 1),
 	(2, 2, 'test', 'e10adc3949ba59abbe56e057f20f883e', 'test', '2020-04-10 12:59:14', '127.0.0.1', 1),
 	(3, 1, 'abcdownload', '4124bc0a9335c27f086f24ba207a4912', 'test', NULL, NULL, 1),
 	(4, 2, 'test1', 'e10adc3949ba59abbe56e057f20f883e', 'test', NULL, NULL, 1);
@@ -114,50 +114,50 @@ CREATE TABLE IF NOT EXISTS `cxuu_article` (
 -- Dumping data for table cxuuweb.cxuu_article: 44 rows
 /*!40000 ALTER TABLE `cxuu_article` DISABLE KEYS */;
 INSERT INTO `cxuu_article` (`id`, `cid`, `title`, `attribute_a`, `attribute_b`, `attribute_c`, `attid`, `examine`, `img`, `imgbl`, `time`, `hits`, `status`, `uid`, `gid`) VALUES
-	(1, 6, '管理员管理d a a ', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:11:19', 3, 1, NULL, 0),
-	(2, 6, '管理员管理', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-18 18:58:55', 1, 0, NULL, 0),
-	(3, 6, 'qrqrqewqr', NULL, NULL, 0, 0, NULL, '', 0, '2020-02-21 12:57:39', 3, 1, NULL, 0),
-	(4, 6, '管理员管理', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:26:11', 2, 1, NULL, 0),
-	(5, 6, '管理员管理', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:31:45', 1, 1, NULL, 0),
-	(6, 6, '12432142134', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:31:57', 2, 1, NULL, 0),
-	(7, 6, '214312', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:04', 3, 1, NULL, 0),
-	(8, 6, '12412412412', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:12', 1, 1, NULL, 0),
-	(9, 6, '213421421', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:22', 1, 1, NULL, 0),
-	(10, 6, '213421', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:29', 1, 1, NULL, 0),
-	(11, 6, '1234214', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/21/5e4f638e541a60.jpg', 0, '2020-02-21 12:58:56', 1, 1, NULL, 0),
-	(12, 6, '22222222', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/21/5e4f8c9db98c40.jpg', 0, '2020-03-01 15:26:23', 2, 1, NULL, 0),
-	(13, 3, '11111111111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-03-02 15:37:50', 9, 1, NULL, 0),
+	(1, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:11:19', 3, 1, NULL, 0),
+	(2, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-18 18:58:55', 1, 0, NULL, 0),
+	(3, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '', 0, '2020-02-21 12:57:39', 3, 1, NULL, 0),
+	(4, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:26:11', 2, 1, NULL, 0),
+	(5, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:31:45', 1, 1, NULL, 0),
+	(6, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:31:57', 2, 1, NULL, 0),
+	(7, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:04', 3, 1, NULL, 0),
+	(8, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:12', 1, 1, NULL, 0),
+	(9, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:22', 1, 1, NULL, 0),
+	(10, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, NULL, 0, '2020-02-20 19:32:29', 1, 1, NULL, 0),
+	(11, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/21/5e4f638e541a60.jpg', 0, '2020-02-21 12:58:56', 1, 1, NULL, 0),
+	(12, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/21/5e4f8c9db98c40.jpg', 0, '2020-03-01 15:26:23', 2, 1, NULL, 0),
+	(13, 3, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '', 0, '2020-03-02 15:37:50', 9, 1, NULL, 0),
 	(14, 6, '你可以改变下拉树的初始值你可以改变下拉树的初始值你可以改变下拉树的初始值', NULL, NULL, 0, 0, NULL, '', 0, '2020-02-29 19:42:14', 3, 1, NULL, 0),
 	(15, 6, '页面中hack一个cdn的html5.js不能使用，但是放到项目中就可以用？', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-02-25 15:56:52', 85, 1, NULL, 0),
 	(16, 3, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-10 17:02:12', 62, 1, NULL, 0),
-	(17, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-02-29 19:23:30', 7, 1, NULL, 0),
+	(17, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-02-29 19:23:30', 10, 1, NULL, 0),
 	(18, 3, '一男子恶意诋毁西藏疫情防控工作被拉萨公安拘留', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a49a9f13880.jpg', 0, '2020-04-03 09:48:09', 23, 1, NULL, 0),
 	(19, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/29/5e5a4a00ef62e0.jpg', 0, '2020-02-29 19:39:46', 4, 1, NULL, 0),
 	(20, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-03-01 15:24:25', 3, 0, NULL, 0),
 	(21, 6, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 09:46:08', 1, 1, NULL, 0),
 	(22, 6, '管理员管理', NULL, NULL, 0, 0, NULL, '/uploads/img/202004/07/5e8bd703413c12329870.jpg', 0, '2020-04-07 09:46:34', 1, 1, NULL, 0),
-	(39, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e9196a178dc61139780.jpg', 1, '2020-04-14 11:25:48', 6, 1, NULL, 0),
-	(38, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 10:23:11', 1, 1, NULL, 0),
+	(39, 6, '龙啸轩内容管理系统V3', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e9196a178dc61139780.jpg', 1, '2020-04-14 11:25:48', 6, 1, NULL, 0),
+	(38, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 10:23:11', 1, 1, NULL, 0),
 	(28, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:46:45', 24, 1, NULL, 0),
 	(29, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:47:45', 1, 0, NULL, 0),
 	(30, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:49:14', 1, 0, NULL, 0),
 	(31, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-07 12:49:24', 2, 0, NULL, 0),
-	(32, 6, '134', NULL, NULL, 0, 0, NULL, '124', 0, '2020-04-07 12:50:33', 1, 1, NULL, 0),
-	(33, 6, '134', NULL, NULL, 0, 0, NULL, '124', 0, '2020-04-07 12:51:20', 1, 1, NULL, 0),
+	(32, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '124', 0, '2020-04-07 12:50:33', 1, 1, NULL, 0),
+	(33, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '124', 0, '2020-04-07 12:51:20', 1, 1, NULL, 0),
 	(34, 8, '控制器中使用视图模板', 1, NULL, 0, 0, '经工', '', 0, '2020-04-12 11:28:42', 3, 1, NULL, 0),
-	(35, 6, '11111111111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-07 12:58:46', 13, 1, NULL, 0),
-	(37, 6, '2221111111111111111111111111管理员管理', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-09 11:52:18', 1, 1, NULL, 0),
+	(35, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-07 12:58:46', 13, 1, NULL, 0),
+	(37, 6, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '', 0, '2020-04-09 11:52:18', 1, 1, NULL, 0),
 	(40, 3, '管理员管理', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 11:54:53', 2, 1, 1, 0),
-	(41, 3, '453253', NULL, NULL, 0, 0, NULL, '2354', 0, '2020-04-10 17:03:34', 2, 1, 2, 0),
-	(42, 3, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 17:07:30', 7, 1, 1, NULL),
+	(41, 3, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, NULL, '2354', 0, '2020-04-10 17:03:34', 2, 1, 2, 0),
+	(42, 3, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', NULL, NULL, 0, 0, NULL, '/public/uploads/img/202002/25/5e54d326462560.jpg', 0, '2020-04-10 17:07:30', 8, 1, 1, NULL),
 	(43, 6, '管理员管理', NULL, NULL, 1, NULL, '经工', '/uploads/img/202004/11/5e919697a65772715070.jpg', 1, '2020-04-14 11:25:40', 2, 1, 1, 1),
 	(44, 6, '联播+丨统筹做好经济社会发展工作 习近平的战“疫”方略', 1, 1, 1, NULL, '经工', '/uploads/img/202004/11/5e91c59a286a2853700.jpg', 1, '2020-04-14 11:23:43', 60, 1, 1, 1),
 	(45, 6, '111123丨统筹做好经济社会发展工作 习近平的战“疫”方略', 1, NULL, 1, 1, '经工', '/uploads/img/202004/11/5e9196865d1f06978160.jpg', 1, '2020-04-14 11:23:26', 92, 1, 1, 1),
-	(46, 3, '11111111111111111111111111111111管理员管理', NULL, NULL, 1, 0, '经工', '/uploads/img/202004/11/5e91994c62b396254680.jpg', 1, '2020-04-13 14:27:32', 17, 1, 1, 1),
-	(47, 6, '控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板控制器中使用视图模板', 1, NULL, NULL, 1, '经工', '/uploads/img/202004/15/5e96c2aeae7281289310.jpg', 1, '2020-04-14 11:21:38', 137, 1, 1, 1),
-	(48, 9, '88888888888888888888888888', NULL, NULL, 0, 0, '经工', '', 0, '2020-04-12 12:39:18', 5, 1, 1, 1),
-	(49, 3, '11111111111111111111111111111111管理员管理', 1, NULL, NULL, 6, '经工', '', 0, '2020-04-14 18:06:23', 52, 1, 1, 1),
-	(50, 6, 'abc11111111111111111111111111111111管理员管理11', NULL, NULL, NULL, NULL, '经工', '/uploads/img/202004/14/5e9582738cd312533760.jpg', 1, '2020-04-15 16:10:31', 22, 1, 1, 1);
+	(46, 3, '龙啸轩内容管理系统V3', NULL, NULL, 1, 0, '经工', '/uploads/img/202004/11/5e91994c62b396254680.jpg', 1, '2020-04-13 14:27:32', 18, 1, 1, 1),
+	(47, 6, '龙啸轩内容管理系统V3测试长标题龙啸轩内容管理系统V3测试长标题龙啸轩内容管理系统V3测试长标题', 1, NULL, NULL, 1, '经工', '/uploads/img/202004/15/5e96c2aeae7281289310.jpg', 1, '2020-04-14 11:21:38', 148, 1, 1, 1),
+	(48, 9, '龙啸轩内容管理系统V3', NULL, NULL, 0, 0, '经工', '', 0, '2020-04-12 12:39:18', 5, 1, 1, 1),
+	(49, 3, '龙啸轩内容管理系统V3', 1, NULL, 1, 6, '经工', '/uploads/img/202005/03/5eae3e30d8ee64762380.jpg', 1, '2020-04-14 18:06:23', 54, 1, 1, 1),
+	(50, 6, '龙啸轩内容管理系统V3', NULL, NULL, NULL, NULL, '经工', '/uploads/img/202004/14/5e9582738cd312533760.jpg', 1, '2020-04-15 16:10:31', 22, 1, 1, 1);
 /*!40000 ALTER TABLE `cxuu_article` ENABLE KEYS */;
 
 -- Dumping structure for table cxuuweb.cxuu_article_cate
@@ -197,17 +197,6 @@ CREATE TABLE IF NOT EXISTS `cxuu_article_content` (
 /*!40000 ALTER TABLE `cxuu_article_content` DISABLE KEYS */;
 INSERT INTO `cxuu_article_content` (`content_id`, `aid`, `content`) VALUES
 	(1, 39, '<p>123</p>'),
-	(2, 186, '18677456692'),
-	(3, 186, '18649376408'),
-	(4, 186, '18631909011'),
-	(5, 186, '18674426493'),
-	(6, 186, '18682557224'),
-	(7, 186, '18692155775'),
-	(8, 186, '18652988811'),
-	(9, 186, '18671463204'),
-	(10, 186, '18643578705'),
-	(11, 186, '18622357808'),
-	(12, 186, '18681194014'),
 	(13, 40, '<p>管理员管理管理员管理管理员管理管理员管理管理员管理useriduseriduseriduseriduseriduseriduseriduseriduseriduserid</p>'),
 	(14, 41, '<p>2352222</p>'),
 	(15, 42, '<p>111111111111111111</p>'),
@@ -230,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `cxuu_attments` (
   `ext` varchar(5) DEFAULT NULL COMMENT '文件类型',
   `size` int(10) DEFAULT NULL COMMENT '文件大小',
   PRIMARY KEY (`attid`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table cxuuweb.cxuu_attments: 6 rows
 /*!40000 ALTER TABLE `cxuu_attments` DISABLE KEYS */;
@@ -240,7 +229,13 @@ INSERT INTO `cxuu_attments` (`attid`, `aid`, `atturl`, `priname`, `ext`, `size`)
 	(3, NULL, '/uploads/attment/202004/13/5e941d1f987535638860.txt', '1.txt', NULL, 98),
 	(4, NULL, '/uploads/attment/202004/13/5e9420337090f2767570.txt', '1.txt', '.txt', 98),
 	(5, NULL, '/uploads/attment/202004/13/5e94212180aad5171860.txt', '1.txt', '.txt', 98),
-	(6, NULL, '/uploads/attment/202004/14/5e951055c6aef8122400.txt', '新建文本文档.txt', '.txt', 1223);
+	(6, NULL, '/uploads/attment/202004/14/5e951055c6aef8122400.txt', '新建文本文档.txt', '.txt', 1223),
+	(7, NULL, '/uploads/attment/202005/05/5eb12b575665b908980.txt', '新建文本文档.txt', '.txt', 74),
+	(8, NULL, NULL, NULL, NULL, NULL),
+	(9, NULL, '/uploads/attment/202005/05/5eb12c63912ee2602930.txt', '新建文本文档.txt', '.txt', 74),
+	(10, NULL, '/uploads/attment/202005/05/5eb131a980c662707580.txt', '新建文本文档.txt', '.txt', 74),
+	(11, NULL, NULL, NULL, NULL, NULL),
+	(12, NULL, '/uploads/attment/202005/05/5eb1341e1cf593114040.txt', '新建文本文档.txt', '.txt', 74);
 /*!40000 ALTER TABLE `cxuu_attments` ENABLE KEYS */;
 
 -- Dumping structure for table cxuuweb.cxuu_images
@@ -314,24 +309,24 @@ CREATE TABLE IF NOT EXISTS `cxuu_notices` (
 -- Dumping data for table cxuuweb.cxuu_notices: 18 rows
 /*!40000 ALTER TABLE `cxuu_notices` DISABLE KEYS */;
 INSERT INTO `cxuu_notices` (`id`, `title`, `img`, `content`, `time`, `status`) VALUES
-	(2, 'aabada', NULL, '22', '2020-02-14 16:29:00', 0),
-	(3, 'sadf', NULL, 'asf', '2020-02-14 13:53:47', 1),
+	(2, '龙啸轩内容管理系统V3', NULL, '22', '2020-02-14 16:29:00', 0),
+	(3, '龙啸轩内容管理系统V3', NULL, 'asf', '2020-02-14 13:53:47', 1),
 	(4, 'cxuuweb 3.0来了', NULL, '这个系统是全新构建的，效率高，扩展性强！', '2020-02-14 13:55:13', 1),
-	(5, '122222222222222', NULL, '2222222222222222222', '2020-02-14 14:05:42', 1),
-	(6, '枯干', NULL, '在要', '2020-02-14 14:08:25', 1),
-	(8, '测试测试', NULL, '21424', '2020-02-14 19:04:39', 1),
-	(9, '测试编辑公告', NULL, '124312', '2020-02-14 16:01:01', 1),
-	(10, '1243', NULL, '214', '2020-02-14 14:08:53', 1),
-	(11, '124', NULL, '124', '2020-02-14 14:08:57', 0),
-	(12, '54325', NULL, '3245', '2020-02-14 14:09:02', 0),
-	(13, 'waerqer', NULL, 'qwrq', '2020-02-14 15:03:16', 1),
-	(14, 'wetr', NULL, 'asfd', '2020-02-16 14:55:41', 1),
-	(15, '11兵421', '', '腑', '2020-04-08 10:27:22', 1),
-	(17, '在工14312a442', NULL, '235', '2020-02-16 16:16:58', 0),
-	(19, '88888888888888888888888888', '/public/uploads/img/202002/21/5e4f5ec883bf90.jpg', '12314', '2020-02-29 17:24:01', 1),
-	(20, '管理员管理', '/public/uploads/img/202002/29/5e5a2986d65b70.jpg', '', '2020-02-29 17:23:56', 0),
-	(21, '管理员管理', '/uploads/img/202004/07/5e8c3cbe3edb07010840.jpg', 'ss', '2020-04-12 10:24:42', 0),
-	(22, '11111111管理员管理', '/public/uploads/img/202002/25/5e54d326462560.jpg', '1111', '2020-04-07 17:08:51', 1);
+	(5, '龙啸轩内容管理系统V3', NULL, '2222222222222222222', '2020-02-14 14:05:42', 1),
+	(6, '龙啸轩内容管理系统V3', NULL, '在要', '2020-02-14 14:08:25', 1),
+	(8, '龙啸轩内容管理系统V3', NULL, '21424', '2020-02-14 19:04:39', 1),
+	(9, '龙啸轩内容管理系统V3', NULL, '124312', '2020-02-14 16:01:01', 1),
+	(10, '龙啸轩内容管理系统V3', NULL, '214', '2020-02-14 14:08:53', 1),
+	(11, '龙啸轩内容管理系统V3', NULL, '124', '2020-02-14 14:08:57', 0),
+	(12, '龙啸轩内容管理系统V3', NULL, '3245', '2020-02-14 14:09:02', 0),
+	(13, '龙啸轩内容管理系统V3', NULL, 'qwrq', '2020-02-14 15:03:16', 1),
+	(14, '龙啸轩内容管理系统V3', NULL, 'asfd', '2020-02-16 14:55:41', 1),
+	(15, '龙啸轩内容管理系统V3', '', '腑', '2020-04-08 10:27:22', 1),
+	(17, '龙啸轩内容管理系统V3', NULL, '235', '2020-02-16 16:16:58', 0),
+	(19, '龙啸轩内容管理系统V3', '/public/uploads/img/202002/21/5e4f5ec883bf90.jpg', '12314', '2020-02-29 17:24:01', 1),
+	(20, '龙啸轩内容管理系统V3', '/public/uploads/img/202002/29/5e5a2986d65b70.jpg', '', '2020-02-29 17:23:56', 0),
+	(21, '龙啸轩内容管理系统V3', '/uploads/img/202004/07/5e8c3cbe3edb07010840.jpg', 'ss', '2020-04-12 10:24:42', 0),
+	(22, '龙啸轩内容管理系统V3', '/public/uploads/img/202002/25/5e54d326462560.jpg', '1111', '2020-04-07 17:08:51', 1);
 /*!40000 ALTER TABLE `cxuu_notices` ENABLE KEYS */;
 
 -- Dumping structure for table cxuuweb.cxuu_onduty
@@ -363,8 +358,9 @@ CREATE TABLE IF NOT EXISTS `cxuu_siteconfig` (
 -- Dumping data for table cxuuweb.cxuu_siteconfig: 2 rows
 /*!40000 ALTER TABLE `cxuu_siteconfig` DISABLE KEYS */;
 INSERT INTO `cxuu_siteconfig` (`name`, `data`) VALUES
-	('siteinfo', 'a:7:{s:8:"sitename";s:15:"龙啸轩网络";s:7:"siteurl";s:20:"http://www.cxuu.net/";s:8:"keywords";s:19:"龙啸轩网络2233";s:8:"descript";s:15:"龙啸轩网络";s:9:"copyright";s:88:"龙啸轩内容管理系统 便捷易用的网站内容管理平台  浏览器支持IE8+";s:10:"uploadsize";s:4:"2048";s:9:"uploadext";s:15:"doc|zip|rar|mp3";}'),
-	('uploadsize', '2048');
+	('siteinfo', 'a:5:{s:8:"sitename";s:16:"龙啸轩网络1";s:7:"siteurl";s:20:"http://www.cxuu.net/";s:8:"keywords";s:19:"龙啸轩网络2233";s:8:"descript";s:15:"龙啸轩网络";s:9:"copyright";s:88:"龙啸轩内容管理系统 便捷易用的网站内容管理平台  浏览器支持IE8+";}'),
+	('upload', 'a:3:{s:10:"uploadsize";s:4:"2048";s:12:"imguploadext";s:20:".jpg|.png|.jpeg|.gif";s:12:"attuploadext";s:40:".doc|.docx|.zip|.7z|.zip|.xls|.xlsx|.txt";}'),
+	('cache', 'a:6:{s:9:"indexhtml";s:1:"1";s:13:"indexhtmltime";s:4:"1133";s:11:"visitscache";s:1:"1";s:9:"visitsnum";s:2:"51";s:10:"visitstime";s:3:"500";s:14:"visitsshowtime";s:3:"600";}');
 /*!40000 ALTER TABLE `cxuu_siteconfig` ENABLE KEYS */;
 
 -- Dumping structure for table cxuuweb.cxuu_visits
@@ -373,9 +369,9 @@ CREATE TABLE IF NOT EXISTS `cxuu_visits` (
   `date` date DEFAULT NULL,
   `visits` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
--- Dumping data for table cxuuweb.cxuu_visits: 8 rows
+-- Dumping data for table cxuuweb.cxuu_visits: 10 rows
 /*!40000 ALTER TABLE `cxuu_visits` DISABLE KEYS */;
 INSERT INTO `cxuu_visits` (`id`, `date`, `visits`) VALUES
 	(39, '2020-04-29', 111),
@@ -385,7 +381,10 @@ INSERT INTO `cxuu_visits` (`id`, `date`, `visits`) VALUES
 	(35, '2020-04-24', 31),
 	(34, '2020-04-22', 21333),
 	(33, '2020-04-23', 326),
-	(40, '2020-05-02', 1);
+	(40, '2020-05-02', 1),
+	(41, '2020-05-03', 31),
+	(42, '2020-05-04', 22),
+	(43, '2020-05-05', 156);
 /*!40000 ALTER TABLE `cxuu_visits` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<div class="content-top-nav">
+	<h3 style="color:#444"><i class="layui-icon layui-icon-home"></i> 内容管理 / 系统设置</h3><hr>
+</div>
+<div class="layui-fluid">
+    <button type="button" class="layui-btn layui-btn-primary" onclick="loadMain('<{caUrl('system','index')}>&name=siteinfo')">网站设置</button>
+    <button type="button" class="layui-btn" onclick="loadMain('<{caUrl('system','index')}>&name=cache')">缓存设置</button>
+    <button type="button" class="layui-btn layui-btn-primary" onclick="loadMain('<{caUrl('system','index')}>&name=upload')">上传设置</button>
+</div>
+<div class="layui-fluid">
+ <div class="layui-form">
+    <fieldset class="layui-elem-field site-demo-button" style="margin-top: 10px;">
+        <legend>首页静态</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">开启静态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="indexhtml" lay-skin="switch" lay-filter="indexhtml" lay-text="ON|OFF" value="1" <?php echo $config['indexhtml']==1 ?'checked':'';?>>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">缓存时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="indexhtmltime" lay-verify="required" lay-reqtext="首页静态缓存时间不能为空" placeholder="请输入首页静态缓存时间"  value="<{ $config['indexhtmltime'] }>" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">单位秒，如 600</div>
+        </div>
+
+    </fieldset>
+
+    <fieldset class="layui-elem-field site-demo-button" style="margin-top: 10px;">
+        <legend>访问统计</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">开启缓存</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="visitscache" lay-skin="switch" lay-filter="visitscache" lay-text="ON|OFF" value="1" <?php echo $config['visitscache']==1 ?'checked':'';?>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">此处依赖Redis 如环境中没有Redis，请关闭此缓存</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">写入缓存计数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="visitsnum"  value="<{ $config['visitsnum'] }>" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">达到多少计数量后更新缓存，单位秒，如 51（建议设置成奇数），可根据网站访问量进行设置，访问量越大数字设置越大，默认51</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">写入缓存时间</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="visitstime"  value="<{ $config['visitstime'] }>" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">缓存时间，单位秒，如 600</div>
+        </div>
+<hr>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">调用缓存时间</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="visitsshowtime"  value="<{ $config['visitsshowtime'] }>" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">前台调用访问量的缓存时间，单位秒，如 600</div>
+        </div>
+
+    </fieldset>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+		<?php echo sysrolTF("siteconfig_edit")?'<button class="layui-btn" lay-submit lay-filter="setting">确认保存</button>':''; ?> 
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer,
+			$ = layui.jquery;
+        form.render();
+
+        //监听提交
+		form.on('submit(setting)', function (data) {
+			$.post('<{caUrl("system","edit")}>&name=cache',data.field,function(res){
+                if(res.status == 1){
+                    layer.msg(res.info, {icon: 1, time: 1000}, function(){
+                        loadMain('<{caUrl("system","index")}>&name=cache');
+                    });
+                }else{
+                    layer.msg(res.info, {icon: 1, anim: 6, time: 5000});
+                }
+            });
+		});
+    });
+</script>

@@ -1,6 +1,7 @@
 <?php
 namespace ctrl;
 
+use model\siteconfig;
 use z\view;
 
 class index
@@ -11,12 +12,18 @@ class index
 	
     public static function index()
     {
-		/*$html = view::GetCache(6000, 'index.html');
-		if($html){
-			echo $html;
+		$d = new siteconfig;
+		$swtich = $d->getCacheConfig('indexhtml');
+		if($swtich ==1){
+			$time = $d->getCacheConfig('indexhtmltime');
+			$html = view::GetCache($time, 'index.html');
+			if($html){
+				echo $html;
+			}else{
+				view::Display();
+			}
 		}else{
-			view::Display();  //第二个参数true缓存页面
-		}*/
-		view::Display();
+			view::Display();
+		}
     }
 }

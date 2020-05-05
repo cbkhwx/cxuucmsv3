@@ -1,11 +1,12 @@
 <?php
 namespace ctrl;
 
+use root\base\ctrl;
 use model\article;
 use model\common;
 use z\view;
 
-class contents
+class contents extends ctrl
 {
 	static function init(){
 		\model\visits::insertData();//用户访问记录 写入记数
